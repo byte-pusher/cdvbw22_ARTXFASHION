@@ -13,7 +13,7 @@ import sys
 from PyQt6 import QtWidgets as qtw
 from gui.mainwin import MainWindow
 from gui.pic_utils import img_creator
-from gui.img_widget import ImgWidget
+from gui.img_widget import ImgWidget, ImgWidgetBig 
 
 img_path = '/Users/rkoop/Documents/cdvbw22/Data_Staatsgalerie_Stuttgart/Bilder/'
 
@@ -25,11 +25,14 @@ class	MainApp(qtw.QApplication):
 
 		#general default stle
 		self.setStyle("Fusion")
+		
 
 		self.main = MainWindow()
 		self.main.setStyleSheet("background : black")
-		self.main.btn_left.clicked.connect(self.main.left_click)
-		self.main.btn_right.clicked.connect(self.main.right_click)
+
+	
+		#self.main.btn_left.clicked.connect(self.main.left_click)
+		#self.main.btn_right.clicked.connect(self.main.right_click)
 
 		self.main.show()
 		#self.widgets = ImgWidget()

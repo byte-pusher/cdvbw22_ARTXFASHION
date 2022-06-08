@@ -6,16 +6,13 @@
 #     |__|      \/          \/              \/_____/      \/          \/     \/       
 
 import os
-import sys
 
-from random import seed
-from random import randint
 from PyQt6 import QtWidgets as qtw
 from PyQt6 import QtGui as qtg
 from PyQt6 import QtCore as qtc
 
 from gui.pic_utils import img_creator
-
+from gui.stylesheet import stylesheet
 
 class ImgWidget(qtw.QWidget):
 
@@ -24,14 +21,42 @@ class ImgWidget(qtw.QWidget):
 
 		self.dirpath = '/Users/rkoop/Documents/cdvbw22/Data_Staatsgalerie_Stuttgart/Bilder/'
 		self.files = [f for f in os.listdir(self.dirpath) if os.path.isfile(os.path.join(self.dirpath, f))]
-		#print(self.files[3])
 		self.list = []
 
-	#not sucessfully connected yet
-	def create_side(self,list):
+		self.btn_right = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_ArrowRight),
+										 '&', self)
+
+	def create_img_widget(self, list):
+		i = 1
+		self.img_choice = qtw.QWidget()
+		self.img_choice.layout = qtw.QHBoxLayout()
+		while (i < 4):
+			self.img = img_creator.get_img(self.dirpath + self.files[list[-i]], 160)
+			self.img_choice.layout.addWidget(self.img)
+			i = i+1
+		self.img_choice.layout.addWidget(self.btn_right)
+		self.img_choice.setLayout(self.img_choice.layout)
+		return(self.img_choice)
+
+
+class ImgWidgetBig(qtw.QWidget):
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+
+		self.dirpath = '/Users/rkoop/Documents/cdvbw22/Data_Staatsgalerie_Stuttgart/Bilder/'
+		self.files = [f for f in os.listdir(self.dirpath) if os.path.isfile(os.path.join(self.dirpath, f))]
+		self.list = []
+
+		self.btn_right = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_ArrowRight),
+										 '&', self)
+
+	def create_img_widget(self,list):
 		counter = 0
 		i = 1
 		j = 1
+		self.btn = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_ArrowRight),
+										 '&', self)
+		self.btn.setStyleSheet(stylesheet)
 		self.img_choice_big = qtw.QWidget()
 		self.img_choice_big.layout = qtw.QGridLayout()
 		while (counter < 15):
@@ -42,31 +67,10 @@ class ImgWidget(qtw.QWidget):
 			if i == 6 or i == 11:
 				j = j + 1
 				i = 1
+		self.img_choice_big.layout.addWidget(self.btn, 1, 4, 5, 1)
+		self.img_choice_big.setLayout(self.img_choice_big.layout)
 		return(self.img_choice_big)
 
-
-
-
-
-
-
-		#print(self.files)
-		i = 0
-		while (i < 237):
-			widget = self.create(self.files[i],self.files[i])
-			self.list.append(widget)
-			i = i + 1
-		print(*self.list[3])
-			#pd.to_pickle(widget, self.files[i])
-
-	def create(self, imagepath, name):
-		name = qtw.QLabel()
-		pixmap = qtg.QPixmap(self.dirpath + imagepath)
-		#pixmap = 
-		name.setPixmap(pixmap.scaled(320,320, qtc.Qt.AspectRatioMode.KeepAspectRatio))
-		name.setAlignment((qtc.Qt.AlignmentFlag.AlignCenter))
-		#self.name = name
-		return(pixmap)
 
 	@qtc.pyqtSlot(str)
 	def set_path(self, dirpath):
