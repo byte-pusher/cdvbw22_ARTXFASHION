@@ -29,23 +29,6 @@ class img_creator(qtw.QWidget):
 		img.setAlignment((qtc.Qt.AlignmentFlag.AlignCenter))
 		return(img)
 
-	
-	# def get_img(filepath, scale):
-	# 	img = qtw.QLabel()
-	# 	pixmap = qtg.QPixmap(filepath)
-	# 	img.setPixmap(pixmap.scaled(scale, scale, qtc.Qt.AspectRatioMode.KeepAspectRatio))
-	# 	img.setAlignment((qtc.Qt.AlignmentFlag.AlignCenter))
-	# 	return(img)
-
-	def get_img(self, filepath, scale):
-		self.img = qtw.QLabel()
-		self.pixmap = qtg.QPixmap(filepath)
-		self.img.setPixmap(self.pixmap.scaled(scale, scale, qtc.Qt.AspectRatioMode.KeepAspectRatio))
-		self.img.setAlignment((qtc.Qt.AlignmentFlag.AlignCenter))
-		self.img.mousePressEvent = self.emit_choice.emit(self.img)
-		return(self.img)
-
-
 	def get_file_list(dirpath):
 		path = dirpath
 		files = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]

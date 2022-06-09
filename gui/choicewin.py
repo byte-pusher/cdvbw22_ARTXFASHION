@@ -34,9 +34,10 @@ class	ChoiceWin(qtw.QWidget):
 		self.set_img_widget()
 
 		#create btn
-		self.btn_all = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_FileDialogListView),
+		self.btn_all = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_MediaSkipBackward),
 										 '&', self)
-		
+		self.btn_all.setGeometry(10, 10, 60, 40)								 
+		self.btn_all.setStyleSheet("text-align : center; border-radius : 5; border : 1px solid white")
 		#create mirror area
 		self.mirror = qtw.QLabel()
 		self.mirror.setStyleSheet("background : lightblue")
@@ -46,7 +47,7 @@ class	ChoiceWin(qtw.QWidget):
 		self.btn_block.setStyleSheet("background : lightblue")
 		self.btn_block.layout = qtw.QVBoxLayout()
 		self.btn_block.layout.addWidget(self.btn_all)
-		self.btn_block.layout.addStretch()
+		#self.btn_block.layout.addStretch()
 		self.btn_block.setLayout(self.btn_block.layout)
 
 		#Create overall layout and assemble
@@ -60,23 +61,42 @@ class	ChoiceWin(qtw.QWidget):
 	def set_img_widget(self):
 		self.btn_right = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_BrowserReload),
 										 '&', self)
+		self.btn_right.setStyleSheet("text-align : center; border-radius : 5; border : 1px solid white")
 		i = 1
 		self.img_choice = qtw.QWidget()
 		self.img_choice_layout = qtw.QHBoxLayout()
-		while (i < 4):
-			self.img = img_creator.get_img(img_path + self.list_img_files[self.nb_list[-i]], 160)
-			self.img_choice_layout.addWidget(self.img)
-			self.img.mousePressEvent = self.emit
-			i = i+1
+		# while (i < 4):
+		# 	self.img = img_creator.get_img(img_path + self.list_img_files[self.nb_list[-i]], 160)
+		# 	self.img_choice_layout.addWidget(self.img)
+		# 	self.img.mousePressEvent = self.emit
+		# 	i = i+1
+
+		#MANUAL CREATION OF 3 IMG WIDGETS FOR  EASY CONNECTION
+		self.img0 = img_creator.get_img(img_path + self.list_img_files[self.nb_list[-1]], 160)
+		self.img_choice_layout.addWidget(self.img0)
+		self.img0.mousePressEvent = self.emit0
+		self.img1 = img_creator.get_img(img_path + self.list_img_files[self.nb_list[-2]], 160)
+		self.img_choice_layout.addWidget(self.img1)
+		self.img1.mousePressEvent = self.emit1
+		self.img2 = img_creator.get_img(img_path + self.list_img_files[self.nb_list[-3]], 160)
+		self.img_choice_layout.addWidget(self.img2)
+		self.img2.mousePressEvent = self.emit2
+		
 		print(len(self.list_img_files))
 		print(len(self.nb_list))
 		self.btn_right.clicked.connect(self.shuffle)
 		self.img_choice_layout.addWidget(self.btn_right)
 		self.img_choice.setLayout(self.img_choice_layout)
 
-	def emit(self, event):
-		self.emit_choice.emit(self.img)
-		print("click succesfull")
+	def emit0(self, event):
+		self.emit_choice.emit(self.img0)
+	
+	def emit1(self, event):
+		self.emit_choice.emit(self.img1)
+	
+	def emit2(self, event):
+		self.emit_choice.emit(self.img2)
+		
 
 	def shuffle(self):
 		self.img_choice.hide()

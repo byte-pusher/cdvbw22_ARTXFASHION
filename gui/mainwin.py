@@ -6,24 +6,15 @@
 #     |__|      \/          \/              \/_____/      \/          \/     \/     
 
 
-from random import seed
-from random import randint
-from PyQt6 import sip
+
 
 from PyQt6 import QtWidgets as qtw
 from PyQt6 import QtGui as qtg
 from PyQt6 import QtCore as qtc
-from gui.img_widget import ImgWidget, ImgWidgetBig
-
-from gui.pic_utils import img_creator
-
-from gui.stylesheet import stylesheet
 
 from gui.choicewin import ChoiceWin
 from gui.side_choice_win import SideChoiceWin
 from gui.final_view import FinalViewWin
-
-img_path = '/Users/rkoop/Documents/cdvbw22/Data_Staatsgalerie_Stuttgart/Bilder/'
 
 class	MainWindow((qtw.QMainWindow)):
 	"Main Window of Magic Mirror"
@@ -32,10 +23,8 @@ class	MainWindow((qtw.QMainWindow)):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 	
-
-		#set basic window & geometry
+		#set basic window & geometry (SetGeometry> x,y, width, height)
 		self.setWindowTitle("Magic Mirror")
-		#setGeometry> x,y, width, height
 		self.setGeometry(0, 0, 900, 1600)
 
 		#menu for acess of actions
@@ -52,60 +41,36 @@ class	MainWindow((qtw.QMainWindow)):
 		self.menu.addAction(self.restartAction)
 		self.menu.addAction(self.exitAction)
 
-		self.list_img_files = img_creator.get_file_list(img_path)
-
-
-		self.nb_list_small = []
-		self.nb_list = img_creator.get_indices(3, self.nb_list_small)
-
-		self.nb_list_big = []
-		self.nb_list_big = img_creator.get_indices(15, self.nb_list_big)
-		
-		self.img_widget_big = ImgWidgetBig()
-		self.img_choice_side = self.img_widget_big.create_img_widget(self.nb_list_big)
-
-		self.img_widget = ImgWidget()
-		self.img_choice_down = self.img_widget.create_img_widget(self.nb_list_small)
-
-		self.utils = img_creator()
-
-
-		#initial central widget
-		# self.central = qtw.QWidget()
-		# self.central.layout = qtw.QGridLayout()
-		# # self.central.layout.addWidget(self.output, 0, 0, 3, 0)
-		# # self.central.layout.addWidget(self.img_choice_down, 2, 0)
-		# # self.central.layout.addWidget(self.img_choice_side, 0, 2, 4, 1)
-		# # self.central.setLayout(self.central.layout)
-
-
+		#create Widgets
 		self.choicewin = ChoiceWin()
 		self.finalview = FinalViewWin()
-		#self.side_choice_win = SideChoiceWin()
-		self.setCentralWidget(self.choicewin)
-		##self.setCentralWidget(self.side_choice_win)
+		self.sidechoicewin = SideChoiceWin()
+
+		#stacked widget
+		self.central = qtw.QStackedWidget()
+		self.central.addWidget(self.choicewin)
+		self.central.addWidget(self.finalview)
+		self.central.addWidget(self.sidechoicewin)
+		self.central.setCurrentIndex(0)
+		self.setCentralWidget(self.central)
+
+	#slots & fts for view change
+	@qtc.pyqtSlot()
+	def show_choice(self):
+		self.central.setCurrentIndex(0)
+	
+	@qtc.pyqtSlot()
+	def show_final_win(self):
+		self.central.setCurrentIndex(1)
+
+	@qtc.pyqtSlot()
+	def show_side_choice(self):
+		self.central.setCurrentIndex(2)
 
 
-		# #test stacked layout in general
-		# self.central = qtw.QWidget()
-		# self.central.layout = qtw.QStackedLayout()
-		# self.central.layout.addWidget(self.output)
-		# self.central.layout.addWidget(self.img_choice_down)
-		# self.central.layout.addWidget(self.img_choice_side)
-		# self.central.layout.setCurrentIndex(2)
-		# self.central.setLayout(self.central.layout)
-		# self.setCentralWidget(self.central)
-		# self.central.layout.setCurrentIndex(1)
 
+	
 
-
-	#change img choice
-	#right clicked
-	def right_click(self):
-		self.img01 = self.img02
-		self.img02 = self.img03
-		self.img03 = img_creator.get_img(img_path + self.list_img_files[randint(0, 235)])
-		self.populate_widget()
 
 	
 

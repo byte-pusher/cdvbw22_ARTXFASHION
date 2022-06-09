@@ -14,10 +14,7 @@ from PyQt6 import QtWidgets as qtw
 from PyQt6 import QtGui as qtg
 from PyQt6 import QtCore as qtc
 from gui.mainwin import MainWindow
-from gui.pic_utils import img_creator
-from gui.img_widget import ImgWidget, ImgWidgetBig 
 
-img_path = '/Users/rkoop/Documents/cdvbw22/Data_Staatsgalerie_Stuttgart/Bilder/'
 
 class	MainApp(qtw.QApplication):
 	'"Build Application from classes and signals"'
@@ -28,22 +25,19 @@ class	MainApp(qtw.QApplication):
 		#general default stle
 		self.setStyle("Fusion")
 		
-
+		#set mainwindow
 		self.main = MainWindow()
 		self.main.setStyleSheet("background : black")
 
-		#self.main.choicewin.emit_choice.connect(self.main.finalview.get_chosen_img)
-		self.main.utils.emit_choice.connect(self.main.finalview.get_chosen_img)
+		#connections
+		self.main.choicewin.emit_choice.connect(self.main.finalview.get_chosen_img)
+		self.main.choicewin.emit_choice.connect(self.main.show_final_win)
+		self.main.choicewin.btn_all.clicked.connect(self.main.show_side_choice)
 		
-		
-		#SHWMAXIMIZED FOR FULLSCREEN
+		#max for Fullscreen
 		#self.main.showMaximized()
 		self.main.show()
 
-		#self.widgets = ImgWidget()
-		#self.img_creator.create_all_img(img_path)
-
-	
 
 if __name__=="__main__":
 	app = MainApp(sys.argv)
