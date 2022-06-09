@@ -32,6 +32,7 @@ class	FinalViewWin(qtw.QWidget):
 		self.overall_layout.addWidget(self.mirror,0 ,0 ,4 ,4)
 		self.overall_layout.addWidget(self.info, 5, 0, 1, 1)
 
+	# set clicked img as widget
 	@qtc.pyqtSlot(object)
 	def get_chosen_img(self, img):
 		self.img = img

@@ -26,6 +26,7 @@ class ImgWidget(qtw.QWidget):
 		self.btn_right = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_ArrowRight),
 										 '&', self)
 
+	#create img widget for choice of 3
 	def create_img_widget(self, list):
 		i = 1
 		self.img_choice = qtw.QWidget()
@@ -49,7 +50,7 @@ class ImgWidgetBig(qtw.QWidget):
 
 		self.btn_right = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_ArrowRight),
 										 '&', self)
-
+	#create img widget for side choice
 	def create_img_widget(self,list):
 		counter = 0
 		i = 1
@@ -71,7 +72,7 @@ class ImgWidgetBig(qtw.QWidget):
 		self.img_choice_big.setLayout(self.img_choice_big.layout)
 		return(self.img_choice_big)
 
-
+	#slot to recieve path
 	@qtc.pyqtSlot(str)
 	def set_path(self, dirpath):
 		self.dirpath = dirpath

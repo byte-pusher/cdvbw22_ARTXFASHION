@@ -58,7 +58,8 @@ class	SideChoiceWin(qtw.QWidget):
 		self.overall_layout.addWidget(self.img_choice_big, 3, 5, 3, 1)
 		#self.overall_layout.addWidget(self.stack, 0, 5, 6, 1)
 		self.setLayout(self.overall_layout)
-		
+	
+	#create img choice widget
 	def set_img_widget(self):
 		counter = 0
 		i = 1
@@ -81,6 +82,7 @@ class	SideChoiceWin(qtw.QWidget):
 		self.img_choice_big_layout.addWidget(self.btn, 1, 0, 3, 1)
 		self.img_choice_big.setLayout(self.img_choice_big_layout)
 
+	#approach for stacked widget with different layers of all imgs
 	def set_stacked_views(self):
 		nb = 237 / 9
 		i = 0
@@ -89,6 +91,7 @@ class	SideChoiceWin(qtw.QWidget):
 			self.set_img_widget()
 			self.stack_layout.addWidget(self.img_choice_big)
 
+	#extend random choice list of images
 	def extend_list(self):
 		i = 0
 		while (i < 9):
@@ -97,6 +100,7 @@ class	SideChoiceWin(qtw.QWidget):
 				self.nb_list.append(x)
 				i = i + 1
 
+	#turn to new site of images
 	#def turn(self):
 		#self.img_choice_big
 

@@ -57,7 +57,7 @@ class	ChoiceWin(qtw.QWidget):
 		self.overall_layout.addWidget(self.btn_block, 0, 4, 4, 1)
 		self.setLayout(self.overall_layout)
 		
-		
+	# create widget for img choice
 	def set_img_widget(self):
 		self.btn_right = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_BrowserReload),
 										 '&', self)
@@ -88,6 +88,7 @@ class	ChoiceWin(qtw.QWidget):
 		self.img_choice_layout.addWidget(self.btn_right)
 		self.img_choice.setLayout(self.img_choice_layout)
 
+	#create emits for widgetchanges/viewchanges
 	def emit0(self, event):
 		self.emit_choice.emit(self.img0)
 	
@@ -97,7 +98,7 @@ class	ChoiceWin(qtw.QWidget):
 	def emit2(self, event):
 		self.emit_choice.emit(self.img2)
 		
-
+	#get 3 new random images
 	def shuffle(self):
 		self.img_choice.hide()
 		self.clear()
@@ -116,6 +117,7 @@ class	ChoiceWin(qtw.QWidget):
 		self.setLayout(self.overall_layout)
 		self.show()
 
+	#clear widget
 	def clear(self):
 		self.overall_layout.removeWidget(self.img_choice)
 		sip.delete(self.img_choice)
