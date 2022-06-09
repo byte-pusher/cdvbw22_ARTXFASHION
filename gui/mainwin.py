@@ -21,6 +21,7 @@ from gui.stylesheet import stylesheet
 
 from gui.choicewin import ChoiceWin
 from gui.side_choice_win import SideChoiceWin
+from gui.final_view import FinalViewWin
 
 img_path = '/Users/rkoop/Documents/cdvbw22/Data_Staatsgalerie_Stuttgart/Bilder/'
 
@@ -34,7 +35,8 @@ class	MainWindow((qtw.QMainWindow)):
 
 		#set basic window & geometry
 		self.setWindowTitle("Magic Mirror")
-		self.setGeometry(400, 700, 800, 100)
+		#setGeometry> x,y, width, height
+		self.setGeometry(0, 0, 900, 1600)
 
 		#menu for acess of actions
 		self.menubar = self.menuBar()
@@ -50,17 +52,7 @@ class	MainWindow((qtw.QMainWindow)):
 		self.menu.addAction(self.restartAction)
 		self.menu.addAction(self.exitAction)
 
-		#buttons
-		#self.btn_left = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_ArrowLeft),
-		#								 '&', self)
-		#self.btn_right = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_ArrowRight),
-		#								 '&', self)
-
 		self.list_img_files = img_creator.get_file_list(img_path)
-		#standartchoice: labels for images & set images on label via pixmap
-		self.img01 = img_creator.get_img(img_path + self.list_img_files[randint(0, 236)], 320)
-		self.img02 = img_creator.get_img(img_path + self.list_img_files[randint(0, 236)], 320)
-		self.img03 = img_creator.get_img(img_path + self.list_img_files[randint(0, 236)], 320)
 
 
 		self.nb_list_small = []
@@ -75,6 +67,9 @@ class	MainWindow((qtw.QMainWindow)):
 		self.img_widget = ImgWidget()
 		self.img_choice_down = self.img_widget.create_img_widget(self.nb_list_small)
 
+		self.utils = img_creator()
+
+
 		#initial central widget
 		# self.central = qtw.QWidget()
 		# self.central.layout = qtw.QGridLayout()
@@ -85,10 +80,10 @@ class	MainWindow((qtw.QMainWindow)):
 
 
 		self.choicewin = ChoiceWin()
-
-		self.side_choice_win = SideChoiceWin()
+		self.finalview = FinalViewWin()
+		#self.side_choice_win = SideChoiceWin()
 		self.setCentralWidget(self.choicewin)
-		#self.setCentralWidget(self.side_choice_win)
+		##self.setCentralWidget(self.side_choice_win)
 
 
 		# #test stacked layout in general
@@ -102,7 +97,8 @@ class	MainWindow((qtw.QMainWindow)):
 		# self.setCentralWidget(self.central)
 		# self.central.layout.setCurrentIndex(1)
 
-	
+
+
 	#change img choice
 	#right clicked
 	def right_click(self):
@@ -111,24 +107,9 @@ class	MainWindow((qtw.QMainWindow)):
 		self.img03 = img_creator.get_img(img_path + self.list_img_files[randint(0, 235)])
 		self.populate_widget()
 
-	def left_click(self):
-		self.img03 = self.img02
-		self.img02 = self.img01
-		self.img01 = img_creator.get_img(img_path + self.list_img_files[randint(0, 235)])
-		print('otre')
 	
-	
-	def clear_widget(self):
-		#self.central.layout.removeWidget(self.img_choice)
-		self.img_choice.close()
-		# self.central.layout.removeWidget(self.img_choice)
-		# sip.delete(self.img_choice)
-		# self.img_choice = None
 
-	def populate_widget(self):
-		self.clear_widget()
-		self.img_choice.layout.replaceWidget()
-		self.img_choice.update()
+
 		
 
 		

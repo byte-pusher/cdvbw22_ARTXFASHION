@@ -11,6 +11,8 @@
 import sys 
 
 from PyQt6 import QtWidgets as qtw
+from PyQt6 import QtGui as qtg
+from PyQt6 import QtCore as qtc
 from gui.mainwin import MainWindow
 from gui.pic_utils import img_creator
 from gui.img_widget import ImgWidget, ImgWidgetBig 
@@ -30,15 +32,18 @@ class	MainApp(qtw.QApplication):
 		self.main = MainWindow()
 		self.main.setStyleSheet("background : black")
 
-	
-		#self.main.btn_left.clicked.connect(self.main.left_click)
-		#self.main.btn_right.clicked.connect(self.main.right_click)
-
+		#self.main.choicewin.emit_choice.connect(self.main.finalview.get_chosen_img)
+		self.main.utils.emit_choice.connect(self.main.finalview.get_chosen_img)
+		
+		
+		#SHWMAXIMIZED FOR FULLSCREEN
+		#self.main.showMaximized()
 		self.main.show()
+
 		#self.widgets = ImgWidget()
 		#self.img_creator.create_all_img(img_path)
 
-		
+	
 
 if __name__=="__main__":
 	app = MainApp(sys.argv)

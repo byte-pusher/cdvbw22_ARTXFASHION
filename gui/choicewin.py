@@ -18,6 +18,7 @@ from gui.pic_utils import img_creator
 img_path = '/Users/rkoop/Documents/cdvbw22/Data_Staatsgalerie_Stuttgart/Bilder/'
 
 class	ChoiceWin(qtw.QWidget):
+	emit_choice = qtc.pyqtSignal(object)
 
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
@@ -30,8 +31,7 @@ class	ChoiceWin(qtw.QWidget):
 		self.nb_list = img_creator.get_indices(3, self.nb_list_small)
 
 		##create img choice widget
-		self.img_widget = ImgWidget()
-		self.img_choice_down = self.img_widget.create_img_widget(self.nb_list_small)
+		self.set_img_widget()
 
 		#create btn
 		self.btn_all = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_FileDialogListView),
@@ -50,28 +50,56 @@ class	ChoiceWin(qtw.QWidget):
 		self.btn_block.setLayout(self.btn_block.layout)
 
 		#Create overall layout and assemble
-		self.layout = qtw.QGridLayout()
-		self.layout.addWidget(self.mirror, 0, 0, 4, 4)
-		self.layout.addWidget(self.img_choice_down, 4, 0, 1, 5)
-		self.layout.addWidget(self.btn_block, 0, 4, 4, 1)
-		self.setLayout(self.layout)
-
+		self.overall_layout = qtw.QGridLayout()
+		self.overall_layout.addWidget(self.mirror, 0, 0, 4, 4)
+		self.overall_layout.addWidget(self.img_choice, 4, 0, 1, 5)
+		self.overall_layout.addWidget(self.btn_block, 0, 4, 4, 1)
+		self.setLayout(self.overall_layout)
 		
-	def update(self):
+		
+	def set_img_widget(self):
+		self.btn_right = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_BrowserReload),
+										 '&', self)
+		i = 1
+		self.img_choice = qtw.QWidget()
+		self.img_choice_layout = qtw.QHBoxLayout()
+		while (i < 4):
+			self.img = img_creator.get_img(img_path + self.list_img_files[self.nb_list[-i]], 160)
+			self.img_choice_layout.addWidget(self.img)
+			self.img.mousePressEvent = self.emit
+			i = i+1
+		print(len(self.list_img_files))
+		print(len(self.nb_list))
+		self.btn_right.clicked.connect(self.shuffle)
+		self.img_choice_layout.addWidget(self.btn_right)
+		self.img_choice.setLayout(self.img_choice_layout)
+
+	def emit(self, event):
+		self.emit_choice.emit(self.img)
+		print("click succesfull")
+
+	def shuffle(self):
+		self.img_choice.hide()
 		self.clear()
-		while i < 1:
+		print(self.nb_list)
+		i = 0
+		while i < 3:
 			x = randint(0, 236)
+			if len(self.nb_list) > (len(self.list_img_files) - 3):
+				self.nb_list = []
 			if x not in self.nb_list:
 				self.nb_list.append(x)
-				i = i+1
-		self.img_choice_down = self.img_widget.create_img_widget(self.nb_list)
-		self.img_widget.layout.addWidget(self.img_choice_down, 4, 0, 1, 5)
-		self.setLayout(self.layout)
-
+				i = i + 1
+		print(self.nb_list)
+		self.set_img_widget()
+		self.overall_layout.addWidget(self.img_choice, 4, 0, 1, 5)
+		self.setLayout(self.overall_layout)
+		self.show()
 
 	def clear(self):
-		sip.delete(self.img_choice_down)
-		self.img_choice_down = None
+		self.overall_layout.removeWidget(self.img_choice)
+		sip.delete(self.img_choice)
+		self.img_choice = None
 
 			
 
