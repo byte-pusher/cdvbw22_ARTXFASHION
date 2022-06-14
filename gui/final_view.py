@@ -25,12 +25,13 @@ class	FinalViewWin(qtw.QWidget):
 		self.info = qtw.QLabel()
 		self.info.setText("Artist:  \nTitle:  \nYear:")
 		
-		self.info.setStyleSheet("font : white")
-		self.info.setAlignment(qtc.Qt.AlignmentFlag.AlignBottom)
-		col = qtw.QGraphicsColorizeEffect()
-		col.setColor(qtc.Qt.GlobalColor.darkGreen)
-		self.info.setGraphicsEffect(col)
-		self.info.setStyleSheet("background : lightblue")
+		self.info.setStyleSheet("color : white;"
+								"background-color : black")
+		self.info.setAlignment(qtc.Qt.AlignmentFlag.AlignCenter)
+		# col = qtw.QGraphicsColorizeEffect()
+		# col.setColor(qtc.Qt.GlobalColor.darkGreen)
+		# self.info.setGraphicsEffect(col)
+		# self.info.setStyleSheet("background : lightblue")
 
 		#create modelview
 		self.oglw = GlWidget()
