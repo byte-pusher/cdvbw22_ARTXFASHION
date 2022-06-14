@@ -10,6 +10,8 @@ from PyQt6 import QtWidgets as qtw
 from PyQt6 import QtGui as qtg
 from PyQt6 import QtCore as qtc
 
+from graphics.modelview import GlWidget
+
 class	FinalViewWin(qtw.QWidget):
 
 	def __init__(self, *args, **kwargs):
@@ -22,15 +24,36 @@ class	FinalViewWin(qtw.QWidget):
 		#createinfobox
 		self.info = qtw.QLabel()
 		self.info.setText("Artist:  \nTitle:  \nYear:")
-		self.info.setStyleSheet("background : lightblue")
+		
+		self.info.setStyleSheet("font : white")
 		self.info.setAlignment(qtc.Qt.AlignmentFlag.AlignBottom)
+		col = qtw.QGraphicsColorizeEffect()
+		col.setColor(qtc.Qt.GlobalColor.darkGreen)
+		self.info.setGraphicsEffect(col)
+		self.info.setStyleSheet("background : lightblue")
 
-		#create btns
+		#create modelview
+		self.oglw = GlWidget()
+		self.oglw.setStyleSheet(("background : lightblue"))
 
 		#set layout
 		self.overall_layout = qtw.QGridLayout()
-		self.overall_layout.addWidget(self.mirror,0 ,0 ,4 ,4)
-		self.overall_layout.addWidget(self.info, 5, 0, 1, 1)
+		self.overall_layout.addWidget(self.oglw,0 ,0 ,4 ,4 )
+		#self.overall_layout.addWidget(self.mirror,0 ,0 ,4 ,4)
+		self.overall_layout.addWidget(self.info, 6, 1, 1, 1)
+
+	#set model movements on keys
+	def keyPressEvent(self, event):
+		if event.key() == qtc.Qt.Key.Key_Up:
+			self.oglw.spin_up()
+		if event.key() == qtc.Qt.Key.Key_Down:
+			self.oglw.spin_down()
+		if event.key() == qtc.Qt.Key.Key_Left:
+			self.oglw.spin_left()
+		if event.key() == qtc.Qt.Key.Key_Right:
+			self.oglw.spin_right()
+		if event.key() == qtc.Qt.Key.Key_Space:
+			self.oglw.spin_none()
 
 	# set clicked img as widget
 	@qtc.pyqtSlot(object)

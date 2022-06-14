@@ -29,10 +29,14 @@ class	MainApp(qtw.QApplication):
 		self.main = MainWindow()
 		self.main.setStyleSheet("background : black")
 
+		
+
 		#connections
 		self.main.choicewin.emit_choice.connect(self.main.finalview.get_chosen_img)
 		self.main.choicewin.emit_choice.connect(self.main.show_final_win)
 		self.main.choicewin.btn_all.clicked.connect(self.main.show_side_choice)
+
+		
 		
 		#max for Fullscreen
 		#self.main.showMaximized()

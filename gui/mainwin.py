@@ -16,6 +16,8 @@ from gui.choicewin import ChoiceWin
 from gui.side_choice_win import SideChoiceWin
 from gui.final_view import FinalViewWin
 
+from graphics.modelview import MainWindow
+
 class	MainWindow((qtw.QMainWindow)):
 	"Main Window of Magic Mirror"
 	 #sigs
@@ -45,7 +47,8 @@ class	MainWindow((qtw.QMainWindow)):
 		self.choicewin = ChoiceWin()
 		self.finalview = FinalViewWin()
 		self.sidechoicewin = SideChoiceWin()
-
+		
+		
 		#stacked widget
 		self.central = qtw.QStackedWidget()
 		self.central.addWidget(self.choicewin)
@@ -53,6 +56,10 @@ class	MainWindow((qtw.QMainWindow)):
 		self.central.addWidget(self.sidechoicewin)
 		self.central.setCurrentIndex(0)
 		self.setCentralWidget(self.central)
+
+	def keyPressEvent(self, event):
+		if event.key() == qtc.Qt.Key.Key_Escape:
+			self.close()
 
 	#slots & fts for view change
 	@qtc.pyqtSlot()
