@@ -7,6 +7,7 @@
 
 
 
+from ast import While
 from random import randint
 from PyQt6 import QtWidgets as qtw
 from PyQt6 import QtGui as qtg
@@ -68,6 +69,7 @@ class	ChoiceWin(qtw.QWidget):
 		self.overall_layout.addWidget(self.btn_block_side, 0, 4, 4, 1)
 
 		self.setLayout(self.overall_layout)
+		#self.create_stack()
 		
 	# create widget for img choice
 	def set_img_widget(self):
@@ -134,6 +136,31 @@ class	ChoiceWin(qtw.QWidget):
 		self.overall_layout.removeWidget(self.img_choice)
 		sip.delete(self.img_choice)
 		self.img_choice = None
+
+
+	# create stack of img widgets
+	def create_stack(self):
+		self.stack = qtw.QStackedWidget()
+		self.index_list = []
+		self.index_list = img_creator.get_indices(229, self.index_list)
+		print(self.index_list)
+		self.img_widgets = {}
+		#for i in range(len(self.list_img_files)):
+		i = 0
+		while i < 235:
+			name = self.list_img_files[i]
+			self.img_widgets[name + '_label'] = img_creator.get_img(img_path + self.list_img_files[i], 120 )
+			self.stack.addWidget(self.img_widgets[name + '_label'])
+			i = i + 1
+			print(name)
+		self.overall_layout.addWidget(self.stack, 4, 0, 1, 5)
+		self.stack.setCurrentIndex(1)
+		print("stack sucessfull added")
+		self.setLayout(self.overall_layout)
+		#self.show()
+
+
+
 
 	
 	# #trigger animations for modelview

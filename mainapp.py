@@ -35,6 +35,8 @@ class	MainApp(qtw.QApplication):
 		self.main.choicewin.emit_choice.connect(self.main.show_final_win)
 		self.main.choicewin.btn_side.clicked.connect(self.main.show_side_choice)
 		self.main.sidechoicewin.btn_back.clicked.connect(self.main.show_choice)
+		self.main.finalview.btn_back.clicked.connect(self.main.show_choice)
+
 
 		#max for Fullscreen
 		#self.main.showMaximized()

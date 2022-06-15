@@ -31,6 +31,7 @@ class img_creator(qtw.QWidget):
 		img.setAlignment((qtc.Qt.AlignmentFlag.AlignCenter))
 		return(img)
 
+	
 	def get_file_list(dirpath):
 		path = dirpath
 		files = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]

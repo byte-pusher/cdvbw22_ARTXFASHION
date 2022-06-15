@@ -59,7 +59,6 @@ class	SideChoiceWin(qtw.QWidget):
 		self.focus_area_layout.addWidget(self.btn_wear, 1, 0, 1, 1)
 		self.focus_area.setLayout(self.focus_area_layout)
 
-
 		#get modelview
 		self.modelview = GlWidget()
 
@@ -93,7 +92,7 @@ class	SideChoiceWin(qtw.QWidget):
 			if i == 4 or i == 7:
 				j = j + 1
 				i = 1
-		#self.btn_shuffle.clicked.connect(self.turn)
+		self.btn_shuffle.clicked.connect(self.turn)
 		self.img_choice_big_layout.addWidget(self.btn_shuffle, 0, 0, 1, 1)
 		self.img_choice_big_layout.addWidget(self.btn_back, 1, 0, 1, 1)
 		self.img_choice_big.setLayout(self.img_choice_big_layout)
@@ -112,13 +111,27 @@ class	SideChoiceWin(qtw.QWidget):
 		i = 0
 		while (i < 9):
 			x = randint(0, 236)
+			if len(self.nb_list) > 200:
+				self.nb_list = []
 			if x not in self.nb_list:
 				self.nb_list.append(x)
 				i = i + 1
+			
 
 	#turn to new site of images
-	#def turn(self):
-		#self.img_choice_big
+	def turn(self):
+		self.img_choice_big.hide()
+		self.clear()
+		self.extend_list()
+		self.set_img_widget()
+		self.overall_layout.addWidget(self.img_choice_big, 3, 5, 3, 1)
+		self.setLayout(self.overall_layout)
+
+	def clear(self):
+		self.overall_layout.removeWidget(self.img_choice_big)
+		sip.delete(self.img_choice_big)
+		self.img_choice_big = None
+
 
 
 		

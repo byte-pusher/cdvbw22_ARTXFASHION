@@ -38,11 +38,23 @@ class	FinalViewWin(qtw.QWidget):
 		#create modelview
 		self.modelview = GlWidget()
 
+		#create btn
+		self.btn_back = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_MediaSkipForward),
+										 '&', self)
+		self.btn_back.setGeometry(10, 10, 60, 40)
+		self.btn_back.setStyleSheet("text-align : center; border-radius : 5; border : 1px solid white")
+		self.btn_wear = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_DialogApplyButton),
+										 '&', self)
+		self.btn_wear.setGeometry(10, 10, 60, 40)								 
+		self.btn_wear.setStyleSheet("text-align : center; border-radius : 5; border : 1px solid white")
+
 		#set layout
 		self.overall_layout = qtw.QGridLayout()
 		#self.overall_layout.addWidget(self.oglw,0 ,0 ,4 ,4 )
 		self.overall_layout.addWidget(self.modelview,0 ,0 ,4 ,4)
 		self.overall_layout.addWidget(self.info, 6, 1, 1, 1)
+		self.overall_layout.addWidget(self.btn_back,6 ,3, 1,1)
+		self.overall_layout.addWidget(self.btn_wear, 6, 2, 1, 1)
 
 	#set model movements on keys (moved to mainwin)
 	# def keyPressEvent(self, event):
