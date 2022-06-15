@@ -13,13 +13,15 @@ from PyQt6 import QtWidgets as qtw
 from PyQt6 import QtGui as qtg
 from PyQt6 import QtCore as qtc
 
+from path import img_path
+
 class img_creator(qtw.QWidget):
 	emit_choice = qtc.pyqtSignal(object)
 
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 
-		dirpath = '/Users/rkoop/Documents/cdvbw22/Data_Staatsgalerie_Stuttgart/Bilder/'
+		dirpath = img_path
 		self.filelist = self.get_file_list(dirpath)
 
 	def get_img(filepath, scale):

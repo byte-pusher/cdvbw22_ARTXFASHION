@@ -6,15 +6,16 @@
 #     |__|      \/          \/              \/_____/      \/          \/     \/     
 
 
-#activate venv: source .venv/bin/activate
+#activate venv in vscode: source .venv/bin/activate
+# necessary package: PyQt6
+# run: python3 mainapp.py
+
 
 import sys 
-
 from PyQt6 import QtWidgets as qtw
 from PyQt6 import QtGui as qtg
 from PyQt6 import QtCore as qtc
 from gui.mainwin import MainWindow
-
 
 class	MainApp(qtw.QApplication):
 	'"Build Application from classes and signals"'
@@ -29,15 +30,12 @@ class	MainApp(qtw.QApplication):
 		self.main = MainWindow()
 		self.main.setStyleSheet("background : black")
 
-		
-
 		#connections
 		self.main.choicewin.emit_choice.connect(self.main.finalview.get_chosen_img)
 		self.main.choicewin.emit_choice.connect(self.main.show_final_win)
-		self.main.choicewin.btn_all.clicked.connect(self.main.show_side_choice)
+		self.main.choicewin.btn_side.clicked.connect(self.main.show_side_choice)
+		self.main.sidechoicewin.btn_back.clicked.connect(self.main.show_choice)
 
-		
-		
 		#max for Fullscreen
 		#self.main.showMaximized()
 		self.main.show()

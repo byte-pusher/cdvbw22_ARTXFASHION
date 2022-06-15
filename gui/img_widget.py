@@ -14,12 +14,14 @@ from PyQt6 import QtCore as qtc
 from gui.pic_utils import img_creator
 from gui.stylesheet import stylesheet
 
+from path import img_path
+
 class ImgWidget(qtw.QWidget):
 
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 
-		self.dirpath = '/Users/rkoop/Documents/cdvbw22/Data_Staatsgalerie_Stuttgart/Bilder/'
+		self.dirpath = img_path
 		self.files = [f for f in os.listdir(self.dirpath) if os.path.isfile(os.path.join(self.dirpath, f))]
 		self.list = []
 
@@ -44,7 +46,7 @@ class ImgWidgetBig(qtw.QWidget):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 
-		self.dirpath = '/Users/rkoop/Documents/cdvbw22/Data_Staatsgalerie_Stuttgart/Bilder/'
+		self.dirpath = img_path
 		self.files = [f for f in os.listdir(self.dirpath) if os.path.isfile(os.path.join(self.dirpath, f))]
 		self.list = []
 

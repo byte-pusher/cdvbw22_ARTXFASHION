@@ -5,18 +5,17 @@
 #\____   |  \___  >\_/  \___  >__|  \_______ \\___  / \___  >__| |___|  /\___  >__|   
 #     |__|      \/          \/              \/_____/      \/          \/     \/     
 
-
-
-
+#PyQt imports
 from PyQt6 import QtWidgets as qtw
 from PyQt6 import QtGui as qtg
 from PyQt6 import QtCore as qtc
 
+#own imports
 from gui.choicewin import ChoiceWin
 from gui.side_choice_win import SideChoiceWin
 from gui.final_view import FinalViewWin
+from graphics.modelview import GlWidget
 
-from graphics.modelview import MainWindow
 
 class	MainWindow((qtw.QMainWindow)):
 	"Main Window of Magic Mirror"
@@ -48,7 +47,6 @@ class	MainWindow((qtw.QMainWindow)):
 		self.finalview = FinalViewWin()
 		self.sidechoicewin = SideChoiceWin()
 		
-		
 		#stacked widget
 		self.central = qtw.QStackedWidget()
 		self.central.addWidget(self.choicewin)
@@ -73,7 +71,6 @@ class	MainWindow((qtw.QMainWindow)):
 	@qtc.pyqtSlot()
 	def show_side_choice(self):
 		self.central.setCurrentIndex(2)
-
 
 
 	

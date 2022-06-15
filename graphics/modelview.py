@@ -5,56 +5,18 @@
 #\____   |  \___  >\_/  \___  >__|  \_______ \\___  / \___  >__| |___|  /\___  >__|   
 #     |__|      \/          \/              \/_____/      \/          \/     \/       
 
-import os
 
+import sys
 from PyQt6 import QtWidgets as qtw
 from PyQt6 import QtGui as qtg
 from PyQt6 import QtCore as qtc
 
-import sys
-
+#GL imports for pyqt
 from PyQt6.QtOpenGL import QOpenGLWindow, QOpenGLVersionProfile, QOpenGLShaderProgram, QOpenGLVersionFunctionsFactory, QOpenGLShader
 from PyQt6.QtOpenGLWidgets import QOpenGLWidget
-#qtg QSurfaceFormat
-#qtw QApplication
-#qtc QSize
-
-
-class MainWindow(qtw.QMainWindow):
-
-    def __init__(self):
-        super().__init__()
-
-        # Your code goes here
-        self.resize(800, 600)
-        main = qtw.QWidget()
-        self.setCentralWidget(main)
-        main.setLayout(qtw.QVBoxLayout())
-        oglw = GlWidget()
-        main.layout().addWidget(oglw)
-
-        # Animation controls
-        btn_layout = qtw.QHBoxLayout()
-        main.layout().addLayout(btn_layout)
-        for direction in ('none', 'left', 'right', 'up', 'down'):
-            button = qtw.QPushButton(
-                direction,
-                autoExclusive=True,
-                checkable=True,
-                clicked=getattr(oglw, f'spin_{direction}')
-                )
-            btn_layout.addWidget(button)
-        zoom_layout = qtw.QHBoxLayout()
-        main.layout().addLayout(zoom_layout)
-        zoom_in = qtw.QPushButton('zoom in', clicked=oglw.zoom_in)
-        zoom_layout.addWidget(zoom_in)
-        zoom_out = qtw.QPushButton('zoom out', clicked=oglw.zoom_out)
-        zoom_layout.addWidget(zoom_out)
-        self.show()
-
 
 class GlWidget(QOpenGLWidget):
-    """A widget to display our OpenGL drawing"""
+    """A widget to display the OpenGL drawing"""
 
     def initializeGL(self):
         super().initializeGL()
@@ -68,7 +30,6 @@ class GlWidget(QOpenGLWidget):
         version.setVersion(2, 1)
         self.gl = gl_fts.get(version)
         
-
         # Configure
         self.gl.glEnable(self.gl.GL_DEPTH_TEST)
         self.gl.glDepthFunc(self.gl.GL_LESS)
@@ -169,14 +130,13 @@ class GlWidget(QOpenGLWidget):
         self.program.disableAttributeArray(self.color_location)
         self.program.release()
 
-
         # Animation
         # rotate
         self.view_matrix.rotate(*self.rotation)
+        self.spin_right()
         self.update()
 
     
-
     def qcolor_to_glvec(self, qcolor):
         return qtg.QVector3D(
             qcolor.red() / 255,
@@ -184,6 +144,7 @@ class GlWidget(QOpenGLWidget):
             qcolor.blue() / 255
         )
 
+    #spin/rest functions
     def spin_none(self):
         self.rotation = [0, 0, 0, 0]
 
@@ -204,9 +165,4 @@ class GlWidget(QOpenGLWidget):
 
     def zoom_out(self):
         self.view_matrix.scale(.9, .9, .9)
-
-
-if __name__ == '__main__':
-    app = qtw.QApplication(sys.argv)
-    mw = MainWindow()
-    app.exec()
+    

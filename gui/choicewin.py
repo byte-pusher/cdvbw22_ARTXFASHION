@@ -12,10 +12,14 @@ from PyQt6 import QtWidgets as qtw
 from PyQt6 import QtGui as qtg
 from PyQt6 import QtCore as qtc
 from PyQt6 import sip
-from gui.img_widget import ImgWidget
+
+#own imports
+from graphics.modelview import GlWidget
 from gui.pic_utils import img_creator
 
-img_path = '/Users/rkoop/Documents/cdvbw22/Data_Staatsgalerie_Stuttgart/Bilder/'
+#path import from path.py
+from path import img_path
+img_path = img_path
 
 class	ChoiceWin(qtw.QWidget):
 	emit_choice = qtc.pyqtSignal(object)
@@ -34,37 +38,45 @@ class	ChoiceWin(qtw.QWidget):
 		self.set_img_widget()
 
 		#create btn
-		self.btn_all = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_MediaSkipBackward),
+		self.btn_side = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_MediaSkipBackward),
 										 '&', self)
-		self.btn_all.setGeometry(10, 10, 60, 40)								 
-		self.btn_all.setStyleSheet("text-align : center; border-radius : 5; border : 1px solid white")
-		#create mirror area
-		self.mirror = qtw.QLabel()
-		self.mirror.setStyleSheet("background : lightblue")
+		self.btn_side.setGeometry(10, 10, 60, 40)								 
+		self.btn_side.setStyleSheet("text-align : center; border-radius : 5; border : 1px solid white")
+
+		self.btn_wear = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_DialogApplyButton),
+										 '&', self)
+		self.btn_wear.setGeometry(10, 10, 60, 40)								 
+		self.btn_wear.setStyleSheet("text-align : center; border-radius : 5; border : 1px solid white")
 
 		#create btn area
-		self.btn_block = qtw.QWidget()
-		self.btn_block.setStyleSheet("background : lightblue")
-		self.btn_block.layout = qtw.QVBoxLayout()
-		self.btn_block.layout.addWidget(self.btn_all)
-		#self.btn_block.layout.addStretch()
-		self.btn_block.setLayout(self.btn_block.layout)
+		self.btn_block_side = qtw.QWidget()
+		self.btn_block_side.setStyleSheet("background : black")
+		self.btn_block_side.layout = qtw.QVBoxLayout()
+		self.btn_block_side.layout.addStretch()
+		self.btn_block_side.layout.addWidget(self.btn_wear)
+		self.btn_block_side.layout.addWidget(self.btn_side)
+		self.btn_block_side.layout.addStretch()
+		self.btn_block_side.setLayout(self.btn_block_side.layout)
+
+		#create modelview
+		self.modelview = GlWidget()
 
 		#Create overall layout and assemble
 		self.overall_layout = qtw.QGridLayout()
-		self.overall_layout.addWidget(self.mirror, 0, 0, 4, 4)
+		self.overall_layout.addWidget(self.modelview, 0, 0, 4, 4)
 		self.overall_layout.addWidget(self.img_choice, 4, 0, 1, 5)
-		self.overall_layout.addWidget(self.btn_block, 0, 4, 4, 1)
+		self.overall_layout.addWidget(self.btn_block_side, 0, 4, 4, 1)
+
 		self.setLayout(self.overall_layout)
 		
 	# create widget for img choice
 	def set_img_widget(self):
-		self.btn_right = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_BrowserReload),
+		self.btn_shuffle = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_BrowserReload),
 										 '&', self)
-		self.btn_right.setStyleSheet("text-align : center; border-radius : 5; border : 1px solid white")
+		self.btn_shuffle.setStyleSheet("text-align : center; border-radius : 5; border : 1px solid white")
 		i = 1
 		self.img_choice = qtw.QWidget()
-		self.img_choice_layout = qtw.QHBoxLayout()
+		self.img_choice_layout = qtw.QGridLayout()
 		# while (i < 4):
 		# 	self.img = img_creator.get_img(img_path + self.list_img_files[self.nb_list[-i]], 160)
 		# 	self.img_choice_layout.addWidget(self.img)
@@ -73,19 +85,19 @@ class	ChoiceWin(qtw.QWidget):
 
 		#MANUAL CREATION OF 3 IMG WIDGETS FOR  EASY CONNECTION
 		self.img0 = img_creator.get_img(img_path + self.list_img_files[self.nb_list[-1]], 160)
-		self.img_choice_layout.addWidget(self.img0)
+		self.img_choice_layout.addWidget(self.img0, 1, 0)
 		self.img0.mousePressEvent = self.emit0
 		self.img1 = img_creator.get_img(img_path + self.list_img_files[self.nb_list[-2]], 160)
-		self.img_choice_layout.addWidget(self.img1)
+		self.img_choice_layout.addWidget(self.img1, 1, 1)
 		self.img1.mousePressEvent = self.emit1
 		self.img2 = img_creator.get_img(img_path + self.list_img_files[self.nb_list[-3]], 160)
-		self.img_choice_layout.addWidget(self.img2)
+		self.img_choice_layout.addWidget(self.img2, 1, 2)
 		self.img2.mousePressEvent = self.emit2
 		
-		print(len(self.list_img_files))
+		print("Number of paintings: " , len( self.list_img_files))
 		print(len(self.nb_list))
-		self.btn_right.clicked.connect(self.shuffle)
-		self.img_choice_layout.addWidget(self.btn_right)
+		self.btn_shuffle.clicked.connect(self.shuffle)
+		self.img_choice_layout.addWidget(self.btn_shuffle, 0, 1, 1, 1)
 		self.img_choice.setLayout(self.img_choice_layout)
 
 	#create emits for widgetchanges/viewchanges
@@ -122,6 +134,20 @@ class	ChoiceWin(qtw.QWidget):
 		self.overall_layout.removeWidget(self.img_choice)
 		sip.delete(self.img_choice)
 		self.img_choice = None
+
+	
+	# #trigger animations for modelview
+	# def keyPressEvent(self, event):
+	# 	if event.key() == qtc.Qt.Key.Key_Up:
+	# 		self.modelview.spin_up()
+	# 	if event.key() == qtc.Qt.Key.Key_Down:
+	# 		self.modelview.spin_down()
+	# 	if event.key() == qtc.Qt.Key.Key_Left:
+	# 		self.modelview.spin_left()
+	# 	if event.key() == qtc.Qt.Key.Key_Right:
+	# 		self.modelview.spin_right()
+	# 	if event.key() == qtc.Qt.Key.Key_Space:
+	# 		self.modelview.spin_none()
 
 			
 
