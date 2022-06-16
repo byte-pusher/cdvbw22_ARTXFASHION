@@ -64,9 +64,9 @@ class	ChoiceWin(qtw.QWidget):
 
 		#Create overall layout and assemble
 		self.overall_layout = qtw.QGridLayout()
-		self.overall_layout.addWidget(self.modelview, 0, 0, 4, 4)
-		self.overall_layout.addWidget(self.img_choice, 4, 0, 1, 5)
-		self.overall_layout.addWidget(self.btn_block_side, 0, 4, 4, 1)
+		self.overall_layout.addWidget(self.modelview, 0, 0, 15, 9)
+		self.overall_layout.addWidget(self.img_choice, 13, 0, 3, 9)
+		self.overall_layout.addWidget(self.btn_block_side, 0, 9, 15, 1)
 
 		self.setLayout(self.overall_layout)
 		#self.create_stack()
@@ -97,7 +97,6 @@ class	ChoiceWin(qtw.QWidget):
 		self.img2.mousePressEvent = self.emit2
 		
 		print("Number of paintings: " , len( self.list_img_files))
-		print(len(self.nb_list))
 		self.btn_shuffle.clicked.connect(self.shuffle)
 		self.img_choice_layout.addWidget(self.btn_shuffle, 0, 1, 1, 1)
 		self.img_choice.setLayout(self.img_choice_layout)

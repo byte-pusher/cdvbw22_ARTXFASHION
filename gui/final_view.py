@@ -29,12 +29,7 @@ class	FinalViewWin(qtw.QWidget):
 		self.info.setStyleSheet("color : white;"
 								"background-color : black")
 		self.info.setAlignment(qtc.Qt.AlignmentFlag.AlignCenter)
-		# #other color approach for label:
-		# col = qtw.QGraphicsColorizeEffect()
-		# col.setColor(qtc.Qt.GlobalColor.darkGreen)
-		# self.info.setGraphicsEffect(col)
-		# self.info.setStyleSheet("background : lightblue")
-
+		
 		#create modelview
 		self.modelview = GlWidget()
 
@@ -50,11 +45,10 @@ class	FinalViewWin(qtw.QWidget):
 
 		#set layout
 		self.overall_layout = qtw.QGridLayout()
-		#self.overall_layout.addWidget(self.oglw,0 ,0 ,4 ,4 )
-		self.overall_layout.addWidget(self.modelview,0 ,0 ,4 ,4)
-		self.overall_layout.addWidget(self.info, 6, 1, 1, 1)
-		self.overall_layout.addWidget(self.btn_back,6 ,3, 1,1)
-		self.overall_layout.addWidget(self.btn_wear, 6, 2, 1, 1)
+		self.overall_layout.addWidget(self.modelview,0 ,0 ,15 ,9)
+		self.overall_layout.addWidget(self.info, 13, 0, 3, 9)
+		self.overall_layout.addWidget(self.btn_back, 6, 9, 1, 1)
+		self.overall_layout.addWidget(self.btn_wear, 7, 9, 1, 1)
 
 	#set model movements on keys (moved to mainwin)
 	# def keyPressEvent(self, event):
@@ -73,7 +67,7 @@ class	FinalViewWin(qtw.QWidget):
 	@qtc.pyqtSlot(object)
 	def get_chosen_img(self, img):
 		self.img = img
-		self.overall_layout.addWidget(self.img, 6, 0, 1, 1)
+		self.overall_layout.addWidget(self.img, 13, 0, 3, 1)
 		self.setLayout(self.overall_layout)
 		self.show()
 

@@ -64,9 +64,9 @@ class	SideChoiceWin(qtw.QWidget):
 
 		#Create overall layout and assemble
 		self.overall_layout = qtw.QGridLayout()
-		self.overall_layout.addWidget(self.modelview, 0, 0, 6, 4)
-		self.overall_layout.addWidget(self.img_choice_big, 3, 5, 3, 1)
-		self.overall_layout.addWidget(self.focus_area, 0, 5, 3, 1)
+		self.overall_layout.addWidget(self.modelview, 0, 0, 15, 9)
+		self.overall_layout.addWidget(self.img_choice_big, 7, 6, 9, 3)
+		self.overall_layout.addWidget(self.focus_area, 0, 6, 7, 3)
 		self.setLayout(self.overall_layout)
 	
 	#create img choice widget
