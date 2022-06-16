@@ -31,9 +31,16 @@ class	SideChoiceWin(qtw.QWidget):
 		self.nb_list = []
 		self.nb_list = img_creator.get_indices(9, self.nb_list)
 
+		##opacity effect
+		self.opacity_effect = qtw.QGraphicsOpacityEffect()
+    	# setting opacity level
+		self.opacity_effect.setOpacity(0.3)
+
 		#create btn
-		self.btn_shuffle_all = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_FileDialogListView),
+		self.btn_back = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_MediaSkipForward),
 										 '&', self)
+		self.btn_back.setGeometry(10, 10, 60, 40)
+		self.btn_back.setStyleSheet("text-align : center; border-radius : 5; border : 1px solid white")
 
 		#create img big area
 		self.focus_img = qtw.QLabel()
@@ -41,78 +48,72 @@ class	SideChoiceWin(qtw.QWidget):
 
 		#get modelview
 		self.modelview = GlWidget()
-		
-		#create img area
-		#Create overall layout and assemble
+
+		#get side choice
 		self.overall_layout = qtw.QGridLayout()
 		self.overall_layout.addWidget(self.modelview, 0, 0, 15, 9)
-		#self.overall_layout.addWidget(self.img_choice_big, 7, 6, 9, 3)
-		self.overall_layout.addWidget(self.focus_img, 0, 6, 7, 3)
+		self.set_img_widget()
+		self.overall_layout.addWidget(self.img_choice_big, 7, 6, 9, 3)
 		self.setLayout(self.overall_layout)
-		self.create_stacks()
-		self.set_img_widget_stack()
-
-		
+	
 	#create img choice widget
 	def set_img_widget(self):
-		counter = 0
-		i = 1
-		j = 1
+
 		self.btn_shuffle = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_BrowserReload),
 										 '&', self)
 		self.btn_shuffle.setGeometry(10, 10, 60, 40)
 		self.btn_shuffle.setStyleSheet("text-align : center; border-radius : 5; border : 1px solid white")
-		self.btn_back = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_MediaSkipForward),
-										 '&', self)
-		self.btn_back.setGeometry(10, 10, 60, 40)
-		self.btn_back.setStyleSheet("text-align : center; border-radius : 5; border : 1px solid white")
 		self.img_choice_big = qtw.QWidget()
 		self.img_choice_big_layout = qtw.QGridLayout()
-		while (counter < 9):
-			self.img = img_creator.get_img(img_path + self.list_img_files[self.nb_list[-counter]], 120)
-			self.img_choice_big_layout.addWidget(self.img, i, j)
-			i = i + 1
-			counter = counter + 1
-			if i == 4 or i == 7:
-				j = j + 1
-				i = 1
+		
+		#manual creation of img widgets to ensure connection
+		self.focus_size = 160
+		self.img1 = img_creator.get_img_own(img_path + self.list_img_files[self.nb_list[-1]], self.focus_size)
+		self.img_choice_big_layout.addWidget(self.img1,0, 1)
+		self.img1.mousePressEvent = self.emit1
+
+		self.img2 = img_creator.get_img_own(img_path + self.list_img_files[self.nb_list[-2]], self.focus_size)
+		self.img_choice_big_layout.addWidget(self.img2,1 ,1)
+		self.img2.mousePressEvent = self.emit2
+		
+		self.img3 = img_creator.get_img_own(img_path + self.list_img_files[self.nb_list[-3]], self.focus_size)
+		self.img_choice_big_layout.addWidget(self.img3,2 ,1)
+		self.img3.mousePressEvent = self.emit3
+
+		self.img4 = img_creator.get_img_own(img_path + self.list_img_files[self.nb_list[-4]], self.focus_size)
+		self.img_choice_big_layout.addWidget(self.img4,0 ,2)
+		self.img4.mousePressEvent = self.emit4
+
+		self.img5 = img_creator.get_img_own(img_path + self.list_img_files[self.nb_list[-5]], self.focus_size)
+		self.img_choice_big_layout.addWidget(self.img5,1 ,2)
+		self.img5.mousePressEvent = self.emit5
+
+		self.img6 = img_creator.get_img_own(img_path + self.list_img_files[self.nb_list[-6]], self.focus_size)
+		self.img_choice_big_layout.addWidget(self.img6,2 ,2)
+		self.img6.mousePressEvent = self.emit6
+
+		self.img7 = img_creator.get_img_own(img_path + self.list_img_files[self.nb_list[-7]], self.focus_size)
+		self.img_choice_big_layout.addWidget(self.img7,0 ,3)
+		self.img7.mousePressEvent = self.emit7
+
+		self.img8 = img_creator.get_img_own(img_path + self.list_img_files[self.nb_list[-8]], self.focus_size)
+		self.img_choice_big_layout.addWidget(self.img8,1 ,3)
+		self.img8.mousePressEvent = self.emit8
+
+		self.img9 = img_creator.get_img_own(img_path + self.list_img_files[self.nb_list[-9]], self.focus_size)
+		self.img_choice_big_layout.addWidget(self.img9,2 ,3)
+		self.img9.mousePressEvent = self.emit9
+
+		#set focus img to first of current selection
+		self.set_focus_img(self.img1.name)
+
+		#fill rest of layout
+		self.img_choice_big.setStyleSheet("background : lightgrey")
 		self.btn_shuffle.clicked.connect(self.turn)
-		self.img_choice_big_layout.addWidget(self.btn_shuffle, 0, 0, 1, 1)
-		self.img_choice_big_layout.addWidget(self.btn_back, 1, 0, 1, 1)
+		self.img_choice_big_layout.addWidget(self.btn_shuffle, 1, 0, 1, 1)
 		self.img_choice_big.setLayout(self.img_choice_big_layout)
 
-	def set_img_widget_stack(self):
-		counter = 0
-		i = 1
-		j = 1
-		self.btn_shuffle = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_BrowserReload),
-										 '&', self)
-		self.btn_shuffle.setGeometry(10, 10, 60, 40)
-		self.btn_shuffle.setStyleSheet("text-align : center; border-radius : 5; border : 1px solid white")
-		self.btn_back = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_MediaSkipForward),
-										 '&', self)
-		self.btn_back.setGeometry(10, 10, 60, 40)
-		self.btn_back.setStyleSheet("text-align : center; border-radius : 5; border : 1px solid white")
-		self.img_choice_big = qtw.QWidget()
-		self.img_choice_big_layout = qtw.QGridLayout()
 
-		while (counter < 9):
-			self.img = self.img_widgets[self.list_img_files[counter] + '_label']
-			self.img_choice_big_layout.addWidget(self.img, i, j)
-			i = i + 1
-			counter = counter + 1
-			if i == 4 or i == 7:
-				j = j + 1
-				i = 1
-		self.btn_shuffle.clicked.connect(self.turn)
-		self.img_choice_big_layout.addWidget(self.btn_shuffle, 0, 0, 1, 1)
-		self.img_choice_big_layout.addWidget(self.btn_back, 1, 0, 1, 1)
-		self.img_choice_big.setLayout(self.img_choice_big_layout)
-		self.overall_layout.addWidget(self.img_choice_big,7, 6, 9, 3)
-		self.setLayout(self.overall_layout)
-
-
-	
 	#clear img_choice_big for new shuffle/turn
 	def clear(self):
 		self.overall_layout.removeWidget(self.img_choice_big)
@@ -130,7 +131,7 @@ class	SideChoiceWin(qtw.QWidget):
 				self.nb_list.append(x)
 				i = i + 1
 			
-	#turn to new site of images
+	#turn to new site of images / create new random choice
 	def turn(self):
 		self.img_choice_big.hide()
 		self.clear()
@@ -139,34 +140,52 @@ class	SideChoiceWin(qtw.QWidget):
 		self.overall_layout.addWidget(self.img_choice_big, 7, 6, 9, 3)
 		self.setLayout(self.overall_layout)
 
-	def create_stacks(self):
-		self.index_list = []
-		self.index_list = img_creator.get_indices(229, self.index_list)
-		#create dictionary to save widgets
-		self.img_widgets = {}
-		i = 0
-		while i < 30:
-			name = self.list_img_files[i]
-			print("name:", name, "sucess")
-			self.img_widgets[name + '_label'] = img_creator.get_img(img_path + self.list_img_files[i], 120 )
-			self.img_widgets[name + '_label'].mousePressEvent = self.emit
-			i = i + 1
-
-	
-	def emit(self, event):
-		print("clicked")
-		#name_of_clicked_img = name
-		#self.emit_img.emit(name_of_clicked_img)
-	
+	# set current focus img as the one clicked
 	@qtc.pyqtSlot(str)
 	def set_focus_img(self, str_img):
 		self.clear_focus()
-		self.focus_img = self.img_widgets[str_img + '_label']
-		self.focus_img.setStyleSheet("background : darkgreen")
-		self.overall_layout.addWidget(self.focus_img, 0, 6, 7, 3 )
+		self.focus_holder = qtw.QLabel()
+		self.focus_holder.setStyleSheet("background : lightgrey")
+		#self.focus_holder.setGraphicsEffect(self.opacity_effect)
+		self.focus_img  = img_creator.get_img(img_path + str_img, 300)
+		self.focus_holder_layout = qtw.QGridLayout()
+		self.focus_holder_layout.addWidget(self.btn_back, 0, 0, 1, 1)
+		self.focus_holder_layout.addWidget(self.focus_img, 1, 0, 3, 3)
+		self.focus_holder.setLayout(self.focus_holder_layout)
+		self.overall_layout.addWidget(self.focus_holder, 0, 6, 7, 3 )
 		self.setLayout(self.overall_layout)
 
+	#clear focus img widget
 	def clear_focus(self):
 		self.overall_layout.removeWidget(self.focus_img)
 		sip.delete(self.focus_img)
 		self.focus_img = None
+
+	# emits for choosen imgs for focus
+	def emit1(self, event):
+		self.emit_img.emit(self.img1.name)
+
+	def emit2(self, event):
+		self.emit_img.emit(self.img2.name)
+
+	def emit3(self, event):
+		self.emit_img.emit(self.img3.name)
+
+	def emit4(self, event):
+		self.emit_img.emit(self.img4.name)
+
+	def emit5(self, event):
+		self.emit_img.emit(self.img5.name)
+
+	def emit6(self, event):
+		self.emit_img.emit(self.img6.name)
+
+	def emit7(self, event):
+		self.emit_img.emit(self.img7.name)
+
+	def emit8(self, event):
+		self.emit_img.emit(self.img8.name)
+
+	def emit9(self, event):
+		self.emit_img.emit(self.img9.name)
+

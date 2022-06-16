@@ -61,7 +61,8 @@ class GlWidget(QOpenGLWidget):
 
     def paintGL(self):
         # Fill the window with dark violet
-        self.gl.glClearColor(0.1, 0, 0.2, 1)
+        #self.gl.glClearColor(0.1, 0, 0.2, 1)
+        self.gl.glClearColor(0.0, 0, 0.0, 0.0)
         self.gl.glClear(
             self.gl.GL_COLOR_BUFFER_BIT | self.gl.GL_DEPTH_BUFFER_BIT)
         self.program.bind()

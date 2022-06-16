@@ -53,8 +53,6 @@ class	ChoiceWin(qtw.QWidget):
 		self.btn_block_side = qtw.QWidget()
 		self.btn_block_side.setStyleSheet("background : black")
 		self.btn_block_side.layout = qtw.QVBoxLayout()
-		self.btn_block_side.layout.addStretch()
-		self.btn_block_side.layout.addWidget(self.btn_wear)
 		self.btn_block_side.layout.addWidget(self.btn_side)
 		self.btn_block_side.layout.addStretch()
 		self.btn_block_side.setLayout(self.btn_block_side.layout)
@@ -79,12 +77,7 @@ class	ChoiceWin(qtw.QWidget):
 		i = 1
 		self.img_choice = qtw.QWidget()
 		self.img_choice_layout = qtw.QGridLayout()
-		# while (i < 4):
-		# 	self.img = img_creator.get_img(img_path + self.list_img_files[self.nb_list[-i]], 160)
-		# 	self.img_choice_layout.addWidget(self.img)
-		# 	self.img.mousePressEvent = self.emit
-		# 	i = i+1
-
+	
 		#MANUAL CREATION OF 3 IMG WIDGETS FOR  EASY CONNECTION
 		self.img0 = img_creator.get_img(img_path + self.list_img_files[self.nb_list[-1]], 160)
 		self.img_choice_layout.addWidget(self.img0, 1, 0)
@@ -136,27 +129,7 @@ class	ChoiceWin(qtw.QWidget):
 		sip.delete(self.img_choice)
 		self.img_choice = None
 
-
-	# create stack of img widgets
-	def create_stack(self):
-		self.stack = qtw.QStackedWidget()
-		self.index_list = []
-		self.index_list = img_creator.get_indices(229, self.index_list)
-		print(self.index_list)
-		self.img_widgets = {}
-		#for i in range(len(self.list_img_files)):
-		i = 0
-		while i < 235:
-			name = self.list_img_files[i]
-			self.img_widgets[name + '_label'] = img_creator.get_img(img_path + self.list_img_files[i], 120 )
-			self.img_widgets[name + '_label'].mousePressEvent = self.emit_img()
-			self.stack.addWidget(self.img_widgets[name + '_label'])
-			i = i + 1
-			print(name)
-		self.overall_layout.addWidget(self.stack, 4, 0, 1, 5)
-		self.stack.setCurrentIndex(1)
-		print("stack sucessfull added")
-		self.setLayout(self.overall_layout)
+	
 
 
 

@@ -16,19 +16,12 @@ from PyQt6 import QtCore as qtc
 
 from path import img_path
 
-
+#
 class OwnLabel(qtw.QLabel):
-	emit_name = qtc.pyqtSignal(str)
 	def __init__(self, name):
+		super().__init__()
 		self.name = name
-	#def mousePressEvent(self, event):
-	#	self.emit(self.name)
-	#def emit(self, name):
-	#	self.emit_name(self.name)
 	
-
-
-
 class img_creator(qtw.QWidget):
 	emit_choice = qtc.pyqtSignal(object)
 
@@ -46,7 +39,8 @@ class img_creator(qtw.QWidget):
 		return(img)
 
 	def get_img_own(filepath, scale):
-		img = qtw.QLabel()
+		img = OwnLabel(filepath)
+		img.name = os.path.basename(filepath)
 		pixmap = qtg.QPixmap(filepath)
 		img.setPixmap(pixmap.scaled(scale, scale, qtc.Qt.AspectRatioMode.KeepAspectRatio))
 		img.setAlignment((qtc.Qt.AlignmentFlag.AlignCenter))
