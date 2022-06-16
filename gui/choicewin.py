@@ -126,7 +126,7 @@ class	ChoiceWin(qtw.QWidget):
 				i = i + 1
 		print(self.nb_list)
 		self.set_img_widget()
-		self.overall_layout.addWidget(self.img_choice, 4, 0, 1, 5)
+		self.overall_layout.addWidget(self.img_choice, 13, 0, 3, 9)
 		self.setLayout(self.overall_layout)
 		self.show()
 
@@ -149,6 +149,7 @@ class	ChoiceWin(qtw.QWidget):
 		while i < 235:
 			name = self.list_img_files[i]
 			self.img_widgets[name + '_label'] = img_creator.get_img(img_path + self.list_img_files[i], 120 )
+			self.img_widgets[name + '_label'].mousePressEvent = self.emit_img()
 			self.stack.addWidget(self.img_widgets[name + '_label'])
 			i = i + 1
 			print(name)
@@ -156,24 +157,8 @@ class	ChoiceWin(qtw.QWidget):
 		self.stack.setCurrentIndex(1)
 		print("stack sucessfull added")
 		self.setLayout(self.overall_layout)
-		#self.show()
 
 
-
-
-	
-	# #trigger animations for modelview
-	# def keyPressEvent(self, event):
-	# 	if event.key() == qtc.Qt.Key.Key_Up:
-	# 		self.modelview.spin_up()
-	# 	if event.key() == qtc.Qt.Key.Key_Down:
-	# 		self.modelview.spin_down()
-	# 	if event.key() == qtc.Qt.Key.Key_Left:
-	# 		self.modelview.spin_left()
-	# 	if event.key() == qtc.Qt.Key.Key_Right:
-	# 		self.modelview.spin_right()
-	# 	if event.key() == qtc.Qt.Key.Key_Space:
-	# 		self.modelview.spin_none()
 
 			
 

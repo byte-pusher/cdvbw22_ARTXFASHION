@@ -5,6 +5,7 @@
 #\____   |  \___  >\_/  \___  >__|  \_______ \\___  / \___  >__| |___|  /\___  >__|   
 #     |__|      \/          \/              \/_____/      \/          \/     \/       
 
+from asyncio import streams
 import os
 import sys
 from random import seed
@@ -14,6 +15,19 @@ from PyQt6 import QtGui as qtg
 from PyQt6 import QtCore as qtc
 
 from path import img_path
+
+
+class OwnLabel(qtw.QLabel):
+	emit_name = qtc.pyqtSignal(str)
+	def __init__(self, name):
+		self.name = name
+	#def mousePressEvent(self, event):
+	#	self.emit(self.name)
+	#def emit(self, name):
+	#	self.emit_name(self.name)
+	
+
+
 
 class img_creator(qtw.QWidget):
 	emit_choice = qtc.pyqtSignal(object)
@@ -31,7 +45,14 @@ class img_creator(qtw.QWidget):
 		img.setAlignment((qtc.Qt.AlignmentFlag.AlignCenter))
 		return(img)
 
-	
+	def get_img_own(filepath, scale):
+		img = qtw.QLabel()
+		pixmap = qtg.QPixmap(filepath)
+		img.setPixmap(pixmap.scaled(scale, scale, qtc.Qt.AspectRatioMode.KeepAspectRatio))
+		img.setAlignment((qtc.Qt.AlignmentFlag.AlignCenter))
+		return(img)
+
+
 	def get_file_list(dirpath):
 		path = dirpath
 		files = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
