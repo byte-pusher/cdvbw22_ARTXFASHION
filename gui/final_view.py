@@ -16,6 +16,8 @@ from path import img_path
 #own imports
 from graphics.modelview import GlWidget
 
+from metadata import df
+
 class	FinalViewWin(qtw.QWidget):
 
 	def __init__(self, *args, **kwargs):
@@ -54,13 +56,13 @@ class	FinalViewWin(qtw.QWidget):
 	@qtc.pyqtSlot(str)
 	def get_chosen_img(self, str_img):
 		print("recieved", str_img)
+		#info_str 
+		self.info.setText("Künstler: " + df.at[ str_img ,'artist'] + "\nTitel: " + df.at[ str_img ,'titel'] +  "\nEnstehungszeit: " + df.at[ str_img ,'entstehungszeit'])
+		self.overall_layout.addWidget(self.info, 13, 0, 3, 9)
 		self.img = img_creator.get_img_own(img_path + str_img, 160)
 		self.overall_layout.addWidget(self.img, 13, 0, 3, 1)
 		self.setLayout(self.overall_layout)
 		self.show()
 
-	# ft to retrieve info for img from pd frame
-	# alternative bind info to img objects
-	def set_info(self, str_img):
-		self.info.setText("Artist:  \nTitle:  \nYear:")
+		
 
