@@ -56,6 +56,8 @@ class GlWidget(QOpenGLWidget):
             0.1,  # Near clipping plane
             100.0  # Far clipping plane
         )
+
+        
         self.view_matrix.translate(0, 0, -5)
         self.rotation = [0, 0, 0, 0]
 
