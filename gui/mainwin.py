@@ -14,12 +14,10 @@ from PyQt6 import QtCore as qtc
 from gui.choicewin import ChoiceWin
 from gui.side_choice_win import SideChoiceWin
 from gui.final_view import FinalViewWin
-from graphics.modelview import GlWidget
 
 
 class	MainWindow((qtw.QMainWindow)):
 	"Main Window of Magic Mirror"
-	 #sigs
 
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
@@ -31,15 +29,10 @@ class	MainWindow((qtw.QMainWindow)):
 		#menu for acess of actions
 		self.menubar = self.menuBar()
 		self.menu = self.menubar.addMenu("Management")
-
 		#set actions for easy program management
-		self.restartAction = qtg.QAction(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_BrowserReload),
-										'&Restart', self)
 		self.exitAction = qtg.QAction(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_DialogCancelButton),
 										'&Terminate', self)
-
 		#add actions to menubar
-		self.menu.addAction(self.restartAction)
 		self.menu.addAction(self.exitAction)
 
 		#create Widgets
@@ -55,6 +48,7 @@ class	MainWindow((qtw.QMainWindow)):
 		self.central.setCurrentIndex(0)
 		self.setCentralWidget(self.central)
 
+	# set esc key to end application
 	def keyPressEvent(self, event):
 		if event.key() == qtc.Qt.Key.Key_Escape:
 			self.close()

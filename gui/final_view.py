@@ -7,8 +7,11 @@
 
 #pyqt imports
 from PyQt6 import QtWidgets as qtw
-from PyQt6 import QtGui as qtg
 from PyQt6 import QtCore as qtc
+
+#own imports
+from gui.pic_utils import img_creator
+from path import img_path
 
 #own imports
 from graphics.modelview import GlWidget
@@ -18,9 +21,6 @@ class	FinalViewWin(qtw.QWidget):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 
-		#create mirror area
-		self.mirror = qtw.QLabel()
-		self.mirror.setStyleSheet("background : lightblue")
 
 		#createinfobox
 		self.info = qtw.QLabel()
@@ -50,24 +50,17 @@ class	FinalViewWin(qtw.QWidget):
 		self.overall_layout.addWidget(self.btn_back, 6, 9, 1, 1)
 		self.overall_layout.addWidget(self.btn_wear, 7, 9, 1, 1)
 
-	#set model movements on keys (moved to mainwin)
-	# def keyPressEvent(self, event):
-	# 	if event.key() == qtc.Qt.Key.Key_Up:
-	# 		self.oglw.spin_up()
-	# 	if event.key() == qtc.Qt.Key.Key_Down:
-	# 		self.oglw.spin_down()
-	# 	if event.key() == qtc.Qt.Key.Key_Left:
-	# 		self.oglw.spin_left()
-	# 	if event.key() == qtc.Qt.Key.Key_Right:
-	# 		self.oglw.spin_right()
-	# 	if event.key() == qtc.Qt.Key.Key_Space:
-	# 		self.oglw.spin_none()
-
 	# set clicked img as widget
-	@qtc.pyqtSlot(object)
-	def get_chosen_img(self, img):
-		self.img = img
+	@qtc.pyqtSlot(str)
+	def get_chosen_img(self, str_img):
+		print("recieved", str_img)
+		self.img = img_creator.get_img_own(img_path + str_img, 160)
 		self.overall_layout.addWidget(self.img, 13, 0, 3, 1)
 		self.setLayout(self.overall_layout)
 		self.show()
+
+	# ft to retrieve info for img from pd frame
+	# alternative bind info to img objects
+	def set_info(self, str_img):
+		self.info.setText("Artist:  \nTitle:  \nYear:")
 

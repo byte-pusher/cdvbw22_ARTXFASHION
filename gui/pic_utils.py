@@ -5,9 +5,8 @@
 #\____   |  \___  >\_/  \___  >__|  \_______ \\___  / \___  >__| |___|  /\___  >__|   
 #     |__|      \/          \/              \/_____/      \/          \/     \/       
 
-from asyncio import streams
+
 import os
-import sys
 from random import seed
 from random import randint
 from PyQt6 import QtWidgets as qtw
@@ -16,12 +15,13 @@ from PyQt6 import QtCore as qtc
 
 from path import img_path
 
-#
+#own Labelclass to add name/path info
 class OwnLabel(qtw.QLabel):
 	def __init__(self, name):
 		super().__init__()
 		self.name = name
 	
+
 class img_creator(qtw.QWidget):
 	emit_choice = qtc.pyqtSignal(object)
 
@@ -31,13 +31,7 @@ class img_creator(qtw.QWidget):
 		dirpath = img_path
 		self.filelist = self.get_file_list(dirpath)
 
-	def get_img(filepath, scale):
-		img = qtw.QLabel()
-		pixmap = qtg.QPixmap(filepath)
-		img.setPixmap(pixmap.scaled(scale, scale, qtc.Qt.AspectRatioMode.KeepAspectRatio))
-		img.setAlignment((qtc.Qt.AlignmentFlag.AlignCenter))
-		return(img)
-
+	#get scaled img in own Label class with pixmap from path
 	def get_img_own(filepath, scale):
 		img = OwnLabel(filepath)
 		img.name = os.path.basename(filepath)
@@ -46,12 +40,13 @@ class img_creator(qtw.QWidget):
 		img.setAlignment((qtc.Qt.AlignmentFlag.AlignCenter))
 		return(img)
 
-
+	#get list of art files in dir from img_path
 	def get_file_list(dirpath):
 		path = dirpath
 		files = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
 		return(files)
 
+	# create X indices
 	def get_indices(nb, list):
 		count = 0
 		x = 0

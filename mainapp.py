@@ -10,11 +10,8 @@
 # necessary package: PyQt6
 # run: python3 mainapp.py
 
-
 import sys 
 from PyQt6 import QtWidgets as qtw
-from PyQt6 import QtGui as qtg
-from PyQt6 import QtCore as qtc
 from gui.mainwin import MainWindow
 
 class	MainApp(qtw.QApplication):
@@ -31,19 +28,25 @@ class	MainApp(qtw.QApplication):
 		self.main.setStyleSheet("background : black")
 
 		#connections
+		#connect menubar action
+		self.main.exitAction.triggered.connect(self.main.close)
+		#connection from basic choice win to finalwin
 		self.main.choicewin.emit_choice.connect(self.main.finalview.get_chosen_img)
 		self.main.choicewin.emit_choice.connect(self.main.show_final_win)
-		self.main.choicewin.btn_side.clicked.connect(self.main.show_side_choice)
-		self.main.sidechoicewin.btn_back.clicked.connect(self.main.show_choice)
-		self.main.finalview.btn_back.clicked.connect(self.main.show_choice)
-
+		#from sidechoice to final win
+		self.main.sidechoicewin.emit_focus.connect(self.main.finalview.get_chosen_img)
+		self.main.sidechoicewin.emit_focus.connect(self.main.show_final_win)
+		# sidechoicewin img to focus img
 		self.main.sidechoicewin.emit_img.connect(self.main.sidechoicewin.set_focus_img)
-
-
-		#max for Fullscreen
-		#self.main.showMaximized()
+		# from basic choice view to side choice view
+		self.main.choicewin.btn_side.clicked.connect(self.main.show_side_choice)
+		# back from sidechoice to basi choice win
+		self.main.sidechoicewin.btn_back.clicked.connect(self.main.show_choice)
+		# back from finalview to basic choice win
+		self.main.finalview.btn_back.clicked.connect(self.main.show_choice)
+		
+		#start?show applicaiton
 		self.main.show()
-
 
 if __name__=="__main__":
 	app = MainApp(sys.argv)

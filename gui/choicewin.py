@@ -5,25 +5,23 @@
 #\____   |  \___  >\_/  \___  >__|  \_______ \\___  / \___  >__| |___|  /\___  >__|   
 #     |__|      \/          \/              \/_____/      \/          \/     \/     
 
-
-
-from ast import While
+#pyqt & other imports
 from random import randint
 from PyQt6 import QtWidgets as qtw
-from PyQt6 import QtGui as qtg
 from PyQt6 import QtCore as qtc
 from PyQt6 import sip
 
 #own imports
 from graphics.modelview import GlWidget
 from gui.pic_utils import img_creator
-
-#path import from path.py
 from path import img_path
+
+#set path to imported path
 img_path = img_path
 
 class	ChoiceWin(qtw.QWidget):
-	emit_choice = qtc.pyqtSignal(object)
+	#signal for finalwin
+	emit_choice = qtc.pyqtSignal(str)
 
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
@@ -51,7 +49,7 @@ class	ChoiceWin(qtw.QWidget):
 
 		#create btn area
 		self.btn_block_side = qtw.QWidget()
-		self.btn_block_side.setStyleSheet("background : black")
+		self.btn_block_side.setStyleSheet("background : transparent")
 		self.btn_block_side.layout = qtw.QVBoxLayout()
 		self.btn_block_side.layout.addWidget(self.btn_side)
 		self.btn_block_side.layout.addStretch()
@@ -78,46 +76,49 @@ class	ChoiceWin(qtw.QWidget):
 		self.img_choice = qtw.QWidget()
 		self.img_choice_layout = qtw.QGridLayout()
 	
-		#MANUAL CREATION OF 3 IMG WIDGETS FOR  EASY CONNECTION
-		self.img0 = img_creator.get_img(img_path + self.list_img_files[self.nb_list[-1]], 160)
+		#img widgets per img and connected to their specific emit for finalview
+		self.img0 = img_creator.get_img_own(img_path + self.list_img_files[self.nb_list[-1]], 160)
 		self.img_choice_layout.addWidget(self.img0, 1, 0)
 		self.img0.mousePressEvent = self.emit0
-		self.img1 = img_creator.get_img(img_path + self.list_img_files[self.nb_list[-2]], 160)
+		self.img1 = img_creator.get_img_own(img_path + self.list_img_files[self.nb_list[-2]], 160)
 		self.img_choice_layout.addWidget(self.img1, 1, 1)
 		self.img1.mousePressEvent = self.emit1
-		self.img2 = img_creator.get_img(img_path + self.list_img_files[self.nb_list[-3]], 160)
+		self.img2 = img_creator.get_img_own(img_path + self.list_img_files[self.nb_list[-3]], 160)
 		self.img_choice_layout.addWidget(self.img2, 1, 2)
 		self.img2.mousePressEvent = self.emit2
-		
-		print("Number of paintings: " , len( self.list_img_files))
+
+		# connect shuffle btn to ft (move connection to mainapp?)
 		self.btn_shuffle.clicked.connect(self.shuffle)
 		self.img_choice_layout.addWidget(self.btn_shuffle, 0, 1, 1, 1)
 		self.img_choice.setLayout(self.img_choice_layout)
 
 	#create emits for widgetchanges/viewchanges
 	def emit0(self, event):
-		self.emit_choice.emit(self.img0)
-	
+		self.emit_choice.emit(self.img0.name)
 	def emit1(self, event):
-		self.emit_choice.emit(self.img1)
-	
+		self.emit_choice.emit(self.img1.name)
 	def emit2(self, event):
-		self.emit_choice.emit(self.img2)
+		self.emit_choice.emit(self.img2.name)
 		
-	#get 3 new random images
+	#get 3 new random images in choice
 	def shuffle(self):
+		#hide & clear widget for img choice
 		self.img_choice.hide()
 		self.clear()
-		print(self.nb_list)
+		#check len of list, reset if necessary
+		if len(self.nb_list) > 230:
+				self.nb_list = []
+		#append three new numbers to list
 		i = 0
 		while i < 3:
-			x = randint(0, 236)
+			x = randint(0, 235)
 			if len(self.nb_list) > (len(self.list_img_files) - 3):
 				self.nb_list = []
 			if x not in self.nb_list:
 				self.nb_list.append(x)
 				i = i + 1
-		print(self.nb_list)
+		print("List of random img indices: ", self.nb_list)
+		#set new imgs, ft always used last three
 		self.set_img_widget()
 		self.overall_layout.addWidget(self.img_choice, 13, 0, 3, 9)
 		self.setLayout(self.overall_layout)
@@ -128,6 +129,10 @@ class	ChoiceWin(qtw.QWidget):
 		self.overall_layout.removeWidget(self.img_choice)
 		sip.delete(self.img_choice)
 		self.img_choice = None
+
+	
+
+
 
 	
 

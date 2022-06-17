@@ -9,18 +9,19 @@
 
 from random import randint
 from PyQt6 import QtWidgets as qtw
-from PyQt6 import QtGui as qtg
 from PyQt6 import QtCore as qtc
 from PyQt6 import sip
 from graphics.modelview import GlWidget
-from gui.img_widget import ImgWidgetBig
 from gui.pic_utils import img_creator
 
 from path import img_path
 img_path = img_path
 
 class	SideChoiceWin(qtw.QWidget):
+	# signals for set up of finalview
 	emit_img = qtc.pyqtSignal(str)
+	emit_focus = qtc.pyqtSignal(str)
+
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 
@@ -44,8 +45,7 @@ class	SideChoiceWin(qtw.QWidget):
 
 		#create img big area
 		self.focus_img = qtw.QLabel()
-		self.focus_img.setStyleSheet("background : darkgreen")
-
+	
 		#get modelview
 		self.modelview = GlWidget()
 
@@ -75,7 +75,7 @@ class	SideChoiceWin(qtw.QWidget):
 		self.img2 = img_creator.get_img_own(img_path + self.list_img_files[self.nb_list[-2]], self.focus_size)
 		self.img_choice_big_layout.addWidget(self.img2,1 ,1)
 		self.img2.mousePressEvent = self.emit2
-		
+
 		self.img3 = img_creator.get_img_own(img_path + self.list_img_files[self.nb_list[-3]], self.focus_size)
 		self.img_choice_big_layout.addWidget(self.img3,2 ,1)
 		self.img3.mousePressEvent = self.emit3
@@ -108,11 +108,10 @@ class	SideChoiceWin(qtw.QWidget):
 		self.set_focus_img(self.img1.name)
 
 		#fill rest of layout
-		self.img_choice_big.setStyleSheet("background : lightgrey")
+		self.img_choice_big.setStyleSheet("background : transparent")
 		self.btn_shuffle.clicked.connect(self.turn)
 		self.img_choice_big_layout.addWidget(self.btn_shuffle, 1, 0, 1, 1)
 		self.img_choice_big.setLayout(self.img_choice_big_layout)
-
 
 	#clear img_choice_big for new shuffle/turn
 	def clear(self):
@@ -123,13 +122,14 @@ class	SideChoiceWin(qtw.QWidget):
 	#extend random choice list of images
 	def extend_list(self):
 		i = 0
+		if len(self.nb_list) > 225:
+			self.nb_list = []
 		while (i < 9):
-			x = randint(0, 236)
-			if len(self.nb_list) > 200:
-				self.nb_list = []
+			x = randint(0, 235)
 			if x not in self.nb_list:
 				self.nb_list.append(x)
 				i = i + 1
+		print(self.nb_list)
 			
 	#turn to new site of images / create new random choice
 	def turn(self):
@@ -145,9 +145,10 @@ class	SideChoiceWin(qtw.QWidget):
 	def set_focus_img(self, str_img):
 		self.clear_focus()
 		self.focus_holder = qtw.QLabel()
-		self.focus_holder.setStyleSheet("background : lightgrey")
+		self.focus_holder.setStyleSheet("background : transparent")
 		#self.focus_holder.setGraphicsEffect(self.opacity_effect)
-		self.focus_img  = img_creator.get_img(img_path + str_img, 300)
+		self.focus_img  = img_creator.get_img_own(img_path + str_img, 400)
+		self.focus_img.mousePressEvent = self.focus_emit
 		self.focus_holder_layout = qtw.QGridLayout()
 		self.focus_holder_layout.addWidget(self.btn_back, 0, 0, 1, 1)
 		self.focus_holder_layout.addWidget(self.focus_img, 1, 0, 3, 3)
@@ -160,6 +161,10 @@ class	SideChoiceWin(qtw.QWidget):
 		self.overall_layout.removeWidget(self.focus_img)
 		sip.delete(self.focus_img)
 		self.focus_img = None
+
+	#focus emit for finalview
+	def focus_emit(self, event):
+		self.emit_focus.emit(self.focus_img.name)
 
 	# emits for choosen imgs for focus
 	def emit1(self, event):

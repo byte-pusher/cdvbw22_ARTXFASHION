@@ -6,14 +6,11 @@
 #     |__|      \/          \/              \/_____/      \/          \/     \/       
 
 import os
-
 from PyQt6 import QtWidgets as qtw
-from PyQt6 import QtGui as qtg
 from PyQt6 import QtCore as qtc
 
 from gui.pic_utils import img_creator
 from gui.stylesheet import stylesheet
-
 from path import img_path
 
 class ImgWidget(qtw.QWidget):
@@ -25,9 +22,6 @@ class ImgWidget(qtw.QWidget):
 		self.files = [f for f in os.listdir(self.dirpath) if os.path.isfile(os.path.join(self.dirpath, f))]
 		self.list = []
 
-		self.btn_right = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_ArrowRight),
-										 '&', self)
-
 	#create img widget for choice of 3
 	def create_img_widget(self, list):
 		i = 1
@@ -37,7 +31,7 @@ class ImgWidget(qtw.QWidget):
 			self.img = img_creator.get_img(self.dirpath + self.files[list[-i]], 160)
 			self.img_choice.layout.addWidget(self.img)
 			i = i+1
-		self.img_choice.layout.addWidget(self.btn_right)
+	
 		self.img_choice.setLayout(self.img_choice.layout)
 		return(self.img_choice)
 
@@ -50,10 +44,8 @@ class ImgWidgetBig(qtw.QWidget):
 		self.files = [f for f in os.listdir(self.dirpath) if os.path.isfile(os.path.join(self.dirpath, f))]
 		self.list = []
 
-		self.btn_right = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_ArrowRight),
-										 '&', self)
 	#create img widget for side choice
-	def create_img_widget(self,list):
+	def create_img_widget(self, list):
 		counter = 0
 		i = 1
 		j = 1
