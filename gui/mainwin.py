@@ -21,6 +21,8 @@ class	MainWindow((qtw.QMainWindow)):
 
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
+
+		self.setObjectName("main_window")
 	
 		#set basic window & geometry (SetGeometry> x,y, width, height)
 		self.setWindowTitle("Magic Mirror")

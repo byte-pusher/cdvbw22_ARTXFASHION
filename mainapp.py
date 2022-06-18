@@ -14,6 +14,8 @@ import sys
 from PyQt6 import QtWidgets as qtw
 from gui.mainwin import MainWindow
 
+from gui.stylesheet import stylesheet
+
 class	MainApp(qtw.QApplication):
 	'"Build Application from classes and signals"'
 
@@ -25,8 +27,11 @@ class	MainApp(qtw.QApplication):
 		
 		#set mainwindow
 		self.main = MainWindow()
-		self.main.setStyleSheet("background : black")
+		
+		
 
+		self.main.setStyleSheet(stylesheet)
+		
 		#connections
 		#connect menubar action
 		self.main.exitAction.triggered.connect(self.main.close)
