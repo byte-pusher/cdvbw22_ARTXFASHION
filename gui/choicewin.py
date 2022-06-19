@@ -14,8 +14,11 @@ from PyQt6 import sip
 
 #own imports
 from graphics.modelview import GlWidget
+from graphics.fashionview import PyVistaView
 from gui.pic_utils import img_creator
 from path import img_path
+
+
 
 #set path to imported path
 img_path = img_path
@@ -55,7 +58,10 @@ class	ChoiceWin(qtw.QWidget):
 		self.btn_block_side.setLayout(self.btn_block_side.layout)
 
 		#create modelview
-		self.modelview = GlWidget()
+	
+		self.view = PyVistaView()
+		self.modelview = self.view.plotter.interactor
+		
 
 		#Create overall layout and assemble
 		self.overall_layout = qtw.QGridLayout()

@@ -13,6 +13,7 @@ from PyQt6 import QtCore as qtc
 from PyQt6 import QtGui as qtg
 from PyQt6 import sip
 from graphics.modelview import GlWidget
+from graphics.fashionview import PyVistaView
 from gui.pic_utils import img_creator
 
 from path import img_path
@@ -51,7 +52,8 @@ class	SideChoiceWin(qtw.QWidget):
 		self.focus_img = qtw.QLabel()
 	
 		#get modelview
-		self.modelview = GlWidget()
+		self.view = PyVistaView()
+		self.modelview = self.view.plotter.interactor
 
 		#get side choice
 		self.overall_layout = qtw.QGridLayout()

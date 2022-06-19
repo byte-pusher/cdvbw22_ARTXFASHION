@@ -41,7 +41,8 @@ class	MainWindow((qtw.QMainWindow)):
 		self.choicewin = ChoiceWin()
 		self.finalview = FinalViewWin()
 		self.sidechoicewin = SideChoiceWin()
-		
+
+
 		#stacked widget
 		self.central = qtw.QStackedWidget()
 		self.central.addWidget(self.choicewin)

@@ -18,6 +18,7 @@ from path import img_path
 
 #own imports
 from graphics.modelview import GlWidget
+from graphics.fashionview import PyVistaView
 
 from metadata.load_data import df_input
 
@@ -37,7 +38,8 @@ class	FinalViewWin(qtw.QWidget):
 		self.info.setAlignment(qtc.Qt.AlignmentFlag.AlignVCenter)
 		
 		#create modelview
-		self.modelview = GlWidget()
+		self.view = PyVistaView()
+		self.modelview = self.view.plotter.interactor
 
 		#create btn
 		self.btn_back = qtw.QPushButton(self)

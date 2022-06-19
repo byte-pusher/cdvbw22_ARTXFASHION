@@ -32,4 +32,8 @@ QLabel#infotext {
     font-size: 18px
 }
 
+QWidget#PyVistaView {
+    background-color : black
+}
+
  """)
