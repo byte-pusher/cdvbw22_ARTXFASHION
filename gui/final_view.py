@@ -19,7 +19,7 @@ from path import img_path
 #own imports
 from graphics.modelview import GlWidget
 
-from metadata.load_data import df
+from metadata.load_data import df_input
 
 class	FinalViewWin(qtw.QWidget):
 
@@ -63,8 +63,8 @@ class	FinalViewWin(qtw.QWidget):
 			self.clear()
 		print("recieved:", str_img)
 		#info_str 
-		self.info.setText("Künstler: " + df.at[ str_img ,'artist'] + "\nTitel: " + df.at[ str_img ,'titel'] +  "\nEnstehungszeit: " + df.at[ str_img ,'entstehungszeit'])
-		self.info.setText(df.at[ str_img ,'titel']  + "\n" + df.at[ str_img ,'artist'] + "\n" + df.at[ str_img ,'entstehungszeit'])
+		self.info.setText("Künstler: " + df_input.at[ str_img ,'artist'] + "\nTitel: " + df_input.at[ str_img ,'titel'] +  "\nEnstehungszeit: " + df_input.at[ str_img ,'entstehungszeit'])
+		self.info.setText(df_input.at[ str_img ,'titel']  + "\n" + df_input.at[ str_img ,'artist'] + "\n" + df_input.at[ str_img ,'entstehungszeit'])
 		#self.overall_layout.addWidget(self.info, 13, 1, 3, 1)
 		self.img = img_creator.get_img_own(img_path + str_img, 160)
 		self.overall_layout.addWidget(self.img, 13, 2, 3, 1)
