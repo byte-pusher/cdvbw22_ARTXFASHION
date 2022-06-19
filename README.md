@@ -1,3 +1,5 @@
+![Banner Image](https://github.com/byte-pusher/cdvbw22_ARTXFASHION/blob/main/Flecture_.png)
+
 # cdvbw22_ARTXFASHION
 Repo of our contribution to the Coding da Vinci Hackathon BW 2022. (https://codingdavinci.de)
 
