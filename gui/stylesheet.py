@@ -13,7 +13,7 @@ stylesheet = ("""
      border : transparent;
  }
 
-QPushButton#btn_shuffle_bottom {
+QPushButton#btn_shuffle_bottom, QPushButton#btn_shuffle_side {
     background-color : black
 }
 
@@ -32,8 +32,10 @@ QLabel#infotext {
     font-size: 18px
 }
 
-QWidget#PyVistaView {
-    background-color : black
+QLabel#focus_view {
+    background-color : transparent"
 }
+
+
 
  """)

@@ -74,6 +74,7 @@ class	FinalViewWin(qtw.QWidget):
 		self.show()
 
 	def clear(self):
+		self.img.hide()
 		self.overall_layout.removeWidget(self.img)
 		sip.delete(self.img)
 		self.img = None

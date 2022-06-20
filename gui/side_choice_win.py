@@ -19,7 +19,7 @@ from gui.pic_utils import img_creator
 from path import img_path
 img_path = img_path
 
-class	SideChoiceWin(qtw.QWidget):
+class	SideChoice(qtw.QWidget):
 	# signals for set up of finalview
 	emit_img = qtc.pyqtSignal(str)
 	emit_focus = qtc.pyqtSignal(str)
@@ -34,30 +34,11 @@ class	SideChoiceWin(qtw.QWidget):
 		self.nb_list = []
 		self.nb_list = img_creator.get_indices(9, self.nb_list)
 
-		##opacity effect
-		self.opacity_effect = qtw.QGraphicsOpacityEffect()
-    	# setting opacity level
-		self.opacity_effect.setOpacity(0.3)
-
-		#create btn
-		self.btn_back = qtw.QPushButton(self)
-		self.btn_back.setObjectName("btn_back")
-		self.btn_back.setIcon(qtg.QIcon('gui/icons/arrow_right'))
-		self.btn_back.setGeometry(200, 150, 100, 30)
-		self.icon_size_back = qtc.QSize(60,60)
-		self.btn_back.setMinimumSize(60,60)
-		self.btn_back.setIconSize(self.icon_size_back)
-
 		#create img big area
 		self.focus_img = qtw.QLabel()
 	
-		#get modelview
-		self.view = PyVistaView()
-		self.modelview = self.view.plotter.interactor
-
 		#get side choice
 		self.overall_layout = qtw.QGridLayout()
-		self.overall_layout.addWidget(self.modelview, 0, 0, 15, 9)
 		self.set_img_widget()
 		self.overall_layout.addWidget(self.img_choice_big, 7, 6, 9, 3)
 		self.setLayout(self.overall_layout)
@@ -65,12 +46,6 @@ class	SideChoiceWin(qtw.QWidget):
 	#create img choice widget
 	def set_img_widget(self):
 
-		self.btn_shuffle = qtw.QPushButton(self)
-		self.btn_shuffle.setObjectName("btn_shuffle_side")
-		self.btn_shuffle.setIcon(qtg.QIcon('gui/icons/shuffle'))
-		self.icon_size_shuffle= qtc.QSize(60,60)
-		self.btn_shuffle.setMinimumSize(60,60)
-		self.btn_shuffle.setIconSize(self.icon_size_shuffle)
 		self.img_choice_big = qtw.QWidget()
 		self.img_choice_big.setObjectName('img_choice_side')
 		self.img_choice_big_layout = qtw.QGridLayout()
@@ -117,9 +92,6 @@ class	SideChoiceWin(qtw.QWidget):
 		self.set_focus_img(self.img1.name)
 
 		#fill rest of layout
-		#self.img_choice_big.setStyleSheet("background : transparent")
-		self.btn_shuffle.clicked.connect(self.turn)
-		self.img_choice_big_layout.addWidget(self.btn_shuffle, 1, 0, 1, 1)
 		self.img_choice_big.setLayout(self.img_choice_big_layout)
 
 	#clear img_choice_big for new shuffle/turn
@@ -134,7 +106,7 @@ class	SideChoiceWin(qtw.QWidget):
 		if len(self.nb_list) > 225:
 			self.nb_list = []
 		while (i < 9):
-			x = randint(0, 235)
+			x = randint(0, 233)
 			if x not in self.nb_list:
 				self.nb_list.append(x)
 				i = i + 1
@@ -154,12 +126,11 @@ class	SideChoiceWin(qtw.QWidget):
 	def set_focus_img(self, str_img):
 		self.clear_focus()
 		self.focus_holder = qtw.QLabel()
-		self.focus_holder.setStyleSheet("background : transparent")
-		#self.focus_holder.setGraphicsEffect(self.opacity_effect)
+		self.focus_holder.setObjectName("focus_holder")
+		#self.focus_holder.setStyleSheet("background : transparent")
 		self.focus_img  = img_creator.get_img_own(img_path + str_img, 400)
 		self.focus_img.mousePressEvent = self.focus_emit
 		self.focus_holder_layout = qtw.QGridLayout()
-		self.focus_holder_layout.addWidget(self.btn_back, 0, 0, 1, 1)
 		self.focus_holder_layout.addWidget(self.focus_img, 1, 0, 3, 3)
 		self.focus_holder.setLayout(self.focus_holder_layout)
 		self.overall_layout.addWidget(self.focus_holder, 0, 6, 7, 3 )
