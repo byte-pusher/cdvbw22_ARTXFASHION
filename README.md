@@ -11,3 +11,20 @@ https://codingdavinci.de/daten/farben-muster-art-x-fashion-show
 
 Idea:
 We want to extract the special patterns and color combinations to generate & inspire new fashion with them.
+
+# Smart Mirror
+
+A smart mirror essentially consists of what is known as a police mirror, a small computer with WiFi and a display, and a frame.
+
+## Hardware
+To assemble your smart mirror, you will need:  
+#### Computer
+  * This could be a Raspberry Pi Modell 4B or a diffrent mini computer. 
+#### Display
+  * Choose an HD-Display in the size you want and you´ll need a display controller  
+  * alternativley you can also take an old HD TV  
+#### Cables
+  * HDMI cable
+  * power adapter for your computer  
+  * power adapter for your display/TV  
+  
