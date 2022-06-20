@@ -9,12 +9,16 @@
 from random import randint
 from PyQt6 import QtWidgets as qtw
 from PyQt6 import QtCore as qtc
+from PyQt6 import QtGui as qtg
 from PyQt6 import sip
 
 #own imports
 from graphics.modelview import GlWidget
+from graphics.fashionview import PyVistaView
 from gui.pic_utils import img_creator
 from path import img_path
+
+
 
 #set path to imported path
 img_path = img_path
@@ -37,26 +41,27 @@ class	ChoiceWin(qtw.QWidget):
 		self.set_img_widget()
 
 		#create btn
-		self.btn_side = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_MediaSkipBackward),
-										 '&', self)
-		self.btn_side.setGeometry(10, 10, 60, 40)								 
-		self.btn_side.setStyleSheet("text-align : center; border-radius : 5; border : 1px solid white")
-
-		self.btn_wear = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_DialogApplyButton),
-										 '&', self)
-		self.btn_wear.setGeometry(10, 10, 60, 40)								 
-		self.btn_wear.setStyleSheet("text-align : center; border-radius : 5; border : 1px solid white")
-
+		self.btn_side = qtw.QPushButton('&', self)
+		self.btn_side.setObjectName("btn_arrow_left")
+		self.btn_side.setIcon(qtg.QIcon('gui/icons/arrow_left'))
+		self.icon_size_side = qtc.QSize(60,60)
+		self.btn_side.setMinimumSize(80,80)
+		self.btn_side.setIconSize(self.icon_size_side)
+										 
+		
 		#create btn area
 		self.btn_block_side = qtw.QWidget()
-		self.btn_block_side.setStyleSheet("background : transparent")
+		self.btn_block_side.setObjectName("btn_area_side")
 		self.btn_block_side.layout = qtw.QVBoxLayout()
 		self.btn_block_side.layout.addWidget(self.btn_side)
 		self.btn_block_side.layout.addStretch()
 		self.btn_block_side.setLayout(self.btn_block_side.layout)
 
 		#create modelview
-		self.modelview = GlWidget()
+	
+		self.view = PyVistaView()
+		self.modelview = self.view.plotter.interactor
+		
 
 		#Create overall layout and assemble
 		self.overall_layout = qtw.QGridLayout()
@@ -69,10 +74,11 @@ class	ChoiceWin(qtw.QWidget):
 		
 	# create widget for img choice
 	def set_img_widget(self):
-		self.btn_shuffle = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_BrowserReload),
-										 '&', self)
-		self.btn_shuffle.setStyleSheet("text-align : center; border-radius : 5; border : 1px solid white")
-		i = 1
+		self.btn_shuffle = qtw.QPushButton('&', self)
+		self.btn_shuffle.setIcon(qtg.QIcon('gui/icons/shuffle'))
+		self.btn_shuffle.setObjectName("btn_shuffle_bottom")
+		self.icon_size_shuffle = qtc.QSize(60,60)
+		self.btn_shuffle.setIconSize(self.icon_size_shuffle)
 		self.img_choice = qtw.QWidget()
 		self.img_choice_layout = qtw.QGridLayout()
 	
@@ -112,13 +118,11 @@ class	ChoiceWin(qtw.QWidget):
 		i = 0
 		while i < 3:
 			x = randint(0, 235)
-			if len(self.nb_list) > (len(self.list_img_files) - 3):
-				self.nb_list = []
 			if x not in self.nb_list:
 				self.nb_list.append(x)
 				i = i + 1
 		print("List of random img indices: ", self.nb_list)
-		#set new imgs, ft always used last three
+		#set new imgs, ft always uses last three
 		self.set_img_widget()
 		self.overall_layout.addWidget(self.img_choice, 13, 0, 3, 9)
 		self.setLayout(self.overall_layout)

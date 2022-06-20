@@ -3,13 +3,37 @@
 # basic stylesheet for whole application
 
 stylesheet = ("""
+
+ QMainWindow#main_window {
+     background : black;
+ }
+
  QPushButton {
-
-     background-color: white;
-
+     background-color: black;
+     border : transparent;
  }
-  QPushButton::pressed {
 
-     background-color: lightgrey;
- }
+QPushButton#btn_shuffle_bottom {
+    background-color : black
+}
+
+QPushButton#btn_arrow_left, QPushButton#btn_back {
+    background : black;
+}
+
+QWidget#img_choice_side, QWidget#btn_area_side {
+    background : transparent
+}
+
+QLabel#infotext {
+    color : white;
+    background-color : black;
+    font-family : arial;
+    font-size: 18px
+}
+
+QWidget#PyVistaView {
+    background-color : black
+}
+
  """)

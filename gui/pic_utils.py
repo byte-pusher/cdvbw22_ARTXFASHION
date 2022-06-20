@@ -44,6 +44,9 @@ class img_creator(qtw.QWidget):
 	def get_file_list(dirpath):
 		path = dirpath
 		files = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
+		img_without_data = ['sgs_arc_xxx_ah-1-ge-div-538-0001r_001_m.jpg', 'sgs_grs_klee_d-2005-681-6_001_s.jpg', 'sgs_grs_schwitters_d-1966-316-4_001_s.jpg']
+		for img in img_without_data:
+			files.remove(img)
 		return(files)
 
 	# create X indices

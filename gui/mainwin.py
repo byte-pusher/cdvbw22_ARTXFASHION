@@ -21,6 +21,8 @@ class	MainWindow((qtw.QMainWindow)):
 
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
+
+		self.setObjectName("main_window")
 	
 		#set basic window & geometry (SetGeometry> x,y, width, height)
 		self.setWindowTitle("Magic Mirror")
@@ -39,7 +41,8 @@ class	MainWindow((qtw.QMainWindow)):
 		self.choicewin = ChoiceWin()
 		self.finalview = FinalViewWin()
 		self.sidechoicewin = SideChoiceWin()
-		
+
+
 		#stacked widget
 		self.central = qtw.QStackedWidget()
 		self.central.addWidget(self.choicewin)

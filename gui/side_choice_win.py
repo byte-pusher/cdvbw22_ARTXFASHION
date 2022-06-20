@@ -10,8 +10,10 @@
 from random import randint
 from PyQt6 import QtWidgets as qtw
 from PyQt6 import QtCore as qtc
+from PyQt6 import QtGui as qtg
 from PyQt6 import sip
 from graphics.modelview import GlWidget
+from graphics.fashionview import PyVistaView
 from gui.pic_utils import img_creator
 
 from path import img_path
@@ -38,16 +40,20 @@ class	SideChoiceWin(qtw.QWidget):
 		self.opacity_effect.setOpacity(0.3)
 
 		#create btn
-		self.btn_back = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_MediaSkipForward),
-										 '&', self)
-		self.btn_back.setGeometry(10, 10, 60, 40)
-		self.btn_back.setStyleSheet("text-align : center; border-radius : 5; border : 1px solid white")
+		self.btn_back = qtw.QPushButton(self)
+		self.btn_back.setObjectName("btn_back")
+		self.btn_back.setIcon(qtg.QIcon('gui/icons/arrow_right'))
+		self.btn_back.setGeometry(200, 150, 100, 30)
+		self.icon_size_back = qtc.QSize(60,60)
+		self.btn_back.setMinimumSize(60,60)
+		self.btn_back.setIconSize(self.icon_size_back)
 
 		#create img big area
 		self.focus_img = qtw.QLabel()
 	
 		#get modelview
-		self.modelview = GlWidget()
+		self.view = PyVistaView()
+		self.modelview = self.view.plotter.interactor
 
 		#get side choice
 		self.overall_layout = qtw.QGridLayout()
@@ -59,11 +65,14 @@ class	SideChoiceWin(qtw.QWidget):
 	#create img choice widget
 	def set_img_widget(self):
 
-		self.btn_shuffle = qtw.QPushButton(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_BrowserReload),
-										 '&', self)
-		self.btn_shuffle.setGeometry(10, 10, 60, 40)
-		self.btn_shuffle.setStyleSheet("text-align : center; border-radius : 5; border : 1px solid white")
+		self.btn_shuffle = qtw.QPushButton(self)
+		self.btn_shuffle.setObjectName("btn_shuffle_side")
+		self.btn_shuffle.setIcon(qtg.QIcon('gui/icons/shuffle'))
+		self.icon_size_shuffle= qtc.QSize(60,60)
+		self.btn_shuffle.setMinimumSize(60,60)
+		self.btn_shuffle.setIconSize(self.icon_size_shuffle)
 		self.img_choice_big = qtw.QWidget()
+		self.img_choice_big.setObjectName('img_choice_side')
 		self.img_choice_big_layout = qtw.QGridLayout()
 		
 		#manual creation of img widgets to ensure connection
@@ -108,7 +117,7 @@ class	SideChoiceWin(qtw.QWidget):
 		self.set_focus_img(self.img1.name)
 
 		#fill rest of layout
-		self.img_choice_big.setStyleSheet("background : transparent")
+		#self.img_choice_big.setStyleSheet("background : transparent")
 		self.btn_shuffle.clicked.connect(self.turn)
 		self.img_choice_big_layout.addWidget(self.btn_shuffle, 1, 0, 1, 1)
 		self.img_choice_big.setLayout(self.img_choice_big_layout)

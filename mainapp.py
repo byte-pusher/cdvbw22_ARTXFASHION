@@ -14,6 +14,11 @@ import sys
 from PyQt6 import QtWidgets as qtw
 from gui.mainwin import MainWindow
 
+from gui.stylesheet import stylesheet
+
+from metadata.load_data import df_input
+
+
 class	MainApp(qtw.QApplication):
 	'"Build Application from classes and signals"'
 
@@ -22,11 +27,15 @@ class	MainApp(qtw.QApplication):
 
 		#general default stle
 		self.setStyle("Fusion")
+
+		#GRPAHISTEST
+		#self.testwin = MyMainWindow()
 		
 		#set mainwindow
 		self.main = MainWindow()
-		self.main.setStyleSheet("background : black")
 
+		self.main.setStyleSheet(stylesheet)
+		
 		#connections
 		#connect menubar action
 		self.main.exitAction.triggered.connect(self.main.close)
@@ -47,6 +56,7 @@ class	MainApp(qtw.QApplication):
 		
 		#start?show applicaiton
 		self.main.show()
+		#self.testwin.show()
 
 if __name__=="__main__":
 	app = MainApp(sys.argv)
