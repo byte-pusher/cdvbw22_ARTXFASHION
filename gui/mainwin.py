@@ -15,6 +15,8 @@ from gui.choiceview import ImgChoiceBottom
 from graphics.fashionview import PyVistaView
 
 from gui.sidebtns import SideBtns
+from gui.sidechoiceview import SideChoice
+from gui.final_view import FinalImg
 
 
 class	MainWindow((qtw.QMainWindow)):
@@ -28,28 +30,36 @@ class	MainWindow((qtw.QMainWindow)):
 		#set basic window & geometry (SetGeometry> x,y, width, height)
 		self.setWindowTitle("Magic Mirror")
 		self.setGeometry(0, 0, 900, 1600)
-
+		self.winsize_status = 900
 
 		#create Widgets
 		#choicewin
 		self.sidebtns = SideBtns()
 		self.sidebtns.choiceview()
-		self.imgchoicebottom = ImgChoiceBottom()
+		self.img_choice_bottom = ImgChoiceBottom()
+
 		#ImgChoiceSide
-		#
+		self.img_choice_side = SideChoice()
+		self.img_choice_side.hide()
+	
 		#modelview
 		self.view = PyVistaView()
 		self.modelview = self.view.plotter
+
+		#final view
+		self.final_img = FinalImg()
 
 		#Grid arguments: row, column, rowSpan, columnSpan
 		# overall layout init
 		self.main_widget = qtw.QWidget()
 		self.layout_main = qtw.QGridLayout()
 		self.layout_main.addWidget(self.view.plotter, 1, 1, 13, 7)
+		self.layout_main.addWidget(self.img_choice_side, 1, 6, 16, 3)
+		self.layout_main.addWidget(self.final_img, 14, 0, 4, 9)
 		self.main_widget.setLayout(self.layout_main)
 		self.setCentralWidget(self.main_widget)
 
-		self.imgchoicebottom.setStyleSheet("background-color : transparent")
+		self.img_choice_bottom.setStyleSheet("background-color : transparent")
 		self.sidebtns.setStyleSheet("background-color : transparent")
 
 		self.go_choiceview()
@@ -59,30 +69,47 @@ class	MainWindow((qtw.QMainWindow)):
 		if event.key() == qtc.Qt.Key.Key_Escape:
 			self.close()
 
+	@qtc.pyqtSlot()
 	def go_choiceview(self):
 		self.sidebtns.choiceview()
-		self.layout_main.addWidget(self.imgchoicebottom, 14, 0, 4, 9)
+		self.img_choice_side.hide()
+		self.layout_main.addWidget(self.img_choice_bottom, 14, 0, 4, 9)
+		self.img_choice_bottom.show()
 		self.layout_main.addWidget(self.sidebtns, 0, 8, 1, 1)
 		self.update()
 
 	@qtc.pyqtSlot()
 	def go_sidechoiceview(self):
-		self.imgchoicebottom.hide()
-		
+		self.layout_main.removeWidget(self.sidebtns)
+		self.layout_main.addWidget(self.sidebtns, 0, 5, 1, 1)
+		self.img_choice_bottom.hide()
+		self.final_img.hide()
+		self.img_choice_side.show()
 		self.update()
 
-	# #slots & fts for view change
-	# @qtc.pyqtSlot()
-	# def show_choice(self):
-	# 	#self.central.setCurrentIndex(0)
+	@qtc.pyqtSlot()
+	def go_finalview(self):
+		self.sidebtns.finalview()
+		self.img_choice_bottom.hide()
+		self.img_choice_side.hide()
+		self.final_img.show()
+		self.update()
+	
+	#change to resizing in height direction for smoother change
+	@qtc.pyqtSlot()
+	def f_update(self):
+		if self.winsize_status == 900:
+			self.resize(901, 1600)
+			self.winsize_status = 901
+		elif self.winsize_status == 901:
+			self.resize(900, 1600)
+			self.winsize_status = 900
+		else:
+			print('resizing error in f update')
+		
+		
 
-	# @qtc.pyqtSlot()
-	# def show_final_win(self):
-	# 	#self.central.setCurrentIndex(1)
 
-	# @qtc.pyqtSlot()
-	# def show_side_choice(self):
-	# 	#self.central.setCurrentIndex(2)
 		
 	
 

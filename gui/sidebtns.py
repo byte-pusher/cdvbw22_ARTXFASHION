@@ -40,6 +40,7 @@ class SideBtns(qtw.QWidget):
 		self.icon_size_back = qtc.QSize(60,60)
 		self.btn_right.setMinimumSize(60,60)
 		self.btn_right.setIconSize(self.icon_size_back)
+		self.btn_right.clicked.connect(self.emit_back)
 		self.btn_right.hide()
 
 		#shuffle button side
@@ -74,49 +75,19 @@ class SideBtns(qtw.QWidget):
 	def emit_back(self):
 		self.sig_back.emit()
 
-	# #open 
+	#open 
 	def choiceview(self):
-		try:
-			self.btn_right.hide()
-			self.btn_wear.hide()
-		except:
-			pass
+		self.btn_right.hide()
+		self.btn_shuffle.hide()
+		self.btn_left.show()
 		
-		try:
-			self.btn_left.show()
-		except:
-			pass
-		
-		# self.update()
-		# self.setLayout(self.btnside_layout)
-		# self.show()
-
-
-
 	def sidechoiceview(self):
-		try:
-			self.btn_left.hide()
-		except:
-			pass
-
-		try:
-			self.btn_right.show()   #, 0, 0)
-			self.btn_shuffle.show()   #, 12, 0)
-		except:
-			pass
+		self.btn_left.hide()
+		self.btn_right.show() 
+		self.btn_shuffle.show()
+	
+	def finalview(self):
+		self.btn_right.hide()
+		self.btn_shuffle.hide()
 		
-
-
-	# def btnside_finalview(self):
-	# 	try:
-	# 		self.btnside_layout.removeWidget(self.btn_right)
-	# 		self.btnside_layout.removeWidget(self.btn_shuffle)
-	# 	except:
-	# 		pass
-
-	# 	try:
-	# 		self.btnside_layout.addWidget(self.btn_right, 7, 0)
-	# 		self.btnside_layout.addWidget(self.btn_wear)
-	# 	except:
-	# 		pass
-	# 	self.btnside.update()
+	

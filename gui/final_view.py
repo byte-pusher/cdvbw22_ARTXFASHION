@@ -22,11 +22,11 @@ from graphics.fashionview import PyVistaView
 
 from metadata.load_data import df_input
 
-class	FinalViewWin(qtw.QWidget):
+class	FinalImg(qtw.QWidget):
 
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
-
+		sig_f_update = qtc.pyqtSignal()
 
 		# set img to None for check
 		self.img = None
@@ -37,47 +37,29 @@ class	FinalViewWin(qtw.QWidget):
 		self.info.setText("Artist:  \nTitle:  \nYear:")
 		self.info.setAlignment(qtc.Qt.AlignmentFlag.AlignVCenter)
 		
-		#create modelview
-		self.view = PyVistaView()
-		self.modelview = self.view.plotter.interactor
-
-		#create btn
-		self.btn_back = qtw.QPushButton(self)
-		self.btn_back.setObjectName("btn_back")
-		self.btn_back.setIcon(qtg.QIcon('gui/icons/arrow_right'))
-		#self.btn_back.setGeometry(0, 0, 800, 800)
-		self.btn_back.setMinimumSize(100,100)
-		self.icon_size = qtc.QSize(80,80)
-		self.btn_back.setIconSize(self.icon_size)
-		
 		#set layout
 		self.overall_layout = qtw.QGridLayout()
-		self.overall_layout.addWidget(self.modelview,0 ,0 ,15 ,9)
-		self.overall_layout.addWidget(self.info, 13, 4, 3, 1)
-		self.overall_layout.addWidget(self.btn_back, 5, 9, 5, 2)
-	
+		self.overall_layout.addWidget(self.info,0,3)
 
 	# set clicked img as widget
 	@qtc.pyqtSlot(str)
 	def get_chosen_img(self, str_img):
-		#remove potential previous im from choicewin
 		if self.img != None:
 			self.clear()
 		print("recieved:", str_img)
-		#info_str 
 		self.info.setText("Künstler: " + df_input.at[ str_img ,'artist'] + "\nTitel: " + df_input.at[ str_img ,'titel'] +  "\nEnstehungszeit: " + df_input.at[ str_img ,'entstehungszeit'])
 		self.info.setText(df_input.at[ str_img ,'titel']  + "\n" + df_input.at[ str_img ,'artist'] + "\n" + df_input.at[ str_img ,'entstehungszeit'])
-		#self.overall_layout.addWidget(self.info, 13, 1, 3, 1)
 		self.img = img_creator.get_img_own(img_path + str_img, 160)
-		self.overall_layout.addWidget(self.img, 13, 2, 3, 1)
+		self.overall_layout.addWidget(self.img,0,2)
 		self.setLayout(self.overall_layout)
-		self.show()
 
 	def clear(self):
 		self.img.hide()
 		self.overall_layout.removeWidget(self.img)
 		sip.delete(self.img)
 		self.img = None
+
+	
 
 		
 
