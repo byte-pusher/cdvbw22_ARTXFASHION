@@ -11,9 +11,10 @@ from PyQt6 import QtGui as qtg
 from PyQt6 import QtCore as qtc
 
 #own imports
-from gui.choicewin import ChoiceWin
-from gui.side_choice_win import SideChoiceWin
-from gui.final_view import FinalViewWin
+from gui.choiceview import ImgChoiceBottom
+from graphics.fashionview import PyVistaView
+
+from gui.sidebtns import SideBtns
 
 
 class	MainWindow((qtw.QMainWindow)):
@@ -28,47 +29,62 @@ class	MainWindow((qtw.QMainWindow)):
 		self.setWindowTitle("Magic Mirror")
 		self.setGeometry(0, 0, 900, 1600)
 
-		#menu for acess of actions
-		self.menubar = self.menuBar()
-		self.menu = self.menubar.addMenu("Management")
-		#set actions for easy program management
-		self.exitAction = qtg.QAction(self.style().standardIcon(qtw.QStyle.StandardPixmap.SP_DialogCancelButton),
-										'&Terminate', self)
-		#add actions to menubar
-		self.menu.addAction(self.exitAction)
 
 		#create Widgets
-		self.choicewin = ChoiceWin()
-		self.finalview = FinalViewWin()
-		self.sidechoicewin = SideChoiceWin()
+		#choicewin
+		self.sidebtns = SideBtns()
+		self.sidebtns.choiceview()
+		self.imgchoicebottom = ImgChoiceBottom()
+		#ImgChoiceSide
+		#
+		#modelview
+		self.view = PyVistaView()
+		self.modelview = self.view.plotter
 
+		#Grid arguments: row, column, rowSpan, columnSpan
+		# overall layout init
+		self.main_widget = qtw.QWidget()
+		self.layout_main = qtw.QGridLayout()
+		self.layout_main.addWidget(self.view.plotter, 1, 1, 13, 7)
+		self.main_widget.setLayout(self.layout_main)
+		self.setCentralWidget(self.main_widget)
 
-		#stacked widget
-		self.central = qtw.QStackedWidget()
-		self.central.addWidget(self.choicewin)
-		self.central.addWidget(self.finalview)
-		self.central.addWidget(self.sidechoicewin)
-		self.central.setCurrentIndex(0)
-		self.setCentralWidget(self.central)
+		self.imgchoicebottom.setStyleSheet("background-color : transparent")
+		self.sidebtns.setStyleSheet("background-color : transparent")
+
+		self.go_choiceview()
 
 	# set esc key to end application
 	def keyPressEvent(self, event):
 		if event.key() == qtc.Qt.Key.Key_Escape:
 			self.close()
 
-	#slots & fts for view change
+	def go_choiceview(self):
+		self.sidebtns.choiceview()
+		self.layout_main.addWidget(self.imgchoicebottom, 14, 0, 4, 9)
+		self.layout_main.addWidget(self.sidebtns, 0, 8, 1, 1)
+		self.update()
+
 	@qtc.pyqtSlot()
-	def show_choice(self):
-		self.central.setCurrentIndex(0)
+	def go_sidechoiceview(self):
+		self.imgchoicebottom.hide()
+		
+		self.update()
+
+	# #slots & fts for view change
+	# @qtc.pyqtSlot()
+	# def show_choice(self):
+	# 	#self.central.setCurrentIndex(0)
+
+	# @qtc.pyqtSlot()
+	# def show_final_win(self):
+	# 	#self.central.setCurrentIndex(1)
+
+	# @qtc.pyqtSlot()
+	# def show_side_choice(self):
+	# 	#self.central.setCurrentIndex(2)
+		
 	
-	@qtc.pyqtSlot()
-	def show_final_win(self):
-		self.central.setCurrentIndex(1)
-
-	@qtc.pyqtSlot()
-	def show_side_choice(self):
-		self.central.setCurrentIndex(2)
-
 
 	
 

@@ -27,36 +27,36 @@ class	MainApp(qtw.QApplication):
 
 		#general default stle
 		self.setStyle("Fusion")
-
-		#GRPAHISTEST
-		#self.testwin = MyMainWindow()
 		
 		#set mainwindow
 		self.main = MainWindow()
-
 		self.main.setStyleSheet(stylesheet)
-		
+
+
+		self.main.sidebtns.sig_side.connect(self.main.go_sidechoiceview)
+
 		#connections
-		#connect menubar action
-		self.main.exitAction.triggered.connect(self.main.close)
-		#connection from basic choice win to finalwin
-		self.main.choicewin.emit_choice.connect(self.main.finalview.get_chosen_img)
-		self.main.choicewin.emit_choice.connect(self.main.show_final_win)
-		#from sidechoice to final win
-		self.main.sidechoicewin.emit_focus.connect(self.main.finalview.get_chosen_img)
-		self.main.sidechoicewin.emit_focus.connect(self.main.show_final_win)
-		# sidechoicewin img to focus img
-		self.main.sidechoicewin.emit_img.connect(self.main.sidechoicewin.set_focus_img)
-		# from basic choice view to side choice view
-		self.main.choicewin.btn_side.clicked.connect(self.main.show_side_choice)
-		# back from sidechoice to basi choice win
-		self.main.sidechoicewin.btn_back.clicked.connect(self.main.show_choice)
-		# back from finalview to basic choice win
-		self.main.finalview.btn_back.clicked.connect(self.main.show_choice)
-		
-		#start?show applicaiton
+		# #connection from basic choice win to finalwin
+		# # self.main.choicewin.btn_shuffle.clicked.connect(self.main.choicewin.shuffle)
+		# # self.main.choicewin.btn_shuffle.clicked.connect(self.main.update)
+		# self.main.choicewin.emit_choice.connect(self.main.finalview.get_chosen_img)
+		# self.main.choicewin.emit_choice.connect(self.main.show_final_win)
+		# #from sidechoice to final win
+		# self.main.sidechoicewin.emit_focus.connect(self.main.finalview.get_chosen_img)
+		# self.main.sidechoicewin.emit_focus.connect(self.main.show_final_win)
+		# # sidechoicewin img to focus img
+		# self.main.sidechoicewin.emit_img.connect(self.main.sidechoicewin.set_focus_img)
+		# # from basic choice view to side choice view
+		# self.main.choicewin.btn_side.clicked.connect(self.main.show_side_choice)
+		# self.main.choicewin.btn_side.clicked.connect(self.main.update)
+		# # back from sidechoice to basi choice win
+		# self.main.sidechoicewin.btn_back.clicked.connect(self.main.show_choice)
+		# # back from finalview to basic choice win
+		# self.main.finalview.btn_back.clicked.connect(self.main.show_choice)
+
+		#start show applicaiton
 		self.main.show()
-		#self.testwin.show()
+		
 
 if __name__=="__main__":
 	app = MainApp(sys.argv)
