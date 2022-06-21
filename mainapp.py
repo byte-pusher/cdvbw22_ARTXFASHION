@@ -32,7 +32,9 @@ class	MainApp(qtw.QApplication):
 		self.main = MainWindow()
 		self.main.setStyleSheet(stylesheet)
 
-		
+
+		self.main.sidebtns.sig_side.connect(self.main.go_sidechoiceview)
+
 		#connections
 		# #connection from basic choice win to finalwin
 		# # self.main.choicewin.btn_shuffle.clicked.connect(self.main.choicewin.shuffle)

@@ -33,34 +33,43 @@ class	MainWindow((qtw.QMainWindow)):
 		#create Widgets
 		#choicewin
 		self.sidebtns = SideBtns()
-		self.sidebtns.btnside_choiceview()
+		self.sidebtns.choiceview()
 		self.imgchoicebottom = ImgChoiceBottom()
-
+		#ImgChoiceSide
+		#
 		#modelview
 		self.view = PyVistaView()
 		self.modelview = self.view.plotter
 
 		#Grid arguments: row, column, rowSpan, columnSpan
-		#
+		# overall layout init
 		self.main_widget = qtw.QWidget()
 		self.layout_main = qtw.QGridLayout()
 		self.layout_main.addWidget(self.view.plotter, 1, 1, 13, 7)
-		self.layout_main.addWidget(self.sidebtns, 0, 8, 1, 1)
-		self.layout_main.addWidget(self.imgchoicebottom, 14, 0, 4, 9)
-		
 		self.main_widget.setLayout(self.layout_main)
 		self.setCentralWidget(self.main_widget)
 
 		self.imgchoicebottom.setStyleSheet("background-color : transparent")
 		self.sidebtns.setStyleSheet("background-color : transparent")
 
-
-
+		self.go_choiceview()
 
 	# set esc key to end application
 	def keyPressEvent(self, event):
 		if event.key() == qtc.Qt.Key.Key_Escape:
 			self.close()
+
+	def go_choiceview(self):
+		self.sidebtns.choiceview()
+		self.layout_main.addWidget(self.imgchoicebottom, 14, 0, 4, 9)
+		self.layout_main.addWidget(self.sidebtns, 0, 8, 1, 1)
+		self.update()
+
+	@qtc.pyqtSlot()
+	def go_sidechoiceview(self):
+		self.imgchoicebottom.hide()
+		
+		self.update()
 
 	# #slots & fts for view change
 	# @qtc.pyqtSlot()

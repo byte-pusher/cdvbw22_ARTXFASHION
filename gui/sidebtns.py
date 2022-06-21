@@ -14,6 +14,8 @@ from path import icon_path
 
 
 class SideBtns(qtw.QWidget):
+	sig_back = qtc.pyqtSignal()
+	sig_side = qtc.pyqtSignal()
 	sig_shuffle_side = qtc.pyqtSignal()
 	
 	def __init__(self, *args, **kwargs):
@@ -27,6 +29,8 @@ class SideBtns(qtw.QWidget):
 		self.icon_size_side = qtc.QSize(60,60)
 		self.btn_left.setMinimumSize(80,80)
 		self.btn_left.setIconSize(self.icon_size_side)
+		self.btn_left.clicked.connect(self.sidechoiceview)
+		self.btn_left.clicked.connect(self.emit_sig_side)
 		self.btn_left.hide()
 
 		#btn right
@@ -58,39 +62,49 @@ class SideBtns(qtw.QWidget):
 	
 		#create layout
 		self.btnside_layout = qtw.QVBoxLayout()
+		self.btnside_layout.addWidget(self.btn_right)
+		self.btnside_layout.addWidget(self.btn_left)
+		self.btnside_layout.addWidget(self.btn_shuffle)
+		self.btnside_layout.addWidget(self.btn_wear)
 		self.setLayout(self.btnside_layout)
 
+	def emit_sig_side(self):
+		self.sig_side.emit()
+	
+	def emit_back(self):
+		self.sig_back.emit()
+
 	# #open 
-	def btnside_choiceview(self):
+	def choiceview(self):
 		try:
-			self.btnside_layout.removeWidget(self.btn_shuffle)
-			self.btnside_layout.removeWidget(self.btn_right)
-			self.btnside_layout.removeWidget(self.btn_wear)
+			self.btn_right.hide()
+			self.btn_wear.hide()
 		except:
 			pass
 		
 		try:
-			self.btnside_layout.addWidget(self.btn_left)
+			self.btn_left.show()
 		except:
 			pass
-		self.update()
-		self.setLayout(self.btnside_layout)
+		
+		# self.update()
+		# self.setLayout(self.btnside_layout)
+		# self.show()
 
 
 
-	# def btnside_sidechoiceview(self):
-	# 	try:
-	# 		self.btnside_layout.removeWidget(self.btn_right)
-	# 	except:
-	# 		pass
+	def sidechoiceview(self):
+		try:
+			self.btn_left.hide()
+		except:
+			pass
 
-	# 	try:
-	# 		self.btnside_layout.addWidget(self.btn_right, 0, 0)
-	# 		self.btnside_layout.addWidget(self.btn_shuffle, 12, 0)
-	# 	except:
-	# 		pass
-	# 	self.btnside.update()
-	# 	self.btnside.setLayout(self.btnside_layout)
+		try:
+			self.btn_right.show()   #, 0, 0)
+			self.btn_shuffle.show()   #, 12, 0)
+		except:
+			pass
+		
 
 
 	# def btnside_finalview(self):

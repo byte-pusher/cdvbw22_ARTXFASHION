@@ -35,7 +35,8 @@ class PyVistaView (qtw.QWidget):
 		shirt = pv.read("graphics/shirt.obj")
 		
 
-		self.plotter.add_mesh(shirt, show_edges=True)
-		self.plotter(texture = self.texture)
+		self.plotter.add_mesh(shirt, show_edges=False, texture=self.texture)
+
+		#self.plotter(texture = self.texture)
 	
 		self.plotter.reset_camera()
