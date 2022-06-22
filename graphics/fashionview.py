@@ -56,6 +56,6 @@ class PyVistaView (qtw.QWidget):
 		print('recieved img path name', str_img)
 
 		self.img_value = random.randint(0,18)
-		self.text_path = (texture_path + str_img + self.img_value)
+		self.text_path = (texture_path + str_img + str(self.img_value))
 		
 		self.plotter.add_mesh
