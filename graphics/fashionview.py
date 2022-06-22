@@ -33,12 +33,9 @@ class PyVistaView (qtw.QWidget):
 		self.plotter.set_background('black')
 	
 		self.shirt = pv.read("graphics/shirt.obj")
-		img_array = self.image_array()
-		i = random.randint(0, len(img_array) - 1)
-		self.texture = pv.read_texture(img_array[i])
 	
 		
-		self.actor = self.plotter.add_mesh(self.shirt, show_edges=False, texture=self.texture)
+		self.actor = self.plotter.add_mesh(self.shirt, show_edges=False)
 		self.plotter.camera  = pv.Camera()
 		print(self.plotter.camera.position)
 		self.plotter.reset_camera()	

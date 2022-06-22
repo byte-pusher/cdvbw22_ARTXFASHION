@@ -37,9 +37,9 @@ class	MainApp(qtw.QApplication):
 		self.main.sidebtns.sig_side.connect(self.main.go_sidechoiceview)
 		self.main.sidebtns.sig_back.connect(self.main.go_choiceview)
 
-		# Webcam
-		# self.cam = Webcam()
-		# self.cam.worker.angles.connect(self.main.view.updating)
+		Webcam
+		self.cam = Webcam()
+		self.cam.worker.angles.connect(self.main.view.updating)
 
 
 		#connect img clicked to finalview
