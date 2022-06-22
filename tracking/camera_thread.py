@@ -39,8 +39,12 @@ class Worker(QObject):
             ret, frame = cap.read()
 
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            self.emit_angles(frame, gray, parameters, cal, markerLength, camera_matrix, camera_distortion, R_flip)
+            
+             
 
-            #-- Find all the aruco markers in the image
+    def emit_angles(self, frame, gray, parameters, cal, markerLength, camera_matrix, camera_distortion, R_flip):
+        #-- Find all the aruco markers in the image
             corners, ids, rejected = aruco.detectMarkers(image=gray, dictionary=cal.aruco_dict, parameters=parameters)
             if ids is not None:
                 aruco.drawDetectedMarkers(frame, corners)
@@ -65,9 +69,8 @@ class Worker(QObject):
                 roll_marker, pitch_marker, yaw_marker = self.rotationMatrixToEulerAngles(R_flip*R_tc)
               
                 self.angles.emit((math.degrees(roll_marker),math.degrees(pitch_marker),math.degrees(pitch_marker)))
-             
 
-    
+
     def isRotationMatrix(self, R):
         Rt = np.transpose(R)
         shouldBeIdentity = np.dot(Rt, R)
