@@ -14,7 +14,7 @@ class Calibrator:
                     dictionary=aruco.Dictionary_get(aruco.DICT_5X5_50))
         self.images = self.image_array()
 
-    def read_chessboards(images, board):
+    def read_chessboards(self, images, board):
         aruco_dict = aruco.Dictionary_get(aruco.DICT_5X5_50)
 
         print("POSE ESTIMATION STARTS:")
@@ -47,7 +47,7 @@ class Calibrator:
         imsize = gray.shape
         return allCorners,allIds,imsize
 
-    def calibrate_camera(allCorners,allIds,imsize, board):
+    def calibrate_camera(self, allCorners,allIds,imsize, board):
         print("CAMERA CALIBRATION")
 
         cameraMatrixInit = np.array([[ 1000.,    0., imsize[0]/2.],
@@ -73,7 +73,7 @@ class Calibrator:
         return ret, camera_matrix, distortion_coefficients0, rotation_vectors, translation_vectors
 
     def image_array(self,): 
-        path = "/Users/mawinter/Desktop/rays/tracking/cal_imgs/"
+        path = "/Users/mawinter/Desktop/newest/tracking/cal_imgs/"
         # create array of image file paths
         files = os.listdir(path)
         images = []

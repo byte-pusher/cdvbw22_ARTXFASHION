@@ -16,6 +16,7 @@ class Worker(QObject):
  
     # method which will execute algorithm in another thread
     def run(self):
+        print("Starting Thread.")
         cal = Calibrator()
 
         allCorners, allIds, imsize = cal.read_chessboards(cal.images, cal.board)
