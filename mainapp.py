@@ -40,7 +40,7 @@ class	MainApp(qtw.QApplication):
 		Webcam
 		self.cam = Webcam()
 		self.cam.worker.angles.connect(self.main.view.updating)
-
+		self.cam.worker.x_diff.connect(self.main.view.scale)
 
 		#connect img clicked to finalview
 		self.main.img_choice_bottom.emit_choice.connect(self.main.final_img.get_chosen_img)

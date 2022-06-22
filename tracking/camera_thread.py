@@ -1,8 +1,10 @@
+from distutils.log import error
 from tkinter import image_names
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 import cv2
+import mediapipe as mp
 import numpy as np
 from cv2 import aruco
 import time
@@ -10,10 +12,14 @@ import os
 from tracking.calibrator import Calibrator
 import math
 
+mpDraw = mp.solutions.drawing_utils
+mpPose = mp.solutions.pose
+pose = mpPose.Pose(enable_segmentation=True)
 
 class Worker(QObject):
     angles = pyqtSignal(tuple)
- 
+    x_diff = pyqtSignal(int)
+
     # method which will execute algorithm in another thread
     def run(self):
         print("Starting Thread.")
@@ -37,11 +43,30 @@ class Worker(QObject):
         while True:
             #-- Convert in gray scale
             ret, frame = cap.read()
-
+    
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             self.emit_angles(frame, gray, parameters, cal, markerLength, camera_matrix, camera_distortion, R_flip)
+
+
+            self.x_difference(frame)
+
+            c = cv2.waitKey(1)
+            if c == 27:
+                break
+        cap.release()
+        cv2.destroyAllWindows()
             
-             
+    def x_difference(self, frame):
+        results = pose.process(frame)
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        try:
+            pr = int(frame.shape[1] * results.pose_landmarks.landmark[11].x)
+            pl = int(frame.shape[1] * results.pose_landmarks.landmark[12].x)
+            x_difference = pr - pl
+            # cv2.putText(frame, "x difference " + str(int(x_difference)), (70, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0 , 0), 3)
+            self.x_diff.emit(x_difference)
+        except Exception as e:
+            print(e)
 
     def emit_angles(self, frame, gray, parameters, cal, markerLength, camera_matrix, camera_distortion, R_flip):
         #-- Find all the aruco markers in the image
