@@ -1,6 +1,5 @@
 PyQt6
 pyvista
 pyvistaqt
-random
 opencv-contrib-python
 pandas
