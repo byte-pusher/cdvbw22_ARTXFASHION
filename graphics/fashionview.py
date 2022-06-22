@@ -35,21 +35,33 @@ class PyVistaView (qtw.QWidget):
 		self.plotter = QtInteractor(self.frame)
 		self.plotter.set_background('black')
 	
-		self.shirt = pv.read("graphics/shirt.obj")
+		self.shirt = pv.read("/home/dantonik/Documents/flecture/graphics/shirt.obj")
 	
-		
+
 		self.actor = self.plotter.add_mesh(self.shirt, show_edges=False)
 		self.plotter.camera  = pv.Camera()
 		print(self.plotter.camera.position)
 		self.plotter.reset_camera()
 		# self.plotter.camera.zoom(0.8)
-	
+		
+
+	@pyqtSlot()
+	def frames(self):
+		pass
+
+		focal = self.plotter.camera.focal_point
+		# print(focal)
+		self.plotter.camera.focal_point = (focal[0],focal[1]+ 0.001, focal[2])
+		# # self.plotter.update()
+
+
+
 	@pyqtSlot(tuple)
 	def updating(self, angles):
 		azimuth = angles[1]
 
-		self.plotter.camera.azimuth = azimuth
-		print(angles)
+		# self.plotter.camera.azimuth = azimuth
+		# print(angles)
 	
 	@pyqtSlot(str)
 	def get_img(self, str_img):
@@ -70,22 +82,22 @@ class PyVistaView (qtw.QWidget):
 
 	@pyqtSlot(int)
 	def scale(self, x_diff):
-		self.frame_i += 1
+		
+		# # (0.0, 1.7, 0.0) -> unterer Rand
+		# # (0.0, 0.66, 0.0) -> oberer Rand
+		self.plotter.camera.view_angle = 30.0
 
-		if self.frame_i % 20 == 0:
-			# pos1, pos2, pos3 = self.plotter.camera.position
-			# self.plotter.camera.position = (pos1 , pos2, pos3 + 0.05)
-			# self.plotter.camera.render()
-			print(self.plotter.camera.view_angle)
-			self.plotter.camera.focal_point = (0.0,2.0,0.0)
-			self.plotter.camera.view_angle = 60.0
-			print("asd")
-		# if self.frame_i % 30 == 0:
-			# self.plotter.camera.view_angle = 30.0
+		
+		
+	@pyqtSlot(tuple)
+	def move(self, mid_point):
+		pixel_width = 680
+		mid = 340
 
-		# 	self.plotter.camera.zoom(0.2)
-		# 	self.plotter.reset_camera()
-			# print("zwei")
-		# self.plotter.update()
-		# print(self.frame_i)
-		# print(x_diff)
+		width = 2
+		fract = width / pixel_width
+		calc_mid = (mid_point[0] - mid) * fract
+		focal = self.plotter.camera.focal_point
+		print(focal)
+		# print(focal_x)
+		self.plotter.camera.focal_point = (calc_mid,focal[1], focal[2])
