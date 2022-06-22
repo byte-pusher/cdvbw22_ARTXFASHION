@@ -31,9 +31,7 @@ class PyVistaView (qtw.QWidget):
         # add the pyvista interactor object
 		self.plotter = QtInteractor(self.frame)
 		self.plotter.set_background('black')
-		#example texture
-		# axes = pv.Axes(show_actor=True, actor_scale=2.0, line_width=5)
-		# self.plotter.add_axes_at_origin(line_width=5)
+	
 		self.shirt = pv.read("graphics/shirt.obj")
 		img_array = self.image_array()
 		i = random.randint(0, len(img_array) - 1)
@@ -57,7 +55,6 @@ class PyVistaView (qtw.QWidget):
 		self.texture = pv.read_texture(texture_path + str_img)
 		self.plotter.remove_actor(self.actor)
 		self.actor = self.plotter.add_mesh(self.shirt, show_edges=False, texture=self.texture)
-		
 
 	def image_array(self,): 
 		path = texture_path
