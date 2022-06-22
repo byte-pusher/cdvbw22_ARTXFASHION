@@ -16,6 +16,7 @@ from pyvistaqt import QtInteractor
 import os
 os.environ["QT_API"] = "pyqt6"
 from path import texture_path
+import random
 
 class PyVistaView (qtw.QWidget):
 	def __init__(self, *args, **kwargs):
@@ -49,3 +50,12 @@ class PyVistaView (qtw.QWidget):
 
 		self.plotter.camera.azimuth = azimuth
 		print(angles)
+	
+	@pyqtSlot(str)
+	def get_img(self, str_img):
+		print('recieved img path name', str_img)
+
+		self.img_value = random.randint(0,18)
+		self.text_path = (texture_path + str_img + self.img_value)
+		
+		self.plotter.add_mesh
