@@ -66,7 +66,6 @@ class	ImgChoiceBottom(qtw.QWidget):
 
 		# connect shuffle btn to ft 
 		self.btn_shuffle.clicked.connect(self.shuffle)
-		#self.btn_shuffle.clicked.connect(self.update)
 		self.img_choice_layout.addWidget(self.btn_shuffle, 0, 1, 1, 1)
 		self.img_choice.setLayout(self.img_choice_layout)
 
@@ -98,6 +97,7 @@ class	ImgChoiceBottom(qtw.QWidget):
 		print("List of random img indices: ", self.nb_list)
 		#set new imgs, ft always uses last three
 		self.set_img_widget()
+		self.setStyleSheet("background-color : grenn")
 
 	#clear widget
 	def clear(self):

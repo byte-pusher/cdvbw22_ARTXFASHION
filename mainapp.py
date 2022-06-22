@@ -32,28 +32,24 @@ class	MainApp(qtw.QApplication):
 		self.main = MainWindow()
 		self.main.setStyleSheet(stylesheet)
 
-
+		#connect buttons to viewchanges
 		self.main.sidebtns.sig_side.connect(self.main.go_sidechoiceview)
+		self.main.sidebtns.sig_back.connect(self.main.go_choiceview)
 
-		#connections
-		# #connection from basic choice win to finalwin
-		# # self.main.choicewin.btn_shuffle.clicked.connect(self.main.choicewin.shuffle)
-		# # self.main.choicewin.btn_shuffle.clicked.connect(self.main.update)
-		# self.main.choicewin.emit_choice.connect(self.main.finalview.get_chosen_img)
-		# self.main.choicewin.emit_choice.connect(self.main.show_final_win)
-		# #from sidechoice to final win
-		# self.main.sidechoicewin.emit_focus.connect(self.main.finalview.get_chosen_img)
-		# self.main.sidechoicewin.emit_focus.connect(self.main.show_final_win)
-		# # sidechoicewin img to focus img
-		# self.main.sidechoicewin.emit_img.connect(self.main.sidechoicewin.set_focus_img)
-		# # from basic choice view to side choice view
-		# self.main.choicewin.btn_side.clicked.connect(self.main.show_side_choice)
-		# self.main.choicewin.btn_side.clicked.connect(self.main.update)
-		# # back from sidechoice to basi choice win
-		# self.main.sidechoicewin.btn_back.clicked.connect(self.main.show_choice)
-		# # back from finalview to basic choice win
-		# self.main.finalview.btn_back.clicked.connect(self.main.show_choice)
+		#connect img clicked to finalview
+		self.main.img_choice_bottom.emit_choice.connect(self.main.final_img.get_chosen_img)
+		self.main.img_choice_bottom.emit_choice.connect(self.main.view.get_img)
+		self.main.img_choice_bottom.emit_choice.connect(self.main.go_finalview)
 
+		#img side img clicked -> set img as focus view
+		self.main.img_choice_side.emit_focus.connect(self.main.img_choice_side.set_focus_img)
+		
+		# side shuffle ft to turn ft
+		self.main.img_choice_side.sig_f_update.connect(self.main.f_update)
+		self.main.sidebtns.btn_shuffle.clicked.connect(self.main.img_choice_side.turn)
+
+
+		
 		#start show applicaiton
 		self.main.show()
 		

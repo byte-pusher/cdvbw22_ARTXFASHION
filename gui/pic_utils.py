@@ -54,7 +54,7 @@ class img_creator(qtw.QWidget):
 		count = 0
 		x = 0
 		while(count < nb):
-			x = randint(0, 236)
+			x = randint(0, 233)
 			if x not in list:
 				list.append(x)
 				count = count + 1
