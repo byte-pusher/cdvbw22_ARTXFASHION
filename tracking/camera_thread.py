@@ -20,7 +20,7 @@ class Worker(QObject):
     angles = pyqtSignal(tuple)
     x_diff = pyqtSignal(int)
     y_height = pyqtSignal(int)
-    mid_point = pyqtSignal(tuple)
+    mid_point = pyqtSignal(np.ndarray)
     frames = pyqtSignal()
     # method which will execute algorithm in another thread
     def run(self):
@@ -46,7 +46,7 @@ class Worker(QObject):
             self.frames.emit()
             #-- Convert in gray scale
             ret, frame = cap.read()
-            # print(frame.shape)
+            print(frame.shape)
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             self.emit_angles(frame, gray, parameters, cal, markerLength, camera_matrix, camera_distortion, R_flip)
 
@@ -79,10 +79,8 @@ class Worker(QObject):
         #-- Find all the aruco markers in the image
             corners, ids, rejected = aruco.detectMarkers(image=gray, dictionary=cal.aruco_dict, parameters=parameters)
             if ids is not None:
-                corner1 = corners[0][0][0]
-                corner2 = corners[0][0][2]
-                middle = ((corner1[0] + corner2[0]) / 2, (corner1[1] + corner2[1]) / 2)
-                self.mid_point.emit(middle)
+                corners2 = corners[0][0]
+                self.mid_point.emit(corners2)
                 # print(corners[0])
                 aruco.drawDetectedMarkers(frame, corners)
                 # detect single marker

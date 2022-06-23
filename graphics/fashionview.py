@@ -7,7 +7,6 @@
 
 #pyqt & other imports
 
-from email.mime import image
 from PyQt6 import QtWidgets as qtw
 from PyQt6 import QtCore as qtc
 from PyQt6.QtCore import pyqtSlot
@@ -20,7 +19,7 @@ import os
 os.environ["QT_API"] = "pyqt6"
 from path import texture_path, shirt_path, img_path
 import random
-
+import numpy as np
 
 
 class PyVistaView (qtw.QWidget):
@@ -38,7 +37,8 @@ class PyVistaView (qtw.QWidget):
 	
 		self.shirt = pv.read(shirt_path)
 	
-
+		self.max_oben = 0
+		self.max_unten = 0
 		self.actor = self.plotter.add_mesh(self.shirt, show_edges=False)
 		self.plotter.camera  = pv.Camera()
 		print(self.plotter.camera.position)
@@ -107,16 +107,14 @@ class PyVistaView (qtw.QWidget):
 
 		
 		
-	@pyqtSlot(tuple)
-	def move(self, mid_point):
-		pass
-		# pixel_width = 680
-		# mid = 340
-
-		# width = 2
-		# fract = width / pixel_width
-		# calc_mid = (mid_point[0] - mid) * fract
-		# focal = self.plotter.camera.focal_point
+	@pyqtSlot(np.ndarray)
+	def move(self, corners):
+		focal_size = 0.4
+		pixel = 135
+		unit = 0.4 / 135
+		middle = 292.5
+		focal = self.plotter.camera.focal_point
+		print(focal)
 		# print(focal)
 		# # print(focal_x)
-		# self.plotter.camera.focal_point = (calc_mid,focal[1], focal[2])
+		self.plotter.camera.focal_point = (focal[0] + 0.001 ,focal[1], focal[2])
