@@ -127,6 +127,13 @@ class PyVistaView (qtw.QWidget):
 		# # (0.0, 0.66, 0.0) -> oberer Rand
 		self.plotter.camera.view_angle = 40.0
 
+	def hide(self):
+		self.plotter.remove_actor(self.actor)
+		
+
+	def show(self):
+		self.actor = self.plotter.add_mesh(self.shirt, show_edges=False, texture = self.texture)
+
 		
 		
 	@pyqtSlot(np.ndarray)

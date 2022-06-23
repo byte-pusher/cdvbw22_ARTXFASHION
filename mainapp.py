@@ -41,12 +41,14 @@ class	MainApp(qtw.QApplication):
 		#self.main.img_choice_bottom.sig_f_update.connect(self.main.repaint)
 		self.main.img_choice_bottom.sig_f_update.connect(self.main.go_choiceview)
 
+		self.main.exitAction.triggered.connect(self.exit)
+
 		#Webcam
-		self.cam = Webcam()
-		self.cam.worker.angles.connect(self.main.view.updating)
-		self.cam.worker.x_diff.connect(self.main.view.scale)
-		self.cam.worker.mid_point.connect(self.main.view.move)
-		self.cam.worker.frames.connect(self.main.view.frames)
+		# self.cam = Webcam()
+		# self.cam.worker.angles.connect(self.main.view.updating)
+		# self.cam.worker.x_diff.connect(self.main.view.scale)
+		# self.cam.worker.mid_point.connect(self.main.view.move)
+		# self.cam.worker.frames.connect(self.main.view.frames)
 
 		#connect img clicked to finalview
 		self.main.img_choice_bottom.emit_choice.connect(self.main.final_img.get_chosen_img)

@@ -19,14 +19,14 @@ data_path = "/Users/rkoop/Documents/cdvbw22/repo/metadata/metadata_clean.csv"
 shirt_path = '/Users/rkoop/Documents/cdvbw22/repo/graphics/shirt.obj'
 
 
-# Nuk
-icon_path = "/home/dantonik/Documents/flecture/gui/icons/"
-data_path = "/home/dantonik/Documents/flecture/metadata/metadata_clean.csv"
-shirt_path = "/home/dantonik/Documents/flecture/graphics/shirt.obj"
-cal_path = "/home/dantonik/Documents/flecture/tracking/cal_imgs/"
+# # Nuk
+# icon_path = "/home/dantonik/Documents/flecture/gui/icons/"
+# data_path = "/home/dantonik/Documents/flecture/metadata/metadata_clean.csv"
+# shirt_path = "/home/dantonik/Documents/flecture/graphics/shirt.obj"
+# cal_path = "/home/dantonik/Documents/flecture/tracking/cal_imgs/"
 
-img_path = '/home/dantonik/Documents/Bilder/'
-texture_path = "/home/dantonik/Documents/Bilder/"
+# img_path = '/home/dantonik/Documents/Bilder/'
+# texture_path = "/home/dantonik/Documents/Bilder/"
 
 
 

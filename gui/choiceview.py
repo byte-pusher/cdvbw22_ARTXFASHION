@@ -99,7 +99,7 @@ class	ImgChoiceBottom(qtw.QWidget):
 		print("List of random img indices: ", self.nb_list)
 		#set new imgs, ft always uses last three
 		self.set_img_widget()
-		self.setStyleSheet("background-color : transparent")
+		self.setStyleSheet("background-color : black")
 		self.emit_f()
 
 	#clear widget
