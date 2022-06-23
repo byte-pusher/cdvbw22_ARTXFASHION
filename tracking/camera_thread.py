@@ -29,7 +29,8 @@ class Worker(QObject):
 
         allCorners, allIds, imsize = cal.read_chessboards(cal.images, cal.board)
         ret, camera_matrix, camera_distortion, rvecs, tvecs = cal.calibrate_camera(allCorners,allIds,imsize,cal.board)
-        markerLength=0.05,
+     
+        markerLength=0.5
 
         #... 180 deg rotation matrix around the x axis
         R_flip = np.zeros((3,3), dtype=np. float32)
@@ -42,10 +43,14 @@ class Worker(QObject):
 
         # capture from web cam
         cap = cv2.VideoCapture(0)
+        # cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+        # cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+
         while True:
             self.frames.emit()
             #-- Convert in gray scale
             ret, frame = cap.read()
+            print(frame.shape)
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             self.emit_angles(frame, gray, parameters, cal, markerLength, camera_matrix, camera_distortion, R_flip)
 
@@ -83,7 +88,7 @@ class Worker(QObject):
                 # print(corners[0])
                 aruco.drawDetectedMarkers(frame, corners)
                 # detect single marker
-                rvec_all, tvec_all, _ = aruco.estimatePoseSingleMarkers(corners, markerLength[0], camera_matrix, camera_distortion)
+                rvec_all, tvec_all, _ = aruco.estimatePoseSingleMarkers(corners, markerLength, camera_matrix, camera_distortion)
 
                 #-- Draw the detected marker and put a reference frame over it
                 rvec = rvec_all[0][0]
