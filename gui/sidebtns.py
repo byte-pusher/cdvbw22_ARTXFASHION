@@ -59,16 +59,16 @@ class SideBtns(qtw.QWidget):
 		self.btn_wear.setObjectName('btn_wear')
 		self.btn_wear.setIcon(qtg.QIcon(icon_path + 'shirt'))
 		self.icon_size_wear = qtc.QSize(60,60)
-		self.btn_wear.setMinimumSize(80,80)
+		self.btn_wear.setMinimumSize(60,60)
 		self.btn_wear.setIconSize(self.icon_size_wear)
 		self.btn_wear.clicked.connect(self.emit_wear)
 		self.btn_wear.hide()
 	
 		#create layout
-		self.btnside_layout = qtw.QVBoxLayout()
-		self.btnside_layout.addWidget(self.btn_right)
-		#self.btnside_layout.addWidget(self.btn_shuffle)
+		self.btnside_layout = qtw.QHBoxLayout()
+		self.btnside_layout.addStretch()
 		self.btnside_layout.addWidget(self.btn_wear)
+		self.btnside_layout.addWidget(self.btn_right)
 		self.setLayout(self.btnside_layout)
 
 	#emIt fts pder button/signal

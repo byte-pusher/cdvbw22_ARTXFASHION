@@ -30,8 +30,10 @@ class	MainWindow((qtw.QMainWindow)):
 	
 		#set basic window & geometry (SetGeometry> x,y, width, height)
 		self.setWindowTitle("Magic Mirror")
-		self.setGeometry(0, 0, 900, 1600)
-		self.winsize_status = 900
+		self.showMaximized()
+
+		# self.exitAction = qtg.QAction('&Neustart', self)
+		# self.exitAction.setShortcut(qtg.QKeySequence("Ctrl+e"))
 
 		#create Widgets
 		#choicewin
@@ -52,17 +54,12 @@ class	MainWindow((qtw.QMainWindow)):
 		# overall layout init
 		self.main_widget = qtw.QWidget()
 		self.layout_main = qtw.QGridLayout()
-		self.layout_main.addWidget(self.view.plotter, 0, 0, 16, 9)
-		self.layout_main.addWidget(self.load, 6, 4)
-		self.layout_main.addWidget(self.final_img, 13, 0, 3, 9)
+		self.layout_main.addWidget(self.view.plotter, 0, 0, 160, 9)
+		self.layout_main.addWidget(self.final_img, 135, 0, 25, 9)
 		self.main_widget.setLayout(self.layout_main)
 		self.setCentralWidget(self.main_widget)
 
-		self.img_choice_bottom.img_choice.setStyleSheet("background-color : transparent")
-		self.sidebtns.setStyleSheet("background-color : transparent")
-		self.img_choice_bottom.setStyleSheet("background-color : red")
-		self.final_img.info.setStyleSheet("background-color : transparent")
-		self.final_img.setStyleSheet("background-color : transparent")
+		self.sidebtns.setStyleSheet("background-color : black")
 
 		self.go_choiceview()
 
@@ -76,11 +73,11 @@ class	MainWindow((qtw.QMainWindow)):
 		self.sidebtns.choiceview()
 		self.load.hide()
 		self.final_img.hide()
-		self.layout_main.addWidget(self.img_choice_bottom, 13, 0, 3, 9)
+		self.layout_main.addWidget(self.img_choice_bottom, 125, 0, 35, 9)
+		self.img_choice_bottom.setStyleSheet("background-color : black")
 		self.img_choice_bottom.hide()
 		self.img_choice_bottom.show()
-		self.layout_main.addWidget(self.sidebtns, 0, 8, 1, 1)
-		self.f_update()
+		self.layout_main.addWidget(self.sidebtns, 0, 0, 10, 9)
 		self.update()
 
 	# @qtc.pyqtSlot()
@@ -98,7 +95,9 @@ class	MainWindow((qtw.QMainWindow)):
 		self.sidebtns.finalview()
 		self.img_choice_bottom.hide()
 		self.final_img.show()
-		self.f_update()
+	
+		self.img_choice_bottom.hide()
+		#self.f_update()
 		self.update()
 
 	@qtc.pyqtSlot()
@@ -107,25 +106,24 @@ class	MainWindow((qtw.QMainWindow)):
 		#self.view.hide()
 		#self.load.show()
 		#qtc.QTimer.singleShot(10500, self.load.stop_gif)
-		self.f_update()
+		#self.f_update()
 		self.update()
 
-	
 	#change to resizing in height direction for smoother change
-	@qtc.pyqtSlot()
-	def f_update(self):
-		self.update()
-		if self.winsize_status == 900:
-			self.resize(1200, 1800)
-			self.winsize_status = 901
-			print('update 901')
-		elif self.winsize_status == 901:
-			self.resize(1200, 1800)
-			self.winsize_status = 900
-			print('update 900')
-		else:
-			print('resizing error in f update')
-		self.showMaximized()
+	# @qtc.pyqtSlot()
+	# def f_update(self):
+	# 	self.update()
+	# 	if self.winsize_status == 900:
+	# 		self.resize(1200, 1800)
+	# 		self.winsize_status = 901
+	# 		print('update 901')
+	# 	elif self.winsize_status == 901:
+	# 		self.resize(1200, 1800)
+	# 		self.winsize_status = 900
+	# 		print('update 900')
+	# 	else:
+	# 		print('resizing error in f update')
+	# 	self.showMaximized()
 
 
 
