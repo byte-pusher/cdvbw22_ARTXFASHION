@@ -61,6 +61,8 @@ class img_creator(qtw.QWidget):
 			if len(list) > 230:
 				list = []
 		return(list)
+	
+	# def path_validator
 
 
 

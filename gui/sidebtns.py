@@ -23,6 +23,9 @@ class SideBtns(qtw.QWidget):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 
+		#style
+		self.setStyleSheet('background : transparent')
+
 		#create buttons
 		# btn left
 		self.btn_left = qtw.QPushButton(self)
@@ -31,8 +34,7 @@ class SideBtns(qtw.QWidget):
 		self.icon_size_side = qtc.QSize(60,60)
 		self.btn_left.setMinimumSize(80,80)
 		self.btn_left.setIconSize(self.icon_size_side)
-		self.btn_left.clicked.connect(self.sidechoiceview)
-		self.btn_left.clicked.connect(self.emit_sig_side)
+		self.btn_left.clicked.connect(self.emit_back)
 		self.btn_left.hide()
 
 		#btn right
@@ -85,18 +87,18 @@ class SideBtns(qtw.QWidget):
 	def choiceview(self):
 		self.btn_right.hide()
 		self.btn_shuffle.hide()
-		self.btn_left.show()
-		
-	def sidechoiceview(self):
-		self.btn_wear.hide()
 		self.btn_left.hide()
-		self.btn_right.show() 
-		self.btn_shuffle.show()
+		
+	# def sidechoiceview(self):
+	# 	self.btn_wear.hide()
+	# 	self.btn_left.hide()
+	# 	self.btn_right.show() 
+	# 	self.btn_shuffle.show()
 	
 	def finalview(self):
 		self.btn_wear.show()
-		self.btn_left.hide()
 		self.btn_right.show()
+		self.btn_left.hide()
 		self.btn_shuffle.hide()
 
 	def wear_view(self):
