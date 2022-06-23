@@ -18,7 +18,7 @@ from pyvistaqt import QtInteractor
 # Setting the Qt bindings for QtPy
 import os
 os.environ["QT_API"] = "pyqt6"
-from path import texture_path
+from path import texture_path, shirt_path
 import random
 
 
@@ -36,7 +36,7 @@ class PyVistaView (qtw.QWidget):
 		self.plotter = QtInteractor(self.frame)
 		self.plotter.set_background('black')
 	
-		self.shirt = pv.read("/home/dantonik/Documents/flecture/graphics/shirt.obj")
+		self.shirt = pv.read(shirt_path)
 	
 
 		self.actor = self.plotter.add_mesh(self.shirt, show_edges=False)
@@ -52,7 +52,7 @@ class PyVistaView (qtw.QWidget):
 
 		focal = self.plotter.camera.focal_point
 		# print(focal)
-		self.plotter.camera.focal_point = (focal[0],focal[1]+ 0.001, focal[2])
+		# self.plotter.camera.focal_point = (focal[0],focal[1]+ 0.001, focal[2])
 		# # self.plotter.update()
 
 
@@ -100,13 +100,14 @@ class PyVistaView (qtw.QWidget):
 		
 	@pyqtSlot(tuple)
 	def move(self, mid_point):
-		pixel_width = 680
-		mid = 340
+		pass
+		# pixel_width = 680
+		# mid = 340
 
-		width = 2
-		fract = width / pixel_width
-		calc_mid = (mid_point[0] - mid) * fract
-		focal = self.plotter.camera.focal_point
-		print(focal)
-		# print(focal_x)
-		self.plotter.camera.focal_point = (calc_mid,focal[1], focal[2])
+		# width = 2
+		# fract = width / pixel_width
+		# calc_mid = (mid_point[0] - mid) * fract
+		# focal = self.plotter.camera.focal_point
+		# print(focal)
+		# # print(focal_x)
+		# self.plotter.camera.focal_point = (calc_mid,focal[1], focal[2])

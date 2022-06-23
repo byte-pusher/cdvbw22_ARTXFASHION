@@ -81,5 +81,5 @@ class Calibrator:
             if file.endswith(('.jpg', '.png', 'jpeg')):
                 img_path = path.cal_path + file
                 images.append(img_path)
-        print(images)
+        # print(images)
         return images
