@@ -58,6 +58,7 @@ class	MainWindow((qtw.QMainWindow)):
 		self.layout_main = qtw.QGridLayout()
 		self.layout_main.addWidget(self.view.plotter, 0, 0, 16, 9)
 		self.layout_main.addWidget(self.load, 6, 4)
+
 		self.layout_main.addWidget(self.img_choice_side, 1, 6, 16, 3)
 		self.layout_main.addWidget(self.final_img, 14, 0, 4, 9)
 		self.main_widget.setLayout(self.layout_main)
