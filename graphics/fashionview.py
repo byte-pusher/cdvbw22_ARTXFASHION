@@ -8,6 +8,7 @@
 #pyqt & other imports
 
 from cmath import inf
+from pickle import TRUE
 from typing import Tuple
 from PyQt6 import QtWidgets as qtw
 from PyQt6 import QtCore as qtc
@@ -45,10 +46,10 @@ class PyVistaView (qtw.QWidget):
 		self.actor = self.plotter.add_mesh(self.shirt, show_edges=False)
 		self.plotter.camera  = pv.Camera()
 		
-		
-		
+		self.active = 0
 		print(self.plotter.camera.position)
 		self.plotter.reset_camera()
+		print("foc" + str(self.plotter.camera.focal_point))
 		# self.plotter.camera.zoom(0.8)
 		
 
@@ -65,34 +66,34 @@ class PyVistaView (qtw.QWidget):
 
 	@qtc.pyqtSlot(tuple)
 	def updating(self, angles):
-		azimuth = angles[1]
-		if abs(azimuth - self.last_angle) < 10:
-			self.plotter.camera.azimuth = azimuth
-			self.last_angle = azimuth
-		elif abs(azimuth - self.last_angle) < 15:
-			azimuth = self.last_angle + (azimuth - self.last_angle)/2
-			self.last_angle = azimuth
-			self.plotter.camera.azimuth = azimuth
-		elif abs(azimuth - self.last_angle) < 20:
-			azimuth = self.last_angle + (azimuth - self.last_angle)/2.5
-			self.last_angle = azimuth
-			self.plotter.camera.azimuth = azimuth
-		elif abs(azimuth - self.last_angle) < 25:
-			azimuth = self.last_angle + (azimuth - self.last_angle)/3
-			self.last_angle = azimuth
-			self.plotter.camera.azimuth = azimuth
-		elif abs(azimuth - self.last_angle) < 30:
-			azimuth = self.last_angle + (azimuth - self.last_angle)/4
-			self.last_angle = azimuth
-			self.plotter.camera.azimuth = azimuth
-		else:
-			print("Before: " + str(self.last_angle))
-			azimuth = self.last_angle + (azimuth - self.last_angle)/8
-			self.last_angle = azimuth
-			self.plotter.camera.azimuth = azimuth
-			print("After: " + str(azimuth))
-		print(angles)
-		# pass
+		# azimuth = angles[1]
+		# if abs(azimuth - self.last_angle) < 10:
+		# 	self.plotter.camera.azimuth = azimuth
+		# 	self.last_angle = azimuth
+		# elif abs(azimuth - self.last_angle) < 15:
+		# 	azimuth = self.last_angle + (azimuth - self.last_angle)/2
+		# 	self.last_angle = azimuth
+		# 	self.plotter.camera.azimuth = azimuth
+		# elif abs(azimuth - self.last_angle) < 20:
+		# 	azimuth = self.last_angle + (azimuth - self.last_angle)/2.5
+		# 	self.last_angle = azimuth
+		# 	self.plotter.camera.azimuth = azimuth
+		# elif abs(azimuth - self.last_angle) < 25:
+		# 	azimuth = self.last_angle + (azimuth - self.last_angle)/3
+		# 	self.last_angle = azimuth
+		# 	self.plotter.camera.azimuth = azimuth
+		# elif abs(azimuth - self.last_angle) < 30:
+		# 	azimuth = self.last_angle + (azimuth - self.last_angle)/4
+		# 	self.last_angle = azimuth
+		# 	self.plotter.camera.azimuth = azimuth
+		# else:
+		# 	print("Before: " + str(self.last_angle))
+		# 	azimuth = self.last_angle + (azimuth - self.last_angle)/8
+		# 	self.last_angle = azimuth
+		# 	self.plotter.camera.azimuth = azimuth
+		# 	print("After: " + str(azimuth))
+		# print(angles)
+		pass
 	
 	@qtc.pyqtSlot(str)
 	def get_img(self, str_img):
@@ -146,7 +147,19 @@ class PyVistaView (qtw.QWidget):
 	@pyqtSlot(tuple)
 	def move_up(self, up):
 		pass
-		
+
+
+	@qtc.pyqtSlot()	
+	def activate(self):
+		if self.active is 1:
+			self.active = 0
+			self.plotter.camera.focal_point = (0.0, 1.2723920047283173, 0.02216850221157074)
+		else:
+			self.active = 1
+		print(self.active)
+
+
+
 	@pyqtSlot(tuple)
 	def move(self, info):
 		# print(info)
@@ -154,16 +167,18 @@ class PyVistaView (qtw.QWidget):
 		# 	shoulder_m = 380
 		# 	shoulder_d = 420
 		# d height 1.265
+		print(self.active)
 		# m height 1.18
+		if self.active is 1:
 
-		base = 420
-		diff = info[1] - 420
-		unit = 0.0028
+			base = 420
+			diff = info[1] - 420
+			unit = 0.0028
 
-		focal = self.plotter.camera.focal_point
+			focal = self.plotter.camera.focal_point
 
 
-		self.plotter.camera.focal_point = (focal[0], 1.265 + unit * diff, focal[2])
+			self.plotter.camera.focal_point = (focal[0], 1.265 + unit * diff, focal[2])
 
 		# focal = self.plotter.camera.focal_point
 		# mid_y = mids[1]

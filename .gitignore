@@ -133,6 +133,7 @@ env.bak/
 venv.bak/
 /tracking/cal_imgs/
 /tracking/cal_img_fake/
+/textures/
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -153,6 +154,7 @@ dmypy.json
 
 # pytype static type analyzer
 .pytype/
+
 
 # Cython debug symbols
 cython_debug/

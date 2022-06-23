@@ -55,6 +55,8 @@ class	MainApp(qtw.QApplication):
 		#connect btn wear to actions
 		self.main.sidebtns.sig_wear.connect(self.main.go_wear)
 
+		self.main.sidebtns.sig_wear.connect(self.main.view.activate)
+
 		#start show applicaiton
 		self.main.show()
 		

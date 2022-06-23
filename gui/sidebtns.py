@@ -88,6 +88,7 @@ class SideBtns(qtw.QWidget):
 		self.btn_right.show()
 
 	def wear_view(self):
-		self.btn_wear.hide()
+		pass
+		#self.btn_wear.hide()
 		
 	
