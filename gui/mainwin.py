@@ -77,9 +77,10 @@ class	MainWindow((qtw.QMainWindow)):
 		self.load.hide()
 		self.final_img.hide()
 		self.layout_main.addWidget(self.img_choice_bottom, 13, 0, 3, 9)
+		self.img_choice_bottom.hide()
 		self.img_choice_bottom.show()
 		self.layout_main.addWidget(self.sidebtns, 0, 8, 1, 1)
-		#self.f_update()
+		self.f_update()
 		self.update()
 
 	# @qtc.pyqtSlot()
@@ -117,11 +118,14 @@ class	MainWindow((qtw.QMainWindow)):
 		if self.winsize_status == 900:
 			self.resize(901, 1600)
 			self.winsize_status = 901
+			print('update 901')
 		elif self.winsize_status == 901:
 			self.resize(900, 1600)
 			self.winsize_status = 900
+			print('update 900')
 		else:
 			print('resizing error in f update')
+		self.showMaximized()
 
 
 

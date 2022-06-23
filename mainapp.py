@@ -37,6 +37,10 @@ class	MainApp(qtw.QApplication):
 		#connect buttons to viewchanges
 		self.main.sidebtns.sig_back.connect(self.main.go_choiceview)
 
+		#
+		#self.main.img_choice_bottom.sig_f_update.connect(self.main.repaint)
+		self.main.img_choice_bottom.sig_f_update.connect(self.main.go_choiceview)
+
 		#Webcam
 		self.cam = Webcam()
 		self.cam.worker.angles.connect(self.main.view.updating)
@@ -48,6 +52,9 @@ class	MainApp(qtw.QApplication):
 		self.main.img_choice_bottom.emit_choice.connect(self.main.final_img.get_chosen_img)
 		self.main.img_choice_bottom.emit_choice.connect(self.main.view.get_img)
 		self.main.img_choice_bottom.emit_choice.connect(self.main.go_finalview)
+		self.main.img_choice_bottom.emit_choice.connect(self.main.update)
+
+		self.main.img_choice_bottom.btn_shuffle.clicked.connect(self.main.go_choiceview)
 
 		#connect btn wear to actions
 		self.main.sidebtns.sig_wear.connect(self.main.go_wear)
