@@ -1,8 +1,10 @@
+from distutils.log import error
 from tkinter import image_names
 from PyQt6.QtGui import *
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 import cv2
+import mediapipe as mp
 import numpy as np
 from cv2 import aruco
 import time
@@ -10,10 +12,16 @@ import os
 from tracking.calibrator import Calibrator
 import math
 
+mpDraw = mp.solutions.drawing_utils
+mpPose = mp.solutions.pose
+pose = mpPose.Pose(enable_segmentation=True)
 
 class Worker(QObject):
     angles = pyqtSignal(tuple)
- 
+    x_diff = pyqtSignal(int)
+    y_height = pyqtSignal(int)
+    mid_point = pyqtSignal(tuple)
+    frames = pyqtSignal()
     # method which will execute algorithm in another thread
     def run(self):
         print("Starting Thread.")
@@ -35,18 +43,47 @@ class Worker(QObject):
         # capture from web cam
         cap = cv2.VideoCapture(0)
         while True:
+            self.frames.emit()
             #-- Convert in gray scale
             ret, frame = cap.read()
-
+            # print(frame.shape)
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             self.emit_angles(frame, gray, parameters, cal, markerLength, camera_matrix, camera_distortion, R_flip)
+
+
+            self.x_difference(frame)
+
+            c = cv2.waitKey(1)
+            if c == 27:
+                break
+        cap.release()
+        cv2.destroyAllWindows()
             
-             
+    def x_difference(self, frame):
+        results = pose.process(frame)
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        try:
+            r_x = int(frame.shape[1] * results.pose_landmarks.landmark[11].x)
+            l_x = int(frame.shape[1] * results.pose_landmarks.landmark[12].x)
+            r_y = int(frame.shape[1] * results.pose_landmarks.landmark[11].y)
+            l_y = int(frame.shape[1] * results.pose_landmarks.landmark[12].y)
+            x_difference = r_x - l_x
+            height = (r_y + l_y) / 2
+            # cv2.putText(frame, "x difference " + str(int(x_difference)), (70, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0 , 0), 3)
+            self.x_diff.emit(x_difference)
+            self.y_height.emit(height) 
+        except Exception as e:
+            pass
 
     def emit_angles(self, frame, gray, parameters, cal, markerLength, camera_matrix, camera_distortion, R_flip):
         #-- Find all the aruco markers in the image
             corners, ids, rejected = aruco.detectMarkers(image=gray, dictionary=cal.aruco_dict, parameters=parameters)
             if ids is not None:
+                corner1 = corners[0][0][0]
+                corner2 = corners[0][0][2]
+                middle = ((corner1[0] + corner2[0]) / 2, (corner1[1] + corner2[1]) / 2)
+                self.mid_point.emit(middle)
+                # print(corners[0])
                 aruco.drawDetectedMarkers(frame, corners)
                 # detect single marker
                 rvec_all, tvec_all, _ = aruco.estimatePoseSingleMarkers(corners, markerLength[0], camera_matrix, camera_distortion)
@@ -59,7 +96,8 @@ class Worker(QObject):
                 
                 rotation_matrix, jacobian = cv2.Rodrigues(rvec_flipped)
                 realworld_tvec = np.dot(rotation_matrix, tvec_flipped)
-
+                # print(tvec[1])
+                # print(tvec[2])
                 pitch, roll, yaw = self.rotationMatrixToEulerAngles(rotation_matrix)
                 # convert axis angle representation into rotation matrix
                 R_ct = np.matrix(cv2.Rodrigues(rvec)[0])

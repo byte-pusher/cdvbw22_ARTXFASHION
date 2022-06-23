@@ -2,6 +2,7 @@ import cv2
 from cv2 import aruco
 import numpy as np
 import os
+import path
 class Calibrator:
     def __init__(self, parent=None):
         super().__init__()
@@ -73,13 +74,12 @@ class Calibrator:
         return ret, camera_matrix, distortion_coefficients0, rotation_vectors, translation_vectors
 
     def image_array(self,): 
-        path = "/Users/mawinter/Desktop/cdvbw22_ARTXFASHION/tracking/cal_imgs/"
         # create array of image file paths
-        files = os.listdir(path)
+        files = os.listdir(path.cal_path)
         images = []
         for file in files:
             if file.endswith(('.jpg', '.png', 'jpeg')):
-                img_path = path + file
+                img_path = path.cal_path + file
                 images.append(img_path)
         print(images)
         return images

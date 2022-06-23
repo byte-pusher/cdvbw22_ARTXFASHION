@@ -17,6 +17,7 @@ from graphics.fashionview import PyVistaView
 from gui.sidebtns import SideBtns
 from gui.sidechoiceview import SideChoice
 from gui.final_view import FinalImg
+from gui.startwearview import StartWear
 
 
 class	MainWindow((qtw.QMainWindow)):
@@ -48,12 +49,16 @@ class	MainWindow((qtw.QMainWindow)):
 
 		#final view
 		self.final_img = FinalImg()
+		# start waear
+		self.load = StartWear()
 
 		#Grid arguments: row, column, rowSpan, columnSpan
 		# overall layout init
 		self.main_widget = qtw.QWidget()
 		self.layout_main = qtw.QGridLayout()
-		self.layout_main.addWidget(self.view.plotter, 1, 1, 13, 7)
+		self.layout_main.addWidget(self.view.plotter, 0, 0, 16, 9)
+		self.layout_main.addWidget(self.load, 6, 4)
+
 		self.layout_main.addWidget(self.img_choice_side, 1, 6, 16, 3)
 		self.layout_main.addWidget(self.final_img, 14, 0, 4, 9)
 		self.main_widget.setLayout(self.layout_main)
@@ -72,10 +77,12 @@ class	MainWindow((qtw.QMainWindow)):
 	@qtc.pyqtSlot()
 	def go_choiceview(self):
 		self.sidebtns.choiceview()
+		self.load.hide()
+		self.final_img.hide()
 		self.img_choice_side.hide()
 		self.layout_main.addWidget(self.img_choice_bottom, 14, 0, 4, 9)
 		self.img_choice_bottom.show()
-		self.layout_main.addWidget(self.sidebtns, 0, 8, 1, 1)
+		self.layout_main.addWidget(self.sidebtns, 0, 9, 1, 1)
 		self.update()
 
 	@qtc.pyqtSlot()
@@ -84,16 +91,28 @@ class	MainWindow((qtw.QMainWindow)):
 		self.layout_main.addWidget(self.sidebtns, 0, 5, 1, 1)
 		self.img_choice_bottom.hide()
 		self.final_img.hide()
+		self.load.hide()
 		self.img_choice_side.show()
 		self.update()
 
 	@qtc.pyqtSlot()
 	def go_finalview(self):
+		self.load.hide()
 		self.sidebtns.finalview()
 		self.img_choice_bottom.hide()
 		self.img_choice_side.hide()
 		self.final_img.show()
+		self.f_update()
 		self.update()
+
+	@qtc.pyqtSlot()
+	def go_wear(self):
+		self.sidebtns.wear_view()
+		self.view.hide()
+		self.load.show()
+		qtc.QTimer.singleShot(10500, self.load.stop_gif)
+		self.update()
+
 	
 	#change to resizing in height direction for smoother change
 	@qtc.pyqtSlot()
@@ -106,6 +125,9 @@ class	MainWindow((qtw.QMainWindow)):
 			self.winsize_status = 900
 		else:
 			print('resizing error in f update')
+
+	def test(self):
+		print('stop')
 		
 		
 
