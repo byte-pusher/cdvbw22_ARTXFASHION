@@ -39,10 +39,6 @@ class	MainWindow((qtw.QMainWindow)):
 		self.sidebtns.choiceview()
 		self.img_choice_bottom = ImgChoiceBottom()
 
-		#ImgChoiceSide
-		self.img_choice_side = SideChoice()
-		self.img_choice_side.hide()
-	
 		#modelview
 		self.view = PyVistaView()
 		self.modelview = self.view.plotter
@@ -56,16 +52,15 @@ class	MainWindow((qtw.QMainWindow)):
 		# overall layout init
 		self.main_widget = qtw.QWidget()
 		self.layout_main = qtw.QGridLayout()
-		self.layout_main.addWidget(self.view.plotter, 0, 0, 16, 9)
+		self.layout_main.addWidget(self.view.plotter, 0, 0, 17, 10)
 		self.layout_main.addWidget(self.load, 6, 4)
-
-		self.layout_main.addWidget(self.img_choice_side, 1, 6, 16, 3)
-		self.layout_main.addWidget(self.final_img, 14, 0, 4, 9)
+		self.layout_main.addWidget(self.final_img, 13, 0, 3, 9)
 		self.main_widget.setLayout(self.layout_main)
 		self.setCentralWidget(self.main_widget)
 
 		self.img_choice_bottom.setStyleSheet("background-color : transparent")
 		self.sidebtns.setStyleSheet("background-color : transparent")
+		self.final_img.info.setStyleSheet("background-color : transparent")
 
 		self.go_choiceview()
 
@@ -79,28 +74,27 @@ class	MainWindow((qtw.QMainWindow)):
 		self.sidebtns.choiceview()
 		self.load.hide()
 		self.final_img.hide()
-		self.img_choice_side.hide()
-		self.layout_main.addWidget(self.img_choice_bottom, 14, 0, 4, 9)
+		self.layout_main.addWidget(self.img_choice_bottom, 13, 0, 3, 9)
 		self.img_choice_bottom.show()
 		self.layout_main.addWidget(self.sidebtns, 0, 9, 1, 1)
+		self.f_update()
 		self.update()
 
-	@qtc.pyqtSlot()
-	def go_sidechoiceview(self):
-		self.layout_main.removeWidget(self.sidebtns)
-		self.layout_main.addWidget(self.sidebtns, 0, 5, 1, 1)
-		self.img_choice_bottom.hide()
-		self.final_img.hide()
-		self.load.hide()
-		self.img_choice_side.show()
-		self.update()
+	# @qtc.pyqtSlot()
+	# def go_sidechoiceview(self):
+	# 	self.layout_main.removeWidget(self.sidebtns)
+	# 	self.layout_main.addWidget(self.sidebtns, 0, 5, 1, 1)
+	# 	self.img_choice_bottom.hide()
+	# 	self.final_img.hide()
+	# 	self.load.hide()
+	# 	self.img_choice_side.show()
+	# 	self.update()
 
 	@qtc.pyqtSlot()
 	def go_finalview(self):
 		self.load.hide()
 		self.sidebtns.finalview()
 		self.img_choice_bottom.hide()
-		self.img_choice_side.hide()
 		self.final_img.show()
 		self.f_update()
 		self.update()

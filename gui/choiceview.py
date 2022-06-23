@@ -90,7 +90,7 @@ class	ImgChoiceBottom(qtw.QWidget):
 		#append three new numbers to list
 		i = 0
 		while i < 3:
-			x = randint(0, 233)
+			x = randint(0, 232)
 			if x not in self.nb_list:
 				self.nb_list.append(x)
 				i = i + 1

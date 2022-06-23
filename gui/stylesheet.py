@@ -32,9 +32,10 @@ QLabel#infotext {
     font-size: 18px
 }
 
-QLabel#focus_view {
+QLabel#infotext {
     background-color : transparent"
 }
+
 
 
 
