@@ -4,7 +4,7 @@ from path import img_path
 
 df = pd.read_csv('metadata/metadata.csv')
 
-#Corrections
+#Corretions of Image paths in metadata
 #1,,Stilleben mit Blumen und Eßwaren,Georg Flegel,,,9BA1B1E144A3411A9A51859A67D8E530,um 1630,Gemälde
 df.at[1, 'dateiname'] = 'flegel_1640.jpg'
 #9,,"Komposition in Weiß, Rot und Blau (Composition en blanc, rouge et bleu)",Piet Mondrian,,,61E27C0B46CAC95BBFAB85BBA5FF4C15,1936,Gemälde
@@ -89,7 +89,7 @@ for file in filenames_metadata:
 # files without metadata
 img_without_data = ['sgs_arc_xxx_ah-1-ge-div-538-0001r_001_m.jpg', 'sgs_grs_klee_d-2005-681-6_001_s.jpg', 'sgs_grs_schwitters_d-1966-316-4_001_s.jpg']
 
-#metadata entries without files
+#metadata entries without files, no need for actions
 # sgs_grs_vuillard_a-1986-6279_001_s.jpg
 # sgs_grs_moholy_a-1974-5368-c_001_s.jpg
 

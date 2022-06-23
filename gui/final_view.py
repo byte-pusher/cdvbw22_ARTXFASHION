@@ -17,30 +17,32 @@ from gui.pic_utils import img_creator
 from path import img_path
 
 #own imports
-from graphics.modelview import GlWidget
-from graphics.fashionview import PyVistaView
-
 from metadata.load_data import df_input
 
 class	FinalImg(qtw.QWidget):
 	
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
-		sig_f_update = qtc.pyqtSignal()
 
 		# set img to None for check
 		self.img = None
+
+		#black label
+		self.banner = qtw.QLabel()
+		self.banner.setStyleSheet("background-color : black")
 
 		#createinfobox
 		self.info = qtw.QLabel()
 		self.info.setObjectName("infotext")
 		self.info.setText("Artist:  \nTitle:  \nYear:")
 		self.info.setAlignment(qtc.Qt.AlignmentFlag.AlignVCenter)
-
+		self.info.setStyleSheet("color : white; background-color : black")
+		self.setStyleSheet("background-color : black")
+		self.info.setStyleSheet("color : white; background-color : black")
 		#set layout
 		self.overall_layout = qtw.QGridLayout()
-		self.overall_layout.addWidget(self.info,0,3)
-
+		self.overall_layout.addWidget(self.banner,0,0,1,9)
+		self.overall_layout.addWidget(self.info,0,4)
 
 	# set clicked img as widget
 	@qtc.pyqtSlot(str)
@@ -51,7 +53,7 @@ class	FinalImg(qtw.QWidget):
 		self.info.setText("Künstler: " + df_input.at[ str_img ,'artist'] + "\nTitel: " + df_input.at[ str_img ,'titel'] +  "\nEnstehungszeit: " + df_input.at[ str_img ,'entstehungszeit'])
 		self.info.setText(df_input.at[ str_img ,'titel']  + "\n" + df_input.at[ str_img ,'artist'] + "\n" + df_input.at[ str_img ,'entstehungszeit'])
 		self.img = img_creator.get_img_own(img_path + str_img, 160)
-		self.overall_layout.addWidget(self.img,0,2)
+		self.overall_layout.addWidget(self.img,0,2,)
 		self.setLayout(self.overall_layout)
 
 	def clear(self):

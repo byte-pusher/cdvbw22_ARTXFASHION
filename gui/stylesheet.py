@@ -1,6 +1,6 @@
 
 
-# basic stylesheet for whole application
+# basic stylesheet for application, overwritten from classes
 
 stylesheet = ("""
 
@@ -19,12 +19,12 @@ QPushButton#btn_arrow_left, QPushButton#btn_back {
 }
 
 QWidget#btn_area_side {
-         background : transparent
+         background : black
 }
 
 QLabel#infotext {
     color : white;
-    background-color : transparent;
+    background-color : black;
     font-family : arial;
     font-size: 18px
 }
