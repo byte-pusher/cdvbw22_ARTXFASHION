@@ -6,11 +6,19 @@ Repo of our contribution to the Coding da Vinci Hackathon BW 2022. (https://codi
 Data:
 The image selection contains around 230 works of art from the collection of the Staatsgalerie Stauttgart: it´s a colorful mix, comes from different eras and includes diverse painting techniques. Atmospheric landscape painting and city views and still lifes belong to it, as well as abstract painting, organic and floral patterns, striking woodcuts and imaginative prints or constructively suggestive drawings.
 What all these works of art have in common are either their special color compositions or their unusual patterns, which sometimes reveal themselves at first glance, sometimes at second.
-https://codingdavinci.de/daten/farben-muster-art-x-fashion-show
+Dataset: https://codingdavinci.de/daten/farben-muster-art-x-fashion-show
 
 
-Idea:
-We want to extract the special patterns and color combinations to generate & inspire new fashion with them.
+Project:
+The impulse from the data provider inspired us to create a Smart Mirror which allows you to experience the style of the artwork with the help of AI- generated textures on the 3D T-Shirt model on your reflection.
+The software is written in Python and contains several parts:
+
+gui/ :graphical user interface of the whole application, written in PyQt
+graphics/ :the model display and texture application
+tracking/ :tracking of body movements
+metadata/ :data cleaning and loading
+mainapp.py :main application
+path.py: for local paths
 
 # Smart Mirror
 
