@@ -20,8 +20,9 @@ class Worker(QObject):
     angles = pyqtSignal(tuple)
     x_diff = pyqtSignal(int)
     y_height = pyqtSignal(int)
-    mid_point = pyqtSignal(np.ndarray)
+    x_diff_always = pyqtSignal(tuple)
     frames = pyqtSignal()
+    move = pyqtSignal(tuple)
     # method which will execute algorithm in another thread
     def run(self):
         print("Starting Thread.")
@@ -30,7 +31,7 @@ class Worker(QObject):
         allCorners, allIds, imsize = cal.read_chessboards(cal.images, cal.board)
         ret, camera_matrix, camera_distortion, rvecs, tvecs = cal.calibrate_camera(allCorners,allIds,imsize,cal.board)
      
-        markerLength=0.5
+        markerLength=5
 
         #... 180 deg rotation matrix around the x axis
         R_flip = np.zeros((3,3), dtype=np. float32)
@@ -50,19 +51,35 @@ class Worker(QObject):
             self.frames.emit()
             #-- Convert in gray scale
             ret, frame = cap.read()
-            print(frame.shape)
+            # print(frame.shape)
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             self.emit_angles(frame, gray, parameters, cal, markerLength, camera_matrix, camera_distortion, R_flip)
+            self.x_diff_always_func(frame)
 
-
-            self.x_difference(frame)
 
             c = cv2.waitKey(1)
             if c == 27:
                 break
         cap.release()
         cv2.destroyAllWindows()
-            
+    
+
+    def x_diff_always_func(self, frame):
+        results = pose.process(frame)
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        try:
+            r_x = int(frame.shape[1] * results.pose_landmarks.landmark[11].x)
+            l_x = int(frame.shape[1] * results.pose_landmarks.landmark[12].x)
+            r_y = int(frame.shape[1] * results.pose_landmarks.landmark[11].y)
+            l_y = int(frame.shape[1] * results.pose_landmarks.landmark[12].y)
+            x_difference = r_x - l_x
+            height = (r_y + l_y) / 2
+            # cv2.putText(frame, "x difference " + str(int(x_difference)), (70, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0 , 0), 3)
+            self.x_diff_always.emit((x_difference, height))
+        except Exception as e:
+            pass
+
+
     def x_difference(self, frame):
         results = pose.process(frame)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -75,7 +92,6 @@ class Worker(QObject):
             height = (r_y + l_y) / 2
             # cv2.putText(frame, "x difference " + str(int(x_difference)), (70, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0 , 0), 3)
             self.x_diff.emit(x_difference)
-            self.y_height.emit(height) 
         except Exception as e:
             pass
 
@@ -83,19 +99,18 @@ class Worker(QObject):
         #-- Find all the aruco markers in the image
             corners, ids, rejected = aruco.detectMarkers(image=gray, dictionary=cal.aruco_dict, parameters=parameters)
             if ids is not None:
-                corners2 = corners[0][0]
-                self.mid_point.emit(corners2)
+                # corners2 = corners[0][0]
+                # self.mid_point.emit(corners2)
                 # print(corners[0])
                 aruco.drawDetectedMarkers(frame, corners)
                 # detect single marker
                 rvec_all, tvec_all, _ = aruco.estimatePoseSingleMarkers(corners, markerLength, camera_matrix, camera_distortion)
-
                 #-- Draw the detected marker and put a reference frame over it
                 rvec = rvec_all[0][0]
                 tvec = tvec_all[0][0]
                 rvec_flipped = rvec * -1
                 tvec_flipped = tvec * -1
-                
+                self.move.emit((tvec_all[0][0][2],))
                 rotation_matrix, jacobian = cv2.Rodrigues(rvec_flipped)
                 realworld_tvec = np.dot(rotation_matrix, tvec_flipped)
                 # print(tvec[1])
@@ -109,8 +124,9 @@ class Worker(QObject):
                 roll_marker, pitch_marker, yaw_marker = self.rotationMatrixToEulerAngles(R_flip*R_tc)
               
                 self.angles.emit((math.degrees(roll_marker),math.degrees(pitch_marker),math.degrees(pitch_marker)))
-
-
+                if (abs(math.degrees(pitch_marker)) < 15):
+                    self.x_difference(frame)
+                
     def isRotationMatrix(self, R):
         Rt = np.transpose(R)
         shouldBeIdentity = np.dot(Rt, R)
