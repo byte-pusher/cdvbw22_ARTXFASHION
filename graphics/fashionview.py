@@ -9,6 +9,7 @@
 
 from email.mime import image
 from PyQt6 import QtWidgets as qtw
+from PyQt6 import QtCore as qtc
 from PyQt6.QtCore import pyqtSlot
 import pyvista as pv
 from pyvistaqt import QtInteractor
@@ -37,25 +38,32 @@ class PyVistaView (qtw.QWidget):
 		i = random.randint(0, len(img_array) - 1)
 		self.texture = pv.read_texture(img_array[i])
 	
-		
 		self.actor = self.plotter.add_mesh(self.shirt, show_edges=False, texture=self.texture)
 		self.plotter.camera  = pv.Camera()
 		print(self.plotter.camera.position)
 		self.plotter.reset_camera()	
 	
-	@pyqtSlot(tuple)
+	@qtc.pyqtSlot(tuple)
 	def updating(self, angles):
 		azimuth = angles[1]
 
 		self.plotter.camera.azimuth = azimuth
 		print(angles)
 	
-	@pyqtSlot(str)
+	@qtc.pyqtSlot(str)
 	def get_img(self, str_img):
 		self.texture = pv.read_texture(texture_path + str_img)
 		self.plotter.remove_actor(self.actor)
 		self.actor = self.plotter.add_mesh(self.shirt, show_edges=False, texture=self.texture)
 
+	def hide(self):
+		self.plotter.remove_actor(self.actor)
+
+	@qtc.pyqtSlot()
+	def show(self):
+		self.plotter.add_mesh(self.shirt, show_edges=False, texture=self.texture)
+		
+	
 	def image_array(self,): 
 		path = texture_path
         # create array of image file paths
