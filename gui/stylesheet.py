@@ -5,7 +5,7 @@
 stylesheet = ("""
 
  QMainWindow#main_window {
-     background : black;
+     background : transparent;
  }
 
  QPushButton {
@@ -13,30 +13,21 @@ stylesheet = ("""
      border : transparent;
  }
 
-QPushButton#btn_shuffle_bottom, QPushButton#btn_shuffle_side {
-    background-color : black
-}
 
 QPushButton#btn_arrow_left, QPushButton#btn_back {
     background : black;
 }
 
-QWidget#img_choice_side, QWidget#btn_area_side {
-    background : transparent
+QWidget#btn_area_side {
+         background : transparent
 }
 
 QLabel#infotext {
     color : white;
-    background-color : black;
+    background-color : transparent;
     font-family : arial;
     font-size: 18px
 }
-
-QLabel#infotext {
-    background-color : transparent"
-}
-
-
 
 
  """)

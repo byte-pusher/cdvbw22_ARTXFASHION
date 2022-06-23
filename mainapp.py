@@ -11,6 +11,7 @@
 
 import sys 
 from PyQt6 import QtWidgets as qtw
+from PyQt6 import QtCore as qtc
 from gui.mainwin import MainWindow
 
 from gui.stylesheet import stylesheet
@@ -24,6 +25,7 @@ class	MainApp(qtw.QApplication):
 
 	def __init__(self,argv):
 		super().__init__(argv)
+		self.winsize_status = 900
 
 		#general default stle
 		self.setStyle("Fusion")
@@ -50,9 +52,6 @@ class	MainApp(qtw.QApplication):
 		#connect btn wear to actions
 		self.main.sidebtns.sig_wear.connect(self.main.go_wear)
 		self.main.sidebtns.sig_wear.connect(self.main.load.start_gif)
-
-		#self.main.load.sig_end.connect(self.main.f_update)
-		#self.main.load.sig_end.connect(self.main.view.show)
 
 		#start show applicaiton
 		self.main.show()

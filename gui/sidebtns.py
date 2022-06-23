@@ -15,10 +15,8 @@ from path import icon_path
 
 class SideBtns(qtw.QWidget):
 	sig_back = qtc.pyqtSignal()
-	sig_side = qtc.pyqtSignal()
 	sig_wear = qtc.pyqtSignal()
 	sig_start = qtc.pyqtSignal()
-	sig_shuffle_side = qtc.pyqtSignal()
 	
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
@@ -28,14 +26,14 @@ class SideBtns(qtw.QWidget):
 
 		#create buttons
 		# btn left
-		self.btn_left = qtw.QPushButton(self)
-		self.btn_left.setObjectName("btn_arrow_left")
-		self.btn_left.setIcon(qtg.QIcon(icon_path + 'arrow_left'))
-		self.icon_size_side = qtc.QSize(60,60)
-		self.btn_left.setMinimumSize(80,80)
-		self.btn_left.setIconSize(self.icon_size_side)
-		self.btn_left.clicked.connect(self.emit_back)
-		self.btn_left.hide()
+		# self.btn_left = qtw.QPushButton(self)
+		# self.btn_left.setObjectName("btn_arrow_left")
+		# self.btn_left.setIcon(qtg.QIcon(icon_path + 'arrow_left'))
+		# self.icon_size_side = qtc.QSize(60,60)
+		# self.btn_left.setMinimumSize(80,80)
+		# self.btn_left.setIconSize(self.icon_size_side)
+		# self.btn_left.clicked.connect(self.emit_back)
+		# self.btn_left.hide()
 
 		#btn right
 		self.btn_right = qtw.QPushButton(self)
@@ -47,14 +45,14 @@ class SideBtns(qtw.QWidget):
 		self.btn_right.clicked.connect(self.emit_back)
 		self.btn_right.hide()
 
-		#shuffle button side
-		self.btn_shuffle = qtw.QPushButton(self)
-		self.btn_shuffle.setObjectName("btn_shuffle_side")
-		self.btn_shuffle.setIcon(qtg.QIcon(icon_path + 'shuffle'))
-		self.icon_size_shuffle= qtc.QSize(60,60)
-		self.btn_shuffle.setMinimumSize(60,60)
-		self.btn_shuffle.setIconSize(self.icon_size_shuffle)
-		self.btn_shuffle.hide()
+		# #shuffle button side
+		# self.btn_shuffle = qtw.QPushButton(self)
+		# self.btn_shuffle.setObjectName("btn_shuffle_side")
+		# self.btn_shuffle.setIcon(qtg.QIcon(icon_path + 'shuffle'))
+		# self.icon_size_shuffle= qtc.QSize(60,60)
+		# self.btn_shuffle.setMinimumSize(60,60)
+		# self.btn_shuffle.setIconSize(self.icon_size_shuffle)
+		# self.btn_shuffle.hide()
 
 		#button wear
 		self.btn_wear = qtw.QPushButton()
@@ -69,37 +67,25 @@ class SideBtns(qtw.QWidget):
 		#create layout
 		self.btnside_layout = qtw.QVBoxLayout()
 		self.btnside_layout.addWidget(self.btn_right)
-		self.btnside_layout.addWidget(self.btn_left)
-		self.btnside_layout.addWidget(self.btn_shuffle)
+		#self.btnside_layout.addWidget(self.btn_shuffle)
 		self.btnside_layout.addWidget(self.btn_wear)
 		self.setLayout(self.btnside_layout)
 
-	def emit_sig_side(self):
-		self.sig_side.emit()
-	
+	#emIt fts pder button/signal
 	def emit_back(self):
 		self.sig_back.emit()
 	
 	def emit_wear(self):
 		self.sig_wear.emit()
 	
-	#open 
+	#fts to set buttons per view
 	def choiceview(self):
+		self.btn_wear.hide()
 		self.btn_right.hide()
-		self.btn_shuffle.hide()
-		self.btn_left.hide()
-		
-	# def sidechoiceview(self):
-	# 	self.btn_wear.hide()
-	# 	self.btn_left.hide()
-	# 	self.btn_right.show() 
-	# 	self.btn_shuffle.show()
 	
 	def finalview(self):
 		self.btn_wear.show()
 		self.btn_right.show()
-		self.btn_left.hide()
-		self.btn_shuffle.hide()
 
 	def wear_view(self):
 		self.btn_wear.hide()
