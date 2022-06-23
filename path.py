@@ -14,7 +14,7 @@
 
 # Nuk
 icon_path = "/home/dantonik/Documents/flecture/gui/icons/"
-data_path = "/home/dantonik/Documents/flecture/metadata/metadata.csv"
+data_path = "/home/dantonik/Documents/flecture/metadata/metadata_clean.csv"
 shirt_path = "/home/dantonik/Documents/flecture/graphics/shirt.obj"
 cal_path = "/home/dantonik/Documents/flecture/tracking/cal_imgs/"
 

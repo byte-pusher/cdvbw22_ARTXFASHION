@@ -46,7 +46,6 @@ class Worker(QObject):
             self.frames.emit()
             #-- Convert in gray scale
             ret, frame = cap.read()
-            print(frame.shape)
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             self.emit_angles(frame, gray, parameters, cal, markerLength, camera_matrix, camera_distortion, R_flip)
 

@@ -112,10 +112,10 @@ class	MainWindow((qtw.QMainWindow)):
 	@qtc.pyqtSlot()
 	def f_update(self):
 		if self.winsize_status == 900:
-			self.resize(901, 1600)
+			self.resize(1200, 1800)
 			self.winsize_status = 901
 		elif self.winsize_status == 901:
-			self.resize(900, 1600)
+			self.resize(1200, 1800)
 			self.winsize_status = 900
 		else:
 			print('resizing error in f update')
