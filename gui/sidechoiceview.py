@@ -12,11 +12,8 @@ from PyQt6 import QtWidgets as qtw
 from PyQt6 import QtCore as qtc
 from PyQt6 import QtGui as qtg
 from PyQt6 import sip
-from graphics.modelview import GlWidget
-from graphics.fashionview import PyVistaView
+
 from gui.pic_utils import img_creator
-
-
 
 from path import img_path
 img_path = img_path
@@ -25,7 +22,6 @@ class	SideChoice(qtw.QWidget):
 	# signals for set up of finalview
 	emit_img = qtc.pyqtSignal(str)
 	emit_focus = qtc.pyqtSignal(str)
-	sig_f_update = qtc.pyqtSignal()
 
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)

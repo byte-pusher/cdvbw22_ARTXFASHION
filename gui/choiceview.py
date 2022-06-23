@@ -13,8 +13,6 @@ from PyQt6 import QtGui as qtg
 from PyQt6 import sip
 
 #own imports
-from graphics.modelview import GlWidget
-from graphics.fashionview import PyVistaView
 from gui.pic_utils import img_creator
 from path import img_path
 
@@ -51,7 +49,6 @@ class	ImgChoiceBottom(qtw.QWidget):
 		self.btn_shuffle.setObjectName("btn_shuffle_bottom")
 		self.icon_size_shuffle = qtc.QSize(60,60)
 		self.btn_shuffle.setIconSize(self.icon_size_shuffle)
-		self.btn_shuffle.clicked.connect(self.emit_f)
 		self.img_choice = qtw.QWidget()
 		self.img_choice_layout = qtw.QGridLayout()
 	
@@ -107,9 +104,6 @@ class	ImgChoiceBottom(qtw.QWidget):
 		self.img_choice.hide()
 		sip.delete(self.img_choice)
 		self.img_choice = None
-
-	def emit_f(self):
-		self.sig_f_update.emit()
 
 
 

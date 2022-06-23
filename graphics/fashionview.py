@@ -14,9 +14,11 @@ from numpy import diff
 import pyvista as pv
 from pyvistaqt import QtInteractor
 from random import randint
+
 # Setting the Qt bindings for QtPy
 import os
 os.environ["QT_API"] = "pyqt6"
+
 from path import texture_path, shirt_path, img_path
 import random
 import numpy as np
@@ -45,7 +47,7 @@ class PyVistaView (qtw.QWidget):
 		# self.plotter.camera.zoom(0.8)
 		
 
-	@pyqtSlot()
+	@qtc.pyqtSlot()
 	def frames(self):
 		pass
 
@@ -56,7 +58,7 @@ class PyVistaView (qtw.QWidget):
 
 
 
-	@pyqtSlot(tuple)
+	@qtc.pyqtSlot(tuple)
 	def updating(self, angles):
 		azimuth = angles[1]
 		if abs(azimuth - self.last_angle) < 10:
@@ -121,7 +123,7 @@ class PyVistaView (qtw.QWidget):
 				images.append(img_path)
 		return images
 
-	@pyqtSlot(int)
+	@qtc.pyqtSlot(int)
 	def scale(self, x_diff):
 		# # (0.0, 1.7, 0.0) -> unterer Rand
 		# # (0.0, 0.66, 0.0) -> oberer Rand
@@ -136,7 +138,7 @@ class PyVistaView (qtw.QWidget):
 
 		
 		
-	@pyqtSlot(np.ndarray)
+	@qtc.pyqtSlot(np.ndarray)
 	def move(self, corners):
 		# Links - rechts
 		# rechts = 250
