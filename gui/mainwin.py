@@ -116,11 +116,11 @@ class	MainWindow((qtw.QMainWindow)):
 	def f_update(self):
 		self.update()
 		if self.winsize_status == 900:
-			self.resize(901, 1600)
+			self.resize(1200, 1800)
 			self.winsize_status = 901
 			print('update 901')
 		elif self.winsize_status == 901:
-			self.resize(900, 1600)
+			self.resize(1200, 1800)
 			self.winsize_status = 900
 			print('update 900')
 		else:

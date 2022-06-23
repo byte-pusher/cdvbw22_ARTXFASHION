@@ -42,7 +42,8 @@ class Calibrator:
                 if res2[1] is not None and res2[2] is not None and len(res2[1])>3 and decimator%1==0:
                     allCorners.append(res2[1])
                     allIds.append(res2[2])
-
+            else:
+                print("ASDASDASDASD" + im)
             decimator+=1
 
         imsize = gray.shape
@@ -50,7 +51,7 @@ class Calibrator:
 
     def calibrate_camera(self, allCorners,allIds,imsize, board):
         print("CAMERA CALIBRATION")
-
+        print(imsize)
         cameraMatrixInit = np.array([[ 1000.,    0., imsize[0]/2.],
                                      [    0., 1000., imsize[1]/2.],
                                      [    0.,    0.,           1.]])
