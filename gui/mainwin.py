@@ -32,8 +32,8 @@ class	MainWindow((qtw.QMainWindow)):
 		self.setWindowTitle("Magic Mirror")
 		self.showMaximized()
 
-		# self.exitAction = qtg.QAction('&Neustart', self)
-		# self.exitAction.setShortcut(qtg.QKeySequence("Ctrl+e"))
+		self.exitAction = qtg.QAction('&Neustart', self)
+		self.exitAction.setShortcut(qtg.QKeySequence("Ctrl+e"))
 
 		#create Widgets
 		#choicewin
@@ -47,9 +47,7 @@ class	MainWindow((qtw.QMainWindow)):
 
 		#final view
 		self.final_img = FinalImg()
-		# start waear
-		self.load = StartWear()
-
+		
 		#Grid arguments: row, column, rowSpan, columnSpan
 		# overall layout init
 		self.main_widget = qtw.QWidget()
@@ -60,7 +58,6 @@ class	MainWindow((qtw.QMainWindow)):
 		self.setCentralWidget(self.main_widget)
 
 		self.sidebtns.setStyleSheet("background-color : black")
-
 		self.go_choiceview()
 
 	# set esc key to end application
@@ -71,7 +68,6 @@ class	MainWindow((qtw.QMainWindow)):
 	@qtc.pyqtSlot()
 	def go_choiceview(self):
 		self.sidebtns.choiceview()
-		self.load.hide()
 		self.final_img.hide()
 		self.layout_main.addWidget(self.img_choice_bottom, 125, 0, 35, 9)
 		self.img_choice_bottom.setStyleSheet("background-color : black")
@@ -95,21 +91,15 @@ class	MainWindow((qtw.QMainWindow)):
 		self.sidebtns.finalview()
 		self.img_choice_bottom.hide()
 		self.final_img.show()
-	
 		self.img_choice_bottom.hide()
-		#self.f_update()
 		self.update()
 
 	@qtc.pyqtSlot()
 	def go_wear(self):
 		self.sidebtns.wear_view()
-		#self.view.hide()
-		#self.load.show()
-		#qtc.QTimer.singleShot(10500, self.load.stop_gif)
-		#self.f_update()
 		self.update()
 
-	#change to resizing in height direction for smoother change
+	#change to resizing 
 	# @qtc.pyqtSlot()
 	# def f_update(self):
 	# 	self.update()

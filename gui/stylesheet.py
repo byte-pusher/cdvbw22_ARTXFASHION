@@ -1,6 +1,6 @@
 
 
-# basic stylesheet for whole application
+# basic stylesheet for application, overwritten from classes
 
 stylesheet = ("""
 

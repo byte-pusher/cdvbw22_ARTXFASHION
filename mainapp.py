@@ -6,9 +6,6 @@
 #     |__|      \/          \/              \/_____/      \/          \/     \/     
 
 
-#activate venv in vscode: source .venv/bin/activate
-# run: python3 mainapp.py
-
 import sys 
 from PyQt6 import QtWidgets as qtw
 from PyQt6 import QtCore as qtc
@@ -21,7 +18,7 @@ from metadata.load_data import df_input
 from tracking.camera_thread import Webcam
 
 class	MainApp(qtw.QApplication):
-	'"Build Application from classes and signals"'
+	'"main class for application"'
 
 	def __init__(self,argv):
 		super().__init__(argv)
@@ -36,10 +33,6 @@ class	MainApp(qtw.QApplication):
 
 		#connect buttons to viewchanges
 		self.main.sidebtns.sig_back.connect(self.main.go_choiceview)
-
-		#
-		#self.main.img_choice_bottom.sig_f_update.connect(self.main.repaint)
-		self.main.img_choice_bottom.sig_f_update.connect(self.main.go_choiceview)
 
 		self.main.exitAction.triggered.connect(self.exit)
 
@@ -60,7 +53,6 @@ class	MainApp(qtw.QApplication):
 
 		#connect btn wear to actions
 		self.main.sidebtns.sig_wear.connect(self.main.go_wear)
-		self.main.sidebtns.sig_wear.connect(self.main.load.start_gif)
 
 		#start show applicaiton
 		self.main.show()
