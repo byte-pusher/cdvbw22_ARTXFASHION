@@ -56,6 +56,13 @@ class	MainApp(qtw.QApplication):
 		self.main.img_choice_side.sig_f_update.connect(self.main.f_update)
 		self.main.sidebtns.btn_shuffle.clicked.connect(self.main.img_choice_side.turn)
 
+		#connect btn wear to actions
+		self.main.sidebtns.sig_wear.connect(self.main.go_wear)
+		self.main.sidebtns.sig_wear.connect(self.main.load.start_gif)
+
+		self.main.load.sig_end.connect(self.main.f_update)
+		self.main.load.sig_end.connect(self.main.view.show)
+
 
 		
 		#start show applicaiton

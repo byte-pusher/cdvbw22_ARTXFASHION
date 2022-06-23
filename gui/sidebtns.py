@@ -16,6 +16,8 @@ from path import icon_path
 class SideBtns(qtw.QWidget):
 	sig_back = qtc.pyqtSignal()
 	sig_side = qtc.pyqtSignal()
+	sig_wear = qtc.pyqtSignal()
+	sig_start = qtc.pyqtSignal()
 	sig_shuffle_side = qtc.pyqtSignal()
 	
 	def __init__(self, *args, **kwargs):
@@ -55,10 +57,11 @@ class SideBtns(qtw.QWidget):
 		#button wear
 		self.btn_wear = qtw.QPushButton()
 		self.btn_wear.setObjectName('btn_wear')
-		self.btn_wear.setIcon(qtg.QIcon(icon_path + 'wear'))
+		self.btn_wear.setIcon(qtg.QIcon(icon_path + 'shirt'))
 		self.icon_size_wear = qtc.QSize(60,60)
-		self.btn_wear.setMinimumSize(60,60)
-		#self.btn_wear.clicked.connect(self.turn)
+		self.btn_wear.setMinimumSize(80,80)
+		self.btn_wear.setIconSize(self.icon_size_wear)
+		self.btn_wear.clicked.connect(self.emit_wear)
 		self.btn_wear.hide()
 	
 		#create layout
@@ -74,7 +77,10 @@ class SideBtns(qtw.QWidget):
 	
 	def emit_back(self):
 		self.sig_back.emit()
-
+	
+	def emit_wear(self):
+		self.sig_wear.emit()
+	
 	#open 
 	def choiceview(self):
 		self.btn_right.hide()
@@ -82,12 +88,18 @@ class SideBtns(qtw.QWidget):
 		self.btn_left.show()
 		
 	def sidechoiceview(self):
+		self.btn_wear.hide()
 		self.btn_left.hide()
 		self.btn_right.show() 
 		self.btn_shuffle.show()
 	
 	def finalview(self):
-		self.btn_right.hide()
+		self.btn_wear.show()
+		self.btn_left.hide()
+		self.btn_right.show()
 		self.btn_shuffle.hide()
+
+	def wear_view(self):
+		self.btn_wear.hide()
 		
 	

@@ -23,7 +23,7 @@ from graphics.fashionview import PyVistaView
 from metadata.load_data import df_input
 
 class	FinalImg(qtw.QWidget):
-
+	
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		sig_f_update = qtc.pyqtSignal()
@@ -36,10 +36,11 @@ class	FinalImg(qtw.QWidget):
 		self.info.setObjectName("infotext")
 		self.info.setText("Artist:  \nTitle:  \nYear:")
 		self.info.setAlignment(qtc.Qt.AlignmentFlag.AlignVCenter)
-		
+
 		#set layout
 		self.overall_layout = qtw.QGridLayout()
 		self.overall_layout.addWidget(self.info,0,3)
+
 
 	# set clicked img as widget
 	@qtc.pyqtSlot(str)

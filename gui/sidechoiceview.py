@@ -16,6 +16,8 @@ from graphics.modelview import GlWidget
 from graphics.fashionview import PyVistaView
 from gui.pic_utils import img_creator
 
+
+
 from path import img_path
 img_path = img_path
 
