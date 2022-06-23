@@ -13,11 +13,11 @@ from PyQt6.QtCore import pyqtSlot
 from numpy import diff
 import pyvista as pv
 from pyvistaqt import QtInteractor
-
+from random import randint
 # Setting the Qt bindings for QtPy
 import os
 os.environ["QT_API"] = "pyqt6"
-from path import texture_path, shirt_path
+from path import texture_path, shirt_path, img_path
 import random
 import numpy as np
 
@@ -66,18 +66,28 @@ class PyVistaView (qtw.QWidget):
 	
 	@qtc.pyqtSlot(str)
 	def get_img(self, str_img):
-		self.texture = pv.read_texture(texture_path + str_img)
 		self.plotter.remove_actor(self.actor)
-		self.actor = self.plotter.add_mesh(self.shirt, show_edges=False, texture=self.texture)
+		texture_dir = str_img[:-4]
 
-	def hide(self):
-		self.plotter.remove_actor(self.actor)
+		try:
+			path = texture_path + texture_dir + '/'
+			files = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
+		except:
+			files = []
 
-	@qtc.pyqtSlot()
-	def show(self):
-		self.plotter.add_mesh(self.shirt, show_edges=False, texture=self.texture)
+		if not files:
+			self.texture = pv.read_texture(img_path + str_img)
+			self.actor = self.plotter.add_mesh(self.shirt, show_edges=False, texture = self.texture)
+			print("Error: no dirs with generated textures")
+		else:
+			texture_nb = len(files)
+			rand = randint(0,texture_nb)
+			self.texture = pv.read_texture(texture_path + texture_dir + '.png')
+			self.actor = self.plotter.add_mesh(self.shirt, show_edges=False, texture=self.texture)
+			print(texture_path + texture_dir + '/' + str(rand) + '.png')
 		
 	
+
 	def image_array(self,): 
 		path = texture_path
         # create array of image file paths
@@ -91,7 +101,6 @@ class PyVistaView (qtw.QWidget):
 
 	@pyqtSlot(int)
 	def scale(self, x_diff):
-		
 		# # (0.0, 1.7, 0.0) -> unterer Rand
 		# # (0.0, 0.66, 0.0) -> oberer Rand
 		self.plotter.camera.view_angle = 30.0

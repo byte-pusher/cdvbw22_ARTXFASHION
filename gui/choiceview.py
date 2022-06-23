@@ -25,6 +25,7 @@ img_path = img_path
 class	ImgChoiceBottom(qtw.QWidget):
 	#signal for finalwin
 	emit_choice = qtc.pyqtSignal(str)
+	sig_f_update = qtc.pyqtSignal()
 
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
@@ -50,6 +51,7 @@ class	ImgChoiceBottom(qtw.QWidget):
 		self.btn_shuffle.setObjectName("btn_shuffle_bottom")
 		self.icon_size_shuffle = qtc.QSize(60,60)
 		self.btn_shuffle.setIconSize(self.icon_size_shuffle)
+		self.btn_shuffle.clicked.connect(self.emit_f)
 		self.img_choice = qtw.QWidget()
 		self.img_choice_layout = qtw.QGridLayout()
 	
@@ -85,7 +87,7 @@ class	ImgChoiceBottom(qtw.QWidget):
 		#hide & clear widget for img choice
 		self.clear()
 		#check len of list, reset if necessary
-		if len(self.nb_list) > 230:
+		if len(self.nb_list) > 229:
 				self.nb_list = []
 		#append three new numbers to list
 		i = 0
@@ -97,7 +99,8 @@ class	ImgChoiceBottom(qtw.QWidget):
 		print("List of random img indices: ", self.nb_list)
 		#set new imgs, ft always uses last three
 		self.set_img_widget()
-		self.setStyleSheet("background-color : grenn")
+		self.setStyleSheet("background-color : transparent")
+		self.emit_f()
 
 	#clear widget
 	def clear(self):
@@ -105,6 +108,8 @@ class	ImgChoiceBottom(qtw.QWidget):
 		sip.delete(self.img_choice)
 		self.img_choice = None
 
+	def emit_f(self):
+		self.sig_f_update.emit()
 
 
 

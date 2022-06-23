@@ -6,11 +6,18 @@
 # data_path = "/Users/mawinter/Desktop/cdvbw22_ARTXFASHION/metadata/metadata.csv"
 # shirt_path = "/Users/mawinter/Desktop/cdvbw22_ARTXFASHION/graphics/shirt.obj"
 # cal_path = "/Users/mawinter/Desktop/cdvbw22_ARTXFASHION/tracking/cal_imgs/"
-# #ray
-# img_path = '/Users/rkoop/Documents/cdvbw22/Data_Staatsgalerie_Stuttgart/Bilder/'
-# texture_path = img_path
-# #texture_path = '/Users/rkoop/Documents/cdvbw22/githubrepo/textures/'
-# icon_path = '/Users/rkoop/Documents/cdvbw22/githubrepo/gui/icons/'
+
+
+
+#ray
+img_path = '/Users/rkoop/Documents/cdvbw22/Data_Staatsgalerie_Stuttgart/Bilder/'
+texture_path = img_path
+#texture_path = '/Users/rkoop/Documents/cdvbw22/repo/textures/'
+icon_path = '/Users/rkoop/Documents/cdvbw22/repo/gui/icons/'
+cal_path = '/Users/rkoop/Documents/cdvbw22/repo/tracking/cal_imgs/'
+data_path = "/Users/rkoop/Documents/cdvbw22/repo/metadata/metadata_clean.csv"
+shirt_path = '/Users/rkoop/Documents/cdvbw22/repo/graphics/shirt.obj'
+
 
 # Nuk
 icon_path = "/home/dantonik/Documents/flecture/gui/icons/"
