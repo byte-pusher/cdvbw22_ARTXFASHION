@@ -45,9 +45,9 @@ class	MainApp(qtw.QApplication):
 		self.cam = Webcam()
 		self.cam.worker.angles.connect(self.main.view.updating)
 		self.cam.worker.x_diff.connect(self.main.view.scale)
-		self.cam.worker.mid_point.connect(self.main.view.move)
+		self.cam.worker.x_diff_always.connect(self.main.view.move)
 		self.cam.worker.frames.connect(self.main.view.frames)
-
+		self.cam.worker.move.connect(self.main.view.move_up)
 		#connect img clicked to finalview
 		self.main.img_choice_bottom.emit_choice.connect(self.main.final_img.get_chosen_img)
 		self.main.img_choice_bottom.emit_choice.connect(self.main.view.get_img)
@@ -58,7 +58,7 @@ class	MainApp(qtw.QApplication):
 
 		#connect btn wear to actions
 		self.main.sidebtns.sig_wear.connect(self.main.go_wear)
-		self.main.sidebtns.sig_wear.connect(self.main.load.start_gif)
+
 
 		#start show applicaiton
 		self.main.show()

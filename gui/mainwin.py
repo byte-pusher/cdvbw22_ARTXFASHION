@@ -17,7 +17,7 @@ from graphics.fashionview import PyVistaView
 from gui.sidebtns import SideBtns
 from gui.sidechoiceview import SideChoice
 from gui.final_view import FinalImg
-from gui.startwearview import StartWear
+
 
 
 class	MainWindow((qtw.QMainWindow)):
@@ -30,7 +30,8 @@ class	MainWindow((qtw.QMainWindow)):
 	
 		#set basic window & geometry (SetGeometry> x,y, width, height)
 		self.setWindowTitle("Magic Mirror")
-		self.setGeometry(0, 0, 900, 1600)
+		#self.setGeometry(0, 0, 900, 1600)
+		self.showMaximized()
 		self.winsize_status = 900
 
 		#create Widgets
@@ -45,15 +46,13 @@ class	MainWindow((qtw.QMainWindow)):
 
 		#final view
 		self.final_img = FinalImg()
-		# start waear
-		self.load = StartWear()
+
 
 		#Grid arguments: row, column, rowSpan, columnSpan
 		# overall layout init
 		self.main_widget = qtw.QWidget()
 		self.layout_main = qtw.QGridLayout()
 		self.layout_main.addWidget(self.view.plotter, 0, 0, 16, 9)
-		self.layout_main.addWidget(self.load, 6, 4)
 		self.layout_main.addWidget(self.final_img, 13, 0, 3, 9)
 		self.main_widget.setLayout(self.layout_main)
 		self.setCentralWidget(self.main_widget)
@@ -74,7 +73,7 @@ class	MainWindow((qtw.QMainWindow)):
 	@qtc.pyqtSlot()
 	def go_choiceview(self):
 		self.sidebtns.choiceview()
-		self.load.hide()
+	
 		self.final_img.hide()
 		self.layout_main.addWidget(self.img_choice_bottom, 13, 0, 3, 9)
 		self.img_choice_bottom.hide()
@@ -114,18 +113,18 @@ class	MainWindow((qtw.QMainWindow)):
 	#change to resizing in height direction for smoother change
 	@qtc.pyqtSlot()
 	def f_update(self):
-		self.update()
+		#self.showFullScreen()
 		if self.winsize_status == 900:
-			self.resize(1200, 1800)
+			#self.resize(1200, 1800)
 			self.winsize_status = 901
 			print('update 901')
 		elif self.winsize_status == 901:
-			self.resize(1200, 1800)
+			#self.resize(1200, 1800)
 			self.winsize_status = 900
 			print('update 900')
 		else:
 			print('resizing error in f update')
-		self.showMaximized()
+		
 
 
 
