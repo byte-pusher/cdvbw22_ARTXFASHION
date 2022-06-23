@@ -13,12 +13,12 @@ Dataset: https://codingdavinci.de/daten/farben-muster-art-x-fashion-show
 The impulse from the data provider inspired us to create a Smart Mirror which allows you to experience the style of the artwork with the help of AI- generated textures on the 3D T-Shirt model on your reflection.
 The software is written in Python and contains several parts:
 
-gui/ :graphical user interface of the whole application, written in PyQt
-graphics/ :the model display and texture application
-tracking/ :tracking of body movements
-metadata/ :data cleaning and loading
-mainapp.py :main application
-path.py: for local paths
+gui/ :graphical user interface of the whole application, written in PyQt\
+graphics/ :the model display and texture application\
+tracking/ :tracking of body movements\
+metadata/ :data cleaning and loading\
+mainapp.py :main application\
+path.py: for local paths\
 
 # Smart Mirror
 
