@@ -83,13 +83,14 @@ class	ImgChoiceBottom(qtw.QWidget):
 	def shuffle(self):
 		#hide & clear widget for img choice
 		self.clear()
+		
 		#check len of list, reset if necessary
 		if len(self.nb_list) > 229:
 				self.nb_list = []
 		#append three new numbers to list
 		i = 0
 		while i < 3:
-			x = randint(0, 232)
+			x = randint(0, len(self.nb_list) -1)
 			if x not in self.nb_list:
 				self.nb_list.append(x)
 				i = i + 1
@@ -103,24 +104,5 @@ class	ImgChoiceBottom(qtw.QWidget):
 		self.img_choice.hide()
 		sip.delete(self.img_choice)
 		self.img_choice = None
-
-
-
-		
-
-		
-
-
-	
-	
-
-
-
-	
-
-
-
-			
-
 
 

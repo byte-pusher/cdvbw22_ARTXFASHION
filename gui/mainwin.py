@@ -17,7 +17,7 @@ from graphics.fashionview import PyVistaView
 from gui.sidebtns import SideBtns
 from gui.sidechoiceview import SideChoice
 from gui.final_view import FinalImg
-from gui.startwearview import StartWear
+
 
 
 class	MainWindow((qtw.QMainWindow)):
@@ -35,6 +35,7 @@ class	MainWindow((qtw.QMainWindow)):
 		self.exitAction = qtg.QAction('&Neustart', self)
 		self.exitAction.setShortcut(qtg.QKeySequence("Ctrl+e"))
 
+
 		#create Widgets
 		#choicewin
 		self.sidebtns = SideBtns()
@@ -47,7 +48,7 @@ class	MainWindow((qtw.QMainWindow)):
 
 		#final view
 		self.final_img = FinalImg()
-		
+
 		#Grid arguments: row, column, rowSpan, columnSpan
 		# overall layout init
 		self.main_widget = qtw.QWidget()
@@ -68,6 +69,7 @@ class	MainWindow((qtw.QMainWindow)):
 	@qtc.pyqtSlot()
 	def go_choiceview(self):
 		self.sidebtns.choiceview()
+
 		self.final_img.hide()
 		self.layout_main.addWidget(self.img_choice_bottom, 125, 0, 35, 9)
 		self.img_choice_bottom.setStyleSheet("background-color : black")
@@ -99,6 +101,7 @@ class	MainWindow((qtw.QMainWindow)):
 		self.sidebtns.wear_view()
 		self.update()
 
+
 	#change to resizing 
 	# @qtc.pyqtSlot()
 	# def f_update(self):
@@ -114,6 +117,7 @@ class	MainWindow((qtw.QMainWindow)):
 	# 	else:
 	# 		print('resizing error in f update')
 	# 	self.showMaximized()
+
 
 
 
