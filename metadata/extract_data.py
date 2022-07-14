@@ -5,6 +5,7 @@ import pandas as pd
 import re
 import os
 
+#ft to change fieextension
 def replace_ending(sentence, old, new):
     if sentence.endswith(old):
         i = sentence.rsplit(old,1)
@@ -12,6 +13,7 @@ def replace_ending(sentence, old, new):
         return new_sentence
     return sentence
 
+# extraction of necessary data from JSON
 with open("/Users/rkoop/Documents/cdvbw22/Data_Staatsgalerie_Stuttgart/sgs_codingDaVinci_20220329.json", "r") as f:
 	data = json.loads(f.read())
 	num_failed_dateiname = 0
@@ -55,12 +57,11 @@ while count < 238:
 
 df = df.set_index('dateiname')
 #df.to_csv("metadata.csv")
-print(df)
 
+#print info of converting processs
+print(df)
 print("failed dateiname = " + str(num_failed_dateiname))
 print("failed entstehungszeit = " + str(num_failed_entstehungszeit))
-# print(df['entstehungszeit'])
-# pprint(data[1])
 print("failed dateinamen: ", end='')
 print(lst_failed_dateiname)
 print("failed entstehungszeit: ", end='')
