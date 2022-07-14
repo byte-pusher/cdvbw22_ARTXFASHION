@@ -97,7 +97,6 @@ class	ImgChoiceBottom(qtw.QWidget):
 		#set new imgs, ft always uses last three
 		self.set_img_widget()
 		self.setStyleSheet("background-color : black")
-		self.emit_f()
 
 	#clear widget
 	def clear(self):
