@@ -3,6 +3,11 @@ from cv2 import aruco
 import numpy as np
 import os
 import path
+
+# Calibration of the Camera. We get a translation matrix that we apply to 
+# each frame of the camera feed to get clearer results. It is required to
+# detect Aruco markers, see take_calibrating.py to take them.
+
 class Calibrator:
     def __init__(self, parent=None):
         super().__init__()
@@ -42,23 +47,18 @@ class Calibrator:
                 if res2[1] is not None and res2[2] is not None and len(res2[1])>3 and decimator%1==0:
                     allCorners.append(res2[1])
                     allIds.append(res2[2])
-            else:
-                print("ASDASDASDASD" + im)
             decimator+=1
 
         imsize = gray.shape
         return allCorners,allIds,imsize
 
     def calibrate_camera(self, allCorners,allIds,imsize, board):
-        print("CAMERA CALIBRATION")
-        print(imsize)
         cameraMatrixInit = np.array([[ 1000.,    0., imsize[0]/2.],
                                      [    0., 1000., imsize[1]/2.],
                                      [    0.,    0.,           1.]])
 
         distCoeffsInit = np.zeros((5,1))
         flags = (cv2.CALIB_USE_INTRINSIC_GUESS + cv2.CALIB_RATIONAL_MODEL + cv2.CALIB_FIX_ASPECT_RATIO)
-        #flags = (cv2.CALIB_RATIONAL_MODEL)
         (ret, camera_matrix, distortion_coefficients0,
          rotation_vectors, translation_vectors,
          stdDeviationsIntrinsics, stdDeviationsExtrinsics,

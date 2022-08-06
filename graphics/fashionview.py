@@ -27,6 +27,7 @@ import random
 import numpy as np
 
 
+
 class PyVistaView (qtw.QWidget):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
@@ -38,32 +39,23 @@ class PyVistaView (qtw.QWidget):
 		self.frame_i = 0
         # add the pyvista interactor object
 		self.plotter = QtInteractor(self.frame)
+
 		self.plotter.set_background('black')
-	
+
+		# read shirt mesh and apply mesh to it
+		# add camera and reset to starting position
 		self.shirt = pv.read(shirt_path)
-		
-		self.last_angle = 0
 		self.actor = self.plotter.add_mesh(self.shirt, show_edges=False)
 		self.plotter.camera  = pv.Camera()
-		
-		self.active = 0
-		print(self.plotter.camera.position)
 		self.plotter.reset_camera()
-		print("foc" + str(self.plotter.camera.focal_point))
-		# self.plotter.camera.zoom(0.8)
 		
 
 	@qtc.pyqtSlot()
 	def frames(self):
 		pass
 
-		focal = self.plotter.camera.focal_point
-		# print(focal)
-		# self.plotter.camera.focal_point = (focal[0],focal[1]+ 0.001, focal[2])
-		# # self.plotter.update()
 
-
-
+	# Experimental Rotation with Aruco Markers
 	@qtc.pyqtSlot(tuple)
 	def updating(self, angles):
 		# azimuth = angles[1]
@@ -95,6 +87,8 @@ class PyVistaView (qtw.QWidget):
 		# print(angles)
 		pass
 	
+
+	# User Selected new Picture. We remove the old one from the scene and add new one
 	@qtc.pyqtSlot(str)
 	def get_img(self, str_img):
 		self.plotter.remove_actor(self.actor)
@@ -118,7 +112,6 @@ class PyVistaView (qtw.QWidget):
 			print(texture_path + texture_dir + '/' + str(rand) + '.png')
 		
 	
-
 	def image_array(self,): 
 		path = texture_path
         # create array of image file paths
@@ -130,17 +123,19 @@ class PyVistaView (qtw.QWidget):
 				images.append(img_path)
 		return images
 
+
+	# Experimental Scaling
 	@qtc.pyqtSlot(int)
 	def scale(self, x_diff):
-		# print(x_diff)
-		# # (0.0, 1.7, 0.0) -> unterer Rand
-		# # (0.0, 0.66, 0.0) -> oberer Rand
-		default = 40
-		fixed = 170
-		scale = 175 - x_diff
-		i = 0.15
-		self.plotter.camera.view_angle = default + scale * i
-	
+		# # print(x_diff)
+		# # # (0.0, 1.7, 0.0) -> unterer Rand
+		# # # (0.0, 0.66, 0.0) -> oberer Rand
+		# default = 40
+		# fixed = 170
+		# scale = 175 - x_diff
+		# i = 0.15
+		# self.plotter.camera.view_angle = default + scale * i
+		pass
 
 		# Marius 170
 
@@ -148,46 +143,47 @@ class PyVistaView (qtw.QWidget):
 	def move_up(self, up):
 		pass
 
-
+	# Experimental resetting of FOcal point
 	@qtc.pyqtSlot()	
 	def activate(self):
-		if self.active is 1:
-			self.active = 0
-			self.plotter.camera.focal_point = (0.0, 1.2723920047283173, 0.02216850221157074)
-		else:
-			self.active = 1
-		print(self.active)
+		# if self.active is 1:
+		# 	self.active = 0
+		# 	self.plotter.camera.focal_point = (0.0, 1.2723920047283173, 0.02216850221157074)
+		# else:
+		# 	self.active = 1
+		# print(self.active)
+		pass
 
 
-
+	# Experimental movement of shirt to left and right as users move.
 	@pyqtSlot(tuple)
 	def move(self, info):
-		# print(info)
-		# if 165 < xdiff and xdiff < 180:
-		# 	shoulder_m = 380
-		# 	shoulder_d = 420
-		# d height 1.265
-		print(self.active)
-		# m height 1.18
-		if self.active is 1:
+		# # print(info)
+		# # if 165 < xdiff and xdiff < 180:
+		# # 	shoulder_m = 380
+		# # 	shoulder_d = 420
+		# # d height 1.265
+		# print(self.active)
+		# # m height 1.18
+		# if self.active is 1:
 
-			base = 420
-			diff = info[1] - 420
-			unit = 0.0028
+		# 	base = 420
+		# 	diff = info[1] - 420
+		# 	unit = 0.0028
 
-			focal = self.plotter.camera.focal_point
+		# 	focal = self.plotter.camera.focal_point
 
 
-			self.plotter.camera.focal_point = (focal[0], 1.265 + unit * diff, focal[2])
+		# 	self.plotter.camera.focal_point = (focal[0], 1.265 + unit * diff, focal[2])
 
-		# focal = self.plotter.camera.focal_point
-		# mid_y = mids[1]
-		# normal = 380
-		# diff = 380 - mids[1]
-		# i = 0.001
-		# print(focal)
-		# self.plotter.camera.focal_point = (focal[0], 1.28 + diff, focal[2])
-		
+		# # focal = self.plotter.camera.focal_point
+		# # mid_y = mids[1]
+		# # normal = 380
+		# # diff = 380 - mids[1]
+		# # i = 0.001
+		# # print(focal)
+		# # self.plotter.camera.focal_point = (focal[0], 1.28 + diff, focal[2])
+		pass
 		
 
 	
