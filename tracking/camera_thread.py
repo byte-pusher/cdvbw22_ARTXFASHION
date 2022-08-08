@@ -51,7 +51,6 @@ class Worker(QObject):
             self.frames.emit()
             #-- Convert in gray scale
             ret, frame = cap.read()
-            # print(frame.shape)
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             self.emit_angles(frame, gray, parameters, cal, markerLength, camera_matrix, camera_distortion, R_flip)
             self.x_diff_always_func(frame)
@@ -74,7 +73,6 @@ class Worker(QObject):
             l_y = int(frame.shape[1] * results.pose_landmarks.landmark[12].y)
             x_difference = r_x - l_x
             height = (r_y + l_y) / 2
-            # cv2.putText(frame, "x difference " + str(int(x_difference)), (70, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0 , 0), 3)
             self.x_diff_always.emit((x_difference, height))
         except Exception as e:
             pass
@@ -90,7 +88,6 @@ class Worker(QObject):
             l_y = int(frame.shape[1] * results.pose_landmarks.landmark[12].y)
             x_difference = r_x - l_x
             height = (r_y + l_y) / 2
-            # cv2.putText(frame, "x difference " + str(int(x_difference)), (70, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0 , 0), 3)
             self.x_diff.emit(x_difference)
         except Exception as e:
             pass
@@ -113,8 +110,6 @@ class Worker(QObject):
                 self.move.emit((tvec_all[0][0][2],))
                 rotation_matrix, jacobian = cv2.Rodrigues(rvec_flipped)
                 realworld_tvec = np.dot(rotation_matrix, tvec_flipped)
-                # print(tvec[1])
-                # print(tvec[2])
                 pitch, roll, yaw = self.rotationMatrixToEulerAngles(rotation_matrix)
                 # convert axis angle representation into rotation matrix
                 R_ct = np.matrix(cv2.Rodrigues(rvec)[0])
@@ -126,7 +121,7 @@ class Worker(QObject):
                 self.angles.emit((math.degrees(roll_marker),math.degrees(pitch_marker),math.degrees(pitch_marker)))
                 if (abs(math.degrees(pitch_marker)) < 15):
                     self.x_difference(frame)
-                
+        
     def isRotationMatrix(self, R):
         Rt = np.transpose(R)
         shouldBeIdentity = np.dot(Rt, R)

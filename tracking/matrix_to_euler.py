@@ -1,6 +1,9 @@
 import math
 import numpy as np
 
+
+
+# Checks if we are dealing with a Rotation matrix
 def isRotationMatrix(R) :
     Rt = np.transpose(R)
     shouldBeIdentity = np.dot(Rt, R)
